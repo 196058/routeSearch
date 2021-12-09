@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ルート検索 -ルート表示中-</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+</head>
+<body>
+<!--<header>-->
+<h1 class="h1title">
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+    <div class="contents-have">
+        <h1>ルート表示中<span>-ルート検索-</span></h1>
+    </div>
+
+    <h3>入力された情報をもとにルートを検索しました</h3>
+    <form action="{% url 'route_search' %}" method="get">
+
+        <!-- いい感じに間隔をつける -->
+
+    </form>
+
+    <br><br><br>
+    <div class="reset button-bg from-left">
+        <a href="{% url 'route_search' %}">- 再検索 -</a><br>
+        <a href="">- ルートを印刷 -</a><br><br>
+        <a href="{% url 'tanbo_info' %}">- 別の田んぼに植える -</a><br><br>
+
+        <a href="{% url 'user_home' %}" title="ホーム画面へ移動します">- 田植えを終了する -</a>
+    </div>
+</article>
+</body>
+</html>

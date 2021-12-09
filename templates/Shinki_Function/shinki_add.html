@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>新規登録 -入力-</title>
+
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/validationEngine.jquery.css' %}">
+
+	<script src="{% static 'systemdesign/js/jquery-1.8.2.min.js' %}"></script>
+	<script src="{% static 'systemdesign/js/jquery.validationEngine-ja.js' %}"></script>
+	<script src="{% static 'systemdesign/js/jquery.validationEngine.js' %}"></script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery("#formID").validationEngine();
+    });
+</script>
+</head>
+<body>
+<!--<header>-->
+<h1 class="h1title">
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+	<div class="contents-have">
+		<h1>入力<span>-新規登録-</span></h1>
+	</div>
+
+	<h4>登録に必要な情報を入力してください</h4>
+
+	<br>
+    <form action="{% url 'shinki_add_confirm' %}" id="formID" method="post">
+        {%  csrf_token %}
+        <label class="centering" for="user_name">利用者名</label>
+        <input type="text" name="user_name" id="user_name" class="validate[required]" data-prompt-position="topLeft"><br>
+
+	    <label class="centering" for="id">ユーザＩＤ</label>
+		    <input type="text" name="id" id="id" class="validate[required,custom[onlyLetterNumber]]" data-prompt-position="topLeft"><br>
+
+	    <label class="centering" for="mail">メールアドレス</label>
+		    <input type="email" name="mail" id="mail" class="validate[required,custom[email]]" data-prompt-position="topLeft"><br>
+
+	    <label class="centering" for="pass">パスワード</label>
+		    <input type="password" name="pass_word" id="pass" class="validate[required]" data-prompt-position="topLeft"><br>
+
+        <label class="centering" for="pass_conf">パスワード<br>(確認用)</label>
+            <input type="password" id="pass_conf" class="validate[required,equals[pass]]" data-prompt-position="topLeft">
+        <br>
+        <input type="submit" value="確認">
+    </form>
+
+    <br><br>
+    <div class="reset button-bg from-left">
+		<a href="{% url 'shinki_add_confirm' %}">- 登録内容 確認 -</a><br><br>
+		<a href="{% url  'index' %}">- メニューに戻る -</a>
+	</div>
+</article>
+</body>
+</html>

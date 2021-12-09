@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>ルート検索 -田んぼ選択-</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
+    <script src="{% static 'systemdesign/js/radio_button.js' %}"></script>
+    <script src="{% static 'systemdesign/js/button_control.js' %}"></script>
+</head>
+<body>
+<!--<header>-->
+<h1 class="h1title">
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+    <div class="contents-have">
+        <h1>田んぼ選択<span>-ルート検索-</span></h1>
+    </div>
+    <br>
+
+    <form action="{% url 'kikai_info' %}" method="post">
+        <h3>? 登録した田んぼに植えますか ?</h3>
+
+        <div class="hidden_box">
+            <div class="hidden_box1">
+                <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
+                <label for="label1"><h4>登録した田んぼに植える</h4></label>
+                <div class="hidden_show1">
+
+                    <h4>↓ 登録した田んぼを表示中です ↓</h4>
+
+                    1:<input type="radio" name="tanbo" id="tanbo1" onclick="clickBtn1()"><br>
+                    2:<input type="radio" name="tanbo" id="tanbo2" onclick="clickBtn1()"><br>
+                    3:<input type="radio" name="tanbo" id="tanbo3" onclick="clickBtn1()"><br>
+                    4:<input type="radio" name="tanbo" id="tanbo4" onclick="clickBtn1()"><br>
+                </div>
+                <!-- hidden_show1 -->
+            </div>
+            <!-- hidden_box1 -->
+        </div>
+        <!-- hidden_box -->
+        <br>
+        <h3>? 新しい田んぼに植えますか ?</h3>
+
+        <div class="hidden_box">
+            <div class="hidden_box2">
+                <input type="checkbox" id="label2" name="group" onclick="clickBtn2()">
+                <label for="label2"><h4>新しい田んぼに植える</h4></label>
+                <div class="hidden_show2">
+
+                    <h4>↓ マップを使用して ↓<br>情報を取得してください</h4>
+                        □
+
+                    <br><br><br>
+                </div>
+                <!-- hidden_show2 -->
+            </div>
+            <!-- hidden_box2-->
+        </div>
+        <!-- hidden_box -->
+    </form>
+
+    <br><br>
+    <div class="reset button-bg from-left">
+        <a href="{% url 'kikai_info' %}">- 植え方選択 -</a><br>
+        <a href="{% url 'member_login' %}">- ホームに戻る -</a>
+    </div>
+</article>
+</body>
+</html>

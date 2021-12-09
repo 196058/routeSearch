@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>システム終了</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+</head>
+<body>
+<!--<header>-->
+<h1 class="h1title">
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+    <div class="contents-miss">
+        <h1>終了します</h1>
+    </div>
+
+    <h3>
+        こちらのシステムは気に入っていただけたでしょうか。<br>
+        気に入っていただけた方はこちらから新規登録もできます
+    </h3>
+
+    <br><br>
+    <div class="reset button-bg from-left">
+        <a href="{% url 'shinki_add' %}">- 登録する -</a><br>
+
+        <a href="{% url 'index' %}">- 終了する -</a>
+    </div>
+</article>
+</body>
+</html>

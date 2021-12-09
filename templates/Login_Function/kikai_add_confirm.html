@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>機械 -登録 確認-</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+</head>
+<body>
+<h1 class="h1title">
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+    <div class="contents-have">
+        <h1>確認<span>-機械新規登録-</span></h1>
+    </div>
+
+    <h3>こちらの内容で登録します</h3>
+
+    <form action="{% url 'kikai_add_comp' %}" method="post">
+        <table class="details">
+            <tr><th>機械名</th><th>内容</th></tr>
+            <tr>
+                <td>●</td>
+                <td>●</td>
+            </tr>
+        </table>
+    </form>
+
+    <div class="reset button-bg from-left">
+    <form action="{% url 'kikai_add_comp' %}" method="post">
+        {%  csrf_token %}
+        ------仮置きのデータ表示------<br>
+            <label class="centering">機械名</label>
+                <input type="text" name="name" id="name" value="{{ meca_info.name.value }}" readonly ><br>
+
+            <label class="centering">全長</label>
+                <input type="text" name="full_length" id="full_length" value="{{ meca_info.full_length.value }}"  readonly><br>
+
+            <label class="centering">全幅</label>
+                <input type="text" name="full_width" id="full_width" value="{{ meca_info.full_width.value }}"  readonly><br>
+
+            <label class="centering">条数</label>
+                <input type="text" name="jousu" id="jousu" value="{{ meca_info.jousu.value }}"  readonly><br>
+
+            <label class="centering">条間</label>
+                <input type="text" name="joukan" id="joukan" value="{{ meca_info.joukan.value }}" readonly ><br>
+
+            <label class="centering">株間</label>
+                <input type="text" name="kabuma" id="kabuma" value="{{ meca_info.kabuma.value }}"  readonly><br>
+
+            <label class="centering">一株本数調節量</label>
+                <input type="text" name="adjusting" id="adjusting" value="{{ meca_info.adjusting.value }}"  readonly><br>
+
+            <label class="centering">作業速度</label>
+                <input type="text" name="workingspeed" id="workingspeed" value="{{ meca_info.workingspeed.value }}"  readonly><br>
+
+            {{ meca_info.id.as_hidden }}
+            <input type="submit" value="登録">
+
+    </form>
+    <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+
+    <h3>よろしいですか？</h3>
+
+    <br><br>
+
+        <a href="{% url 'kikai_add_comp' %}">- 登録する -</a><br>
+        <a href="{% url 'kikai_add' %}">- 修正する -</a><br><br>
+        <a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
+    </div>
+</article>
+</body>
+</html>

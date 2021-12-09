@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>田んぼ -登録 確認-</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+</head>
+<body>
+<h1 class="h1title">
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+    <div class="contents-have">
+        <h1>確認<span>-田んぼ新規登録-</span></h1>
+    </div>
+
+    <h3>こちらの田んぼを登録します</h3>
+
+    <form action="{% url 'tanbo_add_comp' %}" method="get">
+        <table class="details">
+            <tr><th>田んぼ名</th><th>内容</th></tr>
+            <tr>
+                <td>●</td>
+                <td>●</td>
+            </tr>
+        </table>
+    </form>
+
+    <h3>よろしいですか？</h3>
+
+    <br><br>
+    <div class="reset button-bg from-left">
+        <a href="{% url 'tanbo_add_comp' %}">- 登録する -</a><br>
+        <a href="{% url 'tanbo_add' %}">- 修正する -</a><br><br>
+        <a href="{% url 'tanbo_master' %}">- 田んぼ一覧に戻る -</a>
+    </div>
+</article>
+</body>
+</html>

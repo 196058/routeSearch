@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>-田んぼルート検索-</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+</head>
+<body>
+<!--<header>-->
+<h1 class="h1title">
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
+    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+</h1>
+<!--</header>-->
+
+<article class="backsayuu2">
+    <div class="contents-miss">
+        <h1>システムについて</h1>
+    </div>
+
+    <h3>
+        農家の方向けに開発した田植え最適化システムです。<br>
+        簡単な田んぼ、機械の情報を入力するだけで<br>
+        最適な田植えルートを提案します。<br><br>
+        ゲスト　または　ログイン<br>よりご利用いただけます。<br><br>
+    </h3>
+    <br>
+
+    <div id="item">
+        <a href="{% url 'shinki_add' %}">
+            <div class="unification">
+                <i class="fa fa-pen-nib fa-3x"></i><br><h4>新規登録</h4>
+            </div>
+        </a>
+
+        <a href="{% url 'Guest_tanbo_info' %}">
+            <div class="unification">
+                <i class="fas fa-user fa-3x"></i><br><h4>ゲスト</h4>
+            </div>
+        </a>
+
+        <a href="{% url 'login' %}">
+            <div class="unification">
+                <i class="fas fa-sign-in-alt fa-3x"></i><br><h4>ログイン</h4>
+            </div>
+        </a>
+    </div>
+
+    <br><br><br><br>
+    <table class="ta">
+        <tr>
+            <th><i class="fas fa-user fa-2x"></i><br>ゲスト</th>
+            <td>
+                会員登録不要ですぐにご利用いただけます。<br>
+                なお、このシステムを気に入っていただいた方は終了時、
+                ページの新規登録から登録いただきますと、使用された田んぼや機械の情報をそのまま登録することも可能です。<br>
+        </tr>
+        <tr>
+            <td height="16px"></td>
+        </tr>
+        <tr>
+            <th>
+                <i class="fas fa-sign-in-alt fa-2x"></i><br>ログイン
+            </th>
+            <td>
+                田んぼや機械の情報を登録できます。<br>
+                1度の入力のみで何度もご利用いただくことができ、ご登録いただいた田んぼや機械の情報は編集や削除も可能です。<br>
+            </td>
+        </tr>
+        <tr><td height="16px"></td></tr>
+        <tr>
+            <th>
+                <i class="fa fa-pen-nib fa-2x"></i><br>新規登録
+            </th>
+            <td>
+                初めてご利用される方はこちらから、ご氏名・メールアドレス・パスワードを入力いただくことで会員登録が可能です。
+                <br>
+            </td>
+        </tr>
+    </table>
+        <!--<tr>
+            <th><i class="fa far fa-envelope fa-2x"></i><br>お問い合わせ先</th>
+        </tr>-->
+
+
+<!--    <footer class="footer">-->
+    <div class="footer" id="footer">
+        <h5>チーム定時退社</h5>
+        〒73*-****<br>
+        広島市南区比治山本町<br>
+        TEL：***-****<br>
+    </div>
+<!--    </footer>-->
+    <br>
+</article>
+</body>
+</html>
