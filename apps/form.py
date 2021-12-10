@@ -15,6 +15,7 @@ class UserAddForm(forms.ModelForm):
         }
 
 
+# LoginForm
 class LoginForm(forms.ModelForm):
     pass_word = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'myfieldclass'}), label='パスワード')
 
