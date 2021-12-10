@@ -35,8 +35,20 @@
             <tr>
                 <td>{{ paddy.paddy_id }}</td>
                 <td>{{ paddy.name }}</td>
-                <td><a href="{% url 'tanbo_edit' %}">編集</a></td>
-                <td><a href="{% url 'tanbo_del_confirm' %}">削除</a></td>
+                <td><form action="{% url 'tanbo_edit' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="paddy_name" value="{{ paddy.name }}">
+                        <input type="submit" value="編集">
+                    </form>
+                    <a href="{% url 'tanbo_edit' %}">編集</a>
+                </td>
+                <td><form action="{% url 'tanbo_del_confirm' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="paddy_name" value="{{ paddy.name }}">
+                        <input type="submit" value="削除">
+                    </form>
+                    <a href="{% url 'tanbo_del_confirm' %}">削除</a>
+                </td>
             </tr>
             {% endfor %}
         </table>

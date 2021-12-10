@@ -34,7 +34,7 @@ urlpatterns = [
     path('member/kikai_del_comp/', views.kikai_del_comp, name='kikai_del_comp'),
     path('member/kikai_edit/<meca_id>', views.kikai_edit, name='kikai_edit'),
     path('member/kikai_edit_confirm/', views.kikai_edit_confirm, name='kikai_edit_confirm'),
-    path('member/kikai_edit_comp/<meca_id>', views.kikai_edit_comp, name='kikai_edit_comp'),
+    path('member/kikai_edit_comp/', views.kikai_edit_comp, name='kikai_edit_comp'),
 
     # ゲスト
     path('gest/route_search/', views.Guest_route_search, name='Guest_route_search'),

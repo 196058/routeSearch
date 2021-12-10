@@ -38,12 +38,16 @@
             <div class="hidden_box1">
                 <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
                 <label for="label1">機械で植える</label>
-
                 <div class="hidden_show1">
-                    1:<input type="radio" id="kikai" name="kikai1" onclick="clickBtn1()"><br>
-                    2:<input type="radio" id="kikai" name="kikai2" onclick="clickBtn1()"><br>
-                    3:<input type="radio" id="kikai" name="kikai3" onclick="clickBtn1()"><br>
-                    4:<input type="radio" id="kikai" name="kikai4" onclick="clickBtn1()"><br>
+                {% for meca in mecainfo %}
+                    <input type="radio" id="kikai" name="kikai1"><br>
+                {% endfor %}
+
+
+                    1:<input type="radio" id="kikai" name="kikai1"><br>
+                    2:<input type="radio" id="kikai" name="kikai2"><br>
+                    3:<input type="radio" id="kikai" name="kikai3"><br>
+                    4:<input type="radio" id="kikai" name="kikai4"><br>
                 </div>
                 <!-- hidden_show1 -->
             </div>
@@ -61,10 +65,10 @@
 
                     <table class="write">
                         <td>
-                            1:<input type="text" id="new1" onclick="clickBtn2()"><br>
-                            2:<input type="text" id="new2" onclick="clickBtn2()"><br>
-                            3:<input type="text" id="new3" onclick="clickBtn2()"><br>
-                            4:<input type="text" id="new4" onclick="clickBtn2()"><br>
+                            1:<input type="text" id="new1"><br>
+                            2:<input type="text" id="new2"><br>
+                            3:<input type="text" id="new3"><br>
+                            4:<input type="text" id="new4"><br>
                         </td>
                     </table>
                 </div>
@@ -81,7 +85,7 @@
                 <input type="checkbox" id="label3" name="group" onclick="clickBtn3()">
                 <label for="label3">手で植える</label>
                 <div class="hidden_show3">
-                    間隔:<input type="text" id="hand" onclick="clickBtn3()">
+                    間隔:<input type="text" id="hand">
                 </div>
                 <!-- hidden_show3 -->
             </div>

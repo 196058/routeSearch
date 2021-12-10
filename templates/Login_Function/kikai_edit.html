@@ -42,7 +42,7 @@
         {%  csrf_token %}
 	    <table class="write">
 		    <td>
-{#                機械名：<input type="text" name="meca_id" id="meca_id" value="{{ meca_info.meca_id }}" class="validate[required]" data-prompt-position="topLeft"><br>#}
+{#                機械名：<input type="hidden" name="meca_id" id="meca_id" value="{{ meca_info.meca_id }}" class="validate[required]" data-prompt-position="topLeft"><br>#}
 			    機械名：<input type="text" name="name" id="name" value="{{ meca_info.name }}" class="validate[required]" data-prompt-position="topLeft"><br>
 			    全長：<input type="text" name="full_length" id="full_length" value="{{ meca_info.full_length }}" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
 			    全幅：<input type="text" name="full_width" id="full_widt" value="{{ meca_info.full_width }}" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
@@ -54,7 +54,7 @@
 		    </td>
 	    </table>
 {#        {{ meca_info.id.as_hidden }}#}
-        {{ meca_info.meca_id.as_hidden }}
+{#        {{ meca_info.meca_id.as_hidden }}#}
         <input type="submit" value="確認する">
     </form>
     <br><br>

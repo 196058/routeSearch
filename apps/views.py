@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404
 from django.contrib.auth import logout
+from django.template.context_processors import request
 from django.views.generic import ListView, DetailView
 
 from .form import UserAddForm, LoginForm, MecaAddForm, PaddyAddForm
@@ -12,22 +13,8 @@ def index(request):
 
 # 新規
 def shinki_add(request):
-    # 確認画面から内容修正した場合に入力値を取得する為のPOST
-    # if request.method == 'POST':
-    #     user_info = UserAddForm(request.POST)
-    #     if user_info.is_valid():
-    #         context = {
-    #             'form': user_info
-    #         }
-    #         return render(request, 'Shinki_Function/shinki_add.html', context)
-    #     else:
-    #         return HttpResponse('フォームの入力に誤りがあります')
-    # else:
-    user_info = UserAddForm
-    context = {
-        'form': user_info
-    }
-    return render(request, 'Shinki_Function/shinki_add.html', context)
+    # formを使わないため処理なし
+    return render(request, 'Shinki_Function/shinki_add.html')
 
 
 def shinki_add_confirm(request):
@@ -123,8 +110,7 @@ def route_search(request):
 
 def tanbo_master(request):
     user_info = request.session.get('user_info')
-    paddy = Paddy.objects.filter(id=user_info['id'])
-    # paddy = Paddy.objects.all().order_by('paddy_id')
+    paddy = Paddy.objects.filter(id=user_info['id']).order_by('name')
     context = {
         'paddy': paddy
     }
@@ -132,30 +118,21 @@ def tanbo_master(request):
 
 
 def tanbo_info(request):
+    # # 登録した田んぼを一覧表示する処理
+    # user_info = request.session.get('user_info')
+    # paddy_info = Paddy.objects.filter(id=user_info['id']).order_by('name')
+    # context = {
+    #     'paddy': paddy_info
+    # }
+    # # 新しく田んぼを登録する処理
+    #
+    # return render(request, 'Login_Function/tanbo_info.html', context)
     return render(request, 'Login_Function/tanbo_info.html')
 
 
 def tanbo_add(request):
-    # 確認画面から内容修正した場合に入力値を取得する為のPOST
-    if request.method == 'POST':
-        paddy = PaddyAddForm(request.POST)
-        if paddy.is_valid():
-            context = {
-                'form': paddy
-            }
-            return render(request, 'Login_Function/tanbo_add.html', context)
-        else:
-            return HttpResponse('フォームの入力に誤りがあります')
-    else:
-        user_info = request.session.get('user_info')
-        user_id = {
-            'id': user_info['id'],
-        }
-        paddy = PaddyAddForm(user_id)
-        context = {
-            'form': paddy,
-        }
-        return render(request, 'Login_Function/tanbo_add.html')
+    # formを使わないため処理なし
+    return render(request, 'Login_Function/tanbo_add.html')
 
 
 def tanbo_add_confirm(request):
@@ -188,39 +165,38 @@ def tanbo_add_comp(request):
 
 
 def tanbo_del_confirm(request):
+    # if request.method == 'POST':
+    #     paddy_id = request.POST.get('paddy_id')
+    #     paddy_info = Paddy.objects.get(paddy_id=paddy_id)
+    #     context = {
+    #         'meca_info': paddy_info
+    #     }
+    #     return render(request, 'Login_Function/tanbo_del_confirm.html', context)
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Login_Function/tanbo_del_confirm.html')
 
 
 def tanbo_del_comp(request):
+    # if request.method == 'POST':
+    #     user_info = request.session.get('user_info')
+    #     user_id = user_info['id']
+    #     paddy_name = request.POST.get('paddy_name')
+    #     print(user_info['id'], request.POST.get('name'))
+    #     record = Paddy.objects.get(id=user_id, name=paddy_name)
+    #     print('record', record)
+    #     record.delete()
+    #     return render(request, 'Login_Function/tanbo_del_comp.html')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Login_Function/tanbo_del_comp.html')
 
 
 def tanbo_edit(request):
-    # if request.method == 'POST':
-    #     paddy_id = request.POST.get('paddy_id')
-    #     paddy_info = Paddy.objects.get(paddy_id=paddy_id)
-    #     print("[tanbo_edit]paddy_id:", paddy_info.paddy_id)
-    #     context = {
-    #         'paddy_info': paddy_info
-    #     }
-    #     return render(request, 'Login_Function/tanbo_edit.html', context)
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Login_Function/tanbo_edit.html')
 
 
 def tanbo_edit_confirm(request):
-    # if request.method == 'POST':
-    #     paddy_info = Paddy(request.POST)
-    #     if paddy_info.is_valid():
-    #         context = {
-    #             'paddy_info': paddy_info
-    #         }
-    #         return render(request, 'Login_Function/tanbo_edit_confirm.html', context)
-    #     else:
-    #         return HttpResponse('フォームの入力に誤りがあります')
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Login_Function/tanbo_edit_confirm.html')
 
 
@@ -230,7 +206,7 @@ def tanbo_edit_comp(request):
 
 def kikai_master(request):
     user_info = request.session.get('user_info')
-    meca_info = Mecainfo.objects.filter(id=user_info['id'])
+    meca_info = Mecainfo.objects.filter(id=user_info['id']).order_by('name')
     context = {
         'meca_info': meca_info
     }
@@ -238,11 +214,13 @@ def kikai_master(request):
 
 
 def kikai_info(request):
-    # user_info = request.session.get('user_info')
-    # meca_info = Mecainfo.objects.filter(id=user_info['id'])
-    # context = {
-    #     'meca_info': meca_info
-    # }
+    # 機械一覧処理
+    user_info = request.session.get('user_info')
+    meca_info = Mecainfo.objects.filter(id=user_info['id']).order_by('name')
+    context = {
+        'meca_info': meca_info
+    }
+    # 機械登録処理
     return render(request, 'Login_Function/kikai_info.html')
 
 
@@ -273,14 +251,18 @@ def kikai_add(request):
 
 def kikai_add_confirm(request):
     if request.method == 'POST':
-        print("[kikai_add_confirm]id: ", request.POST.get('id'))
+        user_info = request.session.get('user_info')
+        user_id = user_info['id']
+        meca_name = request.POST.get('name')
+        print('[kikai_add_confirm]', meca_name)
+        # print("[kikai_add_confirm]id: ", request.POST.get('id'))
         meca_info = MecaAddForm(request.POST)
         print("add_conf", meca_info)
         try:
-            check = Mecainfo.objects.get(id=meca_info.id, name=meca_info.name)
+            check = Mecainfo.objects.get(id=user_id, name=meca_name)
             if check is not None:
                 return HttpResponse('入力された機械名はすでに登録されています。<br>機械名を変えてください。')
-        except User.DoesNotExist:
+        except Mecainfo.DoesNotExist:
             if meca_info.is_valid():
                 context = {
                     'meca_info': meca_info
@@ -340,17 +322,17 @@ def kikai_del_comp(request):
 
 # 正
 # def kikai_edit(request):
-    # if request.method == 'POST':
-    #     meca_id = request.POST.get('meca_id')
-    #     # meca_info = MecaAddForm(request.POST)
-    #     meca_info = Mecainfo.objects.get(meca_id=meca_id)
-    #     print("[kikai_edit]maca_id:", meca_info)
-    #     context = {
-    #         'meca_info': meca_info
-    #     }
-    #     return render(request, 'Login_Function/kikai_edit.html', context)
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
+# if request.method == 'POST':
+#     meca_id = request.POST.get('meca_id')
+#     # meca_info = MecaAddForm(request.POST)
+#     meca_info = Mecainfo.objects.get(meca_id=meca_id)
+#     print("[kikai_edit]maca_id:", meca_info)
+#     context = {
+#         'meca_info': meca_info
+#     }
+#     return render(request, 'Login_Function/kikai_edit.html', context)
+# else:
+#     return HttpResponse('フォームの送信に使用しているメソッドが違います')
 
 
 # 仮
@@ -365,6 +347,7 @@ def kikai_edit(request, meca_id):
         'meca_info': meca_info,
         'meca_form': meca_form,
     }
+    request.session['meca_name'] = meca_info.name
     return render(request, 'Login_Function/kikai_edit.html', context)
     # else:
     #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
@@ -373,16 +356,22 @@ def kikai_edit(request, meca_id):
 def kikai_edit_confirm(request):
     if request.method == 'POST':
         meca_info = MecaAddForm(request.POST)
-        print("[kikai_edit_confirm]meca_info:", meca_info.id)
+        user_info = request.session.get('user_info')
+        user_id = user_info['id']
+        if meca_info.is_valid():
+            meca_name = request.POST.get('name')
+            print('[kikai_edit_confirm]', meca_name)
+            print("[kikai_edit_confirm]meca_info:", meca_name)
         # print("[kikai_edit_confirm]mecaid: ", meca_info.meca_id)
         try:
-            check = Mecainfo.objects.get(id=meca_info.id, name=meca_info.name)
+            check = Mecainfo.objects.get(id=user_id, name=meca_name)
             if check is not None:
                 return HttpResponse('入力された機械名はすでに登録されています。<br>機械名を変えてください。')
-        except User.DoesNotExist:
+        except Mecainfo.DoesNotExist:
             if meca_info.is_valid():
                 context = {
-                    'meca_info': meca_info
+                    'meca_info': meca_info,
+                    'user_id': user_id,
                 }
                 return render(request, 'Login_Function/kikai_edit_confirm.html', context)
             else:
@@ -408,16 +397,23 @@ def kikai_edit_confirm(request):
 #     else:
 #         return HttpResponse('フォームの送信に使用しているメソッドが違います')
 
-def kikai_edit_comp(request, meca_id):
-    print("[kikai_edit_comp]meca_id:", meca_id)
+
+def kikai_edit_comp(request):
+    # print("[kikai_edit_comp]meca_id:", meca_id)
     if request.method == 'POST':
         # meca_info = MecaAddForm(request.POST)
-        meca_info = get_object_or_404(Mecainfo, pk=meca_id)
-        print("[kikai_edit_comp]meca_id:", meca_info.meca_id)
-        id = meca_info.id
-        meca_name = meca_info.name
-        meca_info = get_object_or_404(Mecainfo, id=id, name=meca_name)
+        user_info = request.session.get('user_info')
+        user_id = user_info['id']
+        meca_name = request.session.get('meca_name')
+        meca_info = Mecainfo.objects.get(id=user_id, name=meca_name)
+        # print("[kikai_edit_comp]meca_id:", meca_info.meca_id)
+        # id = meca_info.id
+        # meca_name = meca_info.name
+        # meca_info = get_object_or_404(Mecainfo, id=id, name=meca_name)
         meca_form = MecaAddForm(request.POST, instance=meca_info)
+        print(type(meca_form['id']))
+        # meca_form['id'] = user_id
+        print('[kikai_edit_comp]meca_form', meca_form['id'], meca_form['full_length'])
         if meca_form.is_valid():
             meca_form.save()
             return render(request, 'Login_Function/kikai_edit_comp.html')
@@ -474,7 +470,7 @@ def admin_home(request):
     # try:
     #     if request.method == 'POST':
     #         admin_id = request.POST.get('id')
-    #         admin = Admin.objects.get(id=admin_id)
+    #         admin = User.objects.get(id=admin_id)
     #         if admin.pass_word == request.POST['pass_word']:
     #             context = {
     #                 'id': admin.id,
@@ -498,26 +494,84 @@ def admin_home(request):
 
 
 def admin_master(request):
+    # 管理者rollを指定する（未設定）↓
+    # admin_info = User.objects.filter(roll='')
+    # context = {
+    #     'admin_info': admin_info
+    # }
+    # return render(request, 'Kanrisya_Function/admin_master.html', context)
     return render(request, 'Kanrisya_Function/admin_master.html')
 
 
 def admin_add(request):
+    # admin_info = UserAddForm
+    # context = {
+    #     'form': admin_info
+    # }
+    # return render(request, 'Kanrisya_Function/admin_add.html', context)
     return render(request, 'Kanrisya_Function/admin_add.html')
 
 
 def admin_add_confirm(request):
+    # if request.method == 'POST':
+    #     input_id = request.POST.get('id')
+    #     print("[admin_add_confirm]入力ID: ", input_id)
+    #     admin_info = UserAddForm(request.POST)
+    #     try:
+    #         check = User.objects.get(id=input_id)
+    #         if check is not None:
+    #             return HttpResponse('入力されたユーザIDはすでに登録されています。<br>ユーザIDを変えてください。')
+    #     except User.DoesNotExist:
+    #         if admin_info.is_valid():
+    #             context = {
+    #                 'admin_info': admin_info
+    #             }
+    #             return render(request, 'Kanrisya_Function/admin_add_confirm.html', context)
+    #         else:
+    #             return HttpResponse('フォームの入力に誤りがあります')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/admin_add_confirm.html')
 
 
 def admin_add_comp(request):
+    # if request.method == 'POST':
+    #     admin_info = UserAddForm(request.POST)
+    #     if admin_info.is_valid():
+    #         admin_info.save()
+    #         context = {
+    #             'form': admin_info
+    #         }
+    #         return render(request, 'Kanrisya_Function/admin_add_comp.html', context)
+    #     else:
+    #         return HttpResponse('フォームの入力に誤りがあります')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/admin_add_comp.html')
 
 
 def admin_del_confirm(request):
+    # if request.method == 'POST':
+    #     admin_id = request.POST.get('admin_id')
+    #     admin_info = User.objects.get(id=admin_id)
+    #     context = {
+    #         'admin_info': admin_info
+    #     }
+    #     return render(request, 'Kanrisya_Function/admin_del_confirm.html', context)
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/admin_del_confirm.html')
 
 
 def admin_del_comp(request):
+    # if request.method == 'POST':
+    #     admin_id = request.POST.get('admin_id')
+    #     admin_record = User.objects.get(id=admin_id)
+    #     print('[admin_del_comp]admin_record', admin_record)
+    #     admin_record.delete()
+    #     return render(request, 'Kanrisya_Function/admin_del_comp.html')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/admin_del_comp.html')
 
 
@@ -534,26 +588,84 @@ def admin_edit_comp(request):
 
 
 def users_master(request):
+    # 利用者rollを指定する（未設定）↓
+    # user_info = User.objects.filter(roll='')
+    # context = {
+    #     'user_info': user_info
+    # }
+    # return render(request, 'Kanrisya_Function/users_master.html', context)
     return render(request, 'Kanrisya_Function/users_master.html')
 
 
 def users_add(request):
+    # user_info = UserAddForm
+    # context = {
+    #     'form': user_info
+    # }
+    # return render(request, 'Kanrisya_Function/users_add.html', context)
     return render(request, 'Kanrisya_Function/users_add.html')
 
 
 def users_add_confirm(request):
+    # if request.method == 'POST':
+    #     input_id = request.POST.get('id')
+    #     print("[shinki_add_confirm]入力ID: ", input_id)
+    #     user_info = UserAddForm(request.POST)
+    #     try:
+    #         check = User.objects.get(id=input_id)
+    #         if check is not None:
+    #             return HttpResponse('入力されたユーザIDはすでに登録されています。<br>ユーザIDを変えてください。')
+    #     except User.DoesNotExist:
+    #         if user_info.is_valid():
+    #             context = {
+    #                 'user_info': user_info
+    #             }
+    #             return render(request, 'Kanrisya_Function/users_add_confirm.html', context)
+    #         else:
+    #             return HttpResponse('フォームの入力に誤りがあります')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/users_add_confirm.html')
 
 
 def users_add_comp(request):
+    # if request.method == 'POST':
+    #     user_info = UserAddForm(request.POST)
+    #     if user_info.is_valid():
+    #         user_info.save()
+    #         context = {
+    #             'form': user_info
+    #         }
+    #         return render(request, 'Kanrisya_Function/users_add_comp.html', context)
+    #     else:
+    #         return HttpResponse('フォームの入力に誤りがあります')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/users_add_comp.html')
 
 
 def users_del_confirm(request):
+    # if request.method == 'POST':
+    #     user_id = request.POST.get('user_id')
+    #     user_info = User.objects.get(id=user_id)
+    #     context = {
+    #         'user_info': user_info
+    #     }
+    #     return render(request, 'Kanrisya_Function/users_del_confirm.html', context)
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/users_del_confirm.html')
 
 
 def users_del_comp(request):
+    # if request.method == 'POST':
+    #     user_id = request.POST.get('user_id')
+    #     user_record = User.objects.get(id=user_id)
+    #     print('[users_del_comp]user_record', user_record)
+    #     user_record.delete()
+    #     return render(request, 'Kanrisya_Function/users_del_comp.html')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
     return render(request, 'Kanrisya_Function/users_del_comp.html')
 
 

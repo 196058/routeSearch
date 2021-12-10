@@ -39,10 +39,10 @@
                 <label for="label1">機械で植える</label>
 
                 <div class="hidden_show1">
-                    1:<input type="text" id="a" onclick="clickBtn1()"><br>
-                    2:<input type="text" id="b" onclick="clickBtn1()"><br>
-                    3:<input type="text" id="c" onclick="clickBtn1()"><br>
-                    4:<input type="text" id="d" onclick="clickBtn1()"><br>
+                    1:<input type="text" id="a"><br>
+                    2:<input type="text" id="b"><br>
+                    3:<input type="text" id="c"><br>
+                    4:<input type="text" id="d"><br>
                 </div>
                 <!-- hidden_show1 -->
             </div>
@@ -50,6 +50,7 @@
         </div>
         <!-- hidden_box -->
 
+        <br>
         <h3>手で植える</h3>
 
         <div class="hidden_box">
@@ -57,7 +58,7 @@
                 <input type="checkbox" id="label2" name="group" onclick="clickBtn2()">
                 <label for="label2">手で植える</label>
                 <div class="hidden_show2">
-                    間隔:<input type="text" id="e" name="hand" onclick="clickBtn2()">
+                    間隔:<input type="text" id="e" name="hand">
                 </div>
                 <!-- hidden_show2 -->
             </div>
@@ -66,6 +67,7 @@
         <!-- hidden_box -->
     </form>
 
+    <br><br><br>
     <div class="reset button-bg from-left">
         <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>
         <a href="{% url 'Guest_tanbo_info' %}">- ひとつ前に戻る -</a>

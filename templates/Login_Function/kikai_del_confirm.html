@@ -41,8 +41,9 @@
     <form action="{% url 'kikai_del_comp' %}" method="post">
         {%  csrf_token %}
         仮置きのデータ表示------<br>
-{#            <label class="centering">機械名</label>#}
-{#                <input type="text" name="meca_id" id="meca_id" value="{{ meca_info.meca_id }}" readonly ><br>#}
+            <label class="centering">機械名</label>
+                <input type="text" name="meca_id" id="meca_id" value="{{ meca_info.meca_id }}" readonly ><br>
+
             <label class="centering">機械名</label>
                 <input type="text" name="name" id="name" value="{{ meca_info.name }}" readonly ><br>
 
