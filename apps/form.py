@@ -28,6 +28,7 @@ class LoginForm(forms.ModelForm):
         }
 
 
+# MecaAddForm
 class MecaAddForm(forms.ModelForm):
     class Meta:
         model = Mecainfo
