@@ -37,7 +37,6 @@ header h1 a:hover {
     margin: 0.3em 0.5em 0.5em 1em;
     width: 2.2em;
     display: block;
-    float: right;
 }
 
 .tel-fixed-phone{
@@ -92,18 +91,17 @@ header h1 a:hover {
 
 /*ボタン（長方形）
 ---------------------------------------------------------------------------*/
-
 .button-bg a{
     display: inline-block;
-    padding: 1em 2em;
+    padding: 0.5em 1.5em;
     background: #407e02;
     border-bottom: solid 0.3em #205406;
     border-right: solid 0.2em #245d07;
     border-radius: 0.5em;
     color: #ffffff;
     text-decoration: none;
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.3em;
+    /*font-weight: inherit;*/
     line-height: 1.2em;
     -webkit-transition: .100s;
     transition: .100s;
@@ -230,15 +228,15 @@ header h1 a:hover {
     .tel-fixed{
         position: fixed;
         right: 1em;
-        top: 2em;
-        width: 0.5em;
+        top: 5em;
+        width: 4.5em;
         display: none;
     }
 
     .tel-fixed-phone{
         position: fixed;
         right: 1em;
-        top: 6em;
+        top: 5em;
         width: 4.5em;
         display: block;
     }
@@ -414,4 +412,6 @@ header h1 a:hover {
         filter: alpha(opacity=60);
         -moz-opacity: 0.6;
     }
+
+
 }

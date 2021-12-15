@@ -28,12 +28,12 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
-<article class="backsayuu2">
+<article class="backsayuu">
 	<div class="contents-have">
 		<h1>入力<span>-新規登録-</span></h1>
 	</div>
@@ -58,7 +58,7 @@
         <label class="centering" for="pass_conf">パスワード<br>(確認用)</label>
             <input type="password" id="pass_conf" class="validate[required,equals[pass]]" data-prompt-position="topLeft">
         <br>
-        <input type="submit" value="確認">
+        <input type="submit" value="- 確認する -">
     </form>
 
     <br><br>
@@ -67,5 +67,9 @@
 		<a href="{% url  'index' %}">- メニューに戻る -</a>
 	</div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

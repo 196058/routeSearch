@@ -16,33 +16,20 @@
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
+
 <!--</header>-->
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-have">
         <h1>確認<span>-機械編集-</span></h1>
     </div>
 
     <h3>↓ こちらの内容で編集します ↓</h3>
-
-    <form action="{% url 'kikai_edit_comp' %}" method="get">
-        <table class="details">
-            <tr><th>機械名</th><th>内容</th></tr>
-            <tr>
-                <td>●</td>
-                <td>●</td>
-            </tr>
-        </table>
-    </form>
     <form action="{% url 'kikai_edit_comp'%}" method="post">
         {%  csrf_token %}
-        仮置きのデータ表示------<br>
-{#            <label class="centering">機械ID</label>#}
-{#                <input type="text" name="meca_id" id="meca_id" value="{{ meca_info.meca_id.value }}" readonly ><br>#}
-
             <label class="centering">機械名</label>
                 <input type="text" name="name" id="name" value="{{ meca_info.name.value }}" readonly ><br>
 
@@ -67,12 +54,12 @@
             <label class="centering">作業速度</label>
                 <input type="text" name="workingspeed" id="workingspeed" value="{{ meca_info.workingspeed.value }}"  readonly><br>
 
-{#            {{ user_id.as_hidden }}#}
-{#            {{ meca_info.meca_id.as_hidden }}#}
-            <input type="submit" value="登録">
+                <input type="hidden" name="id" id="id" value="{{ id }}"><br><br>
+            <input type="submit" value="- 登録する -">
 
     </form>
-    <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+    <br>
+    <input type="button" value="- 修正する -" onClick="javascript:history.go(-1);">
 
 
     <h3>よろしいですか？</h3>
@@ -84,5 +71,9 @@
         <a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

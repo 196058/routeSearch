@@ -16,12 +16,12 @@
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-miss">
         <h1>田んぼ一覧</h1>
     </div>
@@ -40,14 +40,12 @@
                         <input type="hidden" name="paddy_name" value="{{ paddy.name }}">
                         <input type="submit" value="編集">
                     </form>
-                    <a href="{% url 'tanbo_edit' %}">編集</a>
                 </td>
                 <td><form action="{% url 'tanbo_del_confirm' %}" method="post">
                         {% csrf_token %}
                         <input type="hidden" name="paddy_name" value="{{ paddy.name }}">
                         <input type="submit" value="削除">
                     </form>
-                    <a href="{% url 'tanbo_del_confirm' %}">削除</a>
                 </td>
             </tr>
             {% endfor %}
@@ -58,5 +56,9 @@
         <a href="{% url 'member_login' %}">- ホームに戻る -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

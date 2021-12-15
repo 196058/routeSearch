@@ -16,12 +16,12 @@
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します"  style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-miss">
         <h1>機械一覧</h1>
     </div>
@@ -29,36 +29,37 @@
     <h3>ご登録いただいた機械を一覧表示しています</h3>
 
     <div class="reset button-bg from-left">
-{#        <form action="{% url 'kikai_master' %}" method="post">#}
             <table class="details">
                 <tr><th>機械名</th><th>内容</th><th>編集</th><th>削除</th></tr>
                 {% for meca in meca_info %}
                 <tr>
                     <td>{{meca.name}}</td>
                     <td>{{meca.full_length}}</td>
-                    <td><a href="{% url 'kikai_edit' meca.meca_id %}">変更</a>
-{#                        <form action="{% url "kikai_edit" %}" method="post">#}
-{#                        {%  csrf_token %}#}
-{#                        <input type="hidden" name="meca_id" value="{{ meca.meca_id }}">#}
-{#                        <input type="submit" value="編集">#}
-{#                        </form>#}
+                    <td>
+                        <form action="{% url "kikai_edit" %}" method="post">
+                        {%  csrf_token %}
+                            <input type="hidden" name="meca_id" value="{{ meca.meca_id }}">
+                            <input type="submit" value="編集">
+                        </form>
                     </td>
                     <td><form action="{% url "kikai_del_confirm" %}" method="post">
                         {%  csrf_token %}
                         <input type="hidden" name="meca_id" value="{{ meca.meca_id }}">
                         <input type="submit" value="削除">
                         </form>
-{#                        <a href="{% url 'kikai_del_confirm' meca.meca_id %}">削除</a>#}
                     </td>
                 </tr>
                 {% endfor %}
             </table>
-{#        </form>#}
 
         <br><br>
         <a href="{% url 'kikai_add' %}">- 新規登録 -</a><br><br>
         <a href="{% url 'member_login' %}">- ホームに戻る -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

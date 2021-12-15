@@ -17,8 +17,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -36,12 +36,16 @@
 
     <br><br><br>
     <div class="reset button-bg from-left">
-        <a href="{% url 'Guest_route_search' %}">- 再検索 -</a><br>
-        <a href="">- ルートを印刷 -</a><br>
-        <a href="{% url 'Guest_tanbo_info' %}">- 別の田んぼに植える -</a><br><br>
+        <a href="{% url 'Guest_route_search' %}">- 再検索 -</a><br><br>
+        <a href="">- ルートを印刷 -</a><br><br>
+        <a href="{% url 'Guest_tanbo_info' %}">- 別の田んぼに植える -</a><br><br><br>
 
-        <a href="{% url 'soliit_create_account' %}">- 田植えを終了する -</a>
+        <a href="{% url 'proposal' %}">- 田植えを終了する -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

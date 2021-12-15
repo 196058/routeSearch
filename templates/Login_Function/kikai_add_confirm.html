@@ -16,32 +16,20 @@
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-have">
         <h1>確認<span>-機械新規登録-</span></h1>
     </div>
 
     <h3>こちらの内容で登録します</h3>
-
-    <form action="{% url 'kikai_add_comp' %}" method="post">
-        <table class="details">
-            <tr><th>機械名</th><th>内容</th></tr>
-            <tr>
-                <td>●</td>
-                <td>●</td>
-            </tr>
-        </table>
-    </form>
-
     <div class="reset button-bg from-left">
     <form action="{% url 'kikai_add_comp' %}" method="post">
         {%  csrf_token %}
-        ------仮置きのデータ表示------<br>
             <label class="centering">機械名</label>
                 <input type="text" name="name" id="name" value="{{ meca_info.name.value }}" readonly ><br>
 
@@ -67,10 +55,12 @@
                 <input type="text" name="workingspeed" id="workingspeed" value="{{ meca_info.workingspeed.value }}"  readonly><br>
 
             {{ meca_info.id.as_hidden }}
-            <input type="submit" value="登録">
+            <input type="submit" value="- 登録する -">
 
     </form>
-    <input type="button" value="戻る" onClick="javascript:history.go(-1);">
+        <br>
+    <input type="button" value="- 修正する -" onClick="javascript:history.go(-1);">
+        <br><br>
 
     <h3>よろしいですか？</h3>
 
@@ -81,5 +71,9 @@
         <a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>
