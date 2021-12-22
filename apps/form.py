@@ -1,7 +1,7 @@
 from django import forms
 from .models import User, Mecainfo, Paddy, Admin, Field, Inquiry
 
-
+# UserAddForm
 class UserAddForm(forms.ModelForm):
     pass_word = forms.CharField(widget=forms.PasswordInput, label='パスワード')
     mail = forms.EmailField(label='電子メール', widget=forms.TextInput(attrs={'class': 'myfieldclass'}))
