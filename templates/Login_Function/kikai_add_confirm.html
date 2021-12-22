@@ -40,7 +40,7 @@
                 <input type="text" name="full_width" id="full_width" value="{{ meca_info.full_width.value }}"  readonly><br>
 
             <label class="centering">条数</label>
-                <input type="text" name="jousu" id="jousu" value="{{ meca_info.jousu.value }}"  readonly><br>
+                <input type="text" name="plant" id="plant" value="{{ meca_info.plant.value }}"  readonly><br>
 
             <label class="centering">条間</label>
                 <input type="text" name="joukan" id="joukan" value="{{ meca_info.joukan.value }}" readonly ><br>
@@ -54,7 +54,7 @@
             <label class="centering">作業速度</label>
                 <input type="text" name="workingspeed" id="workingspeed" value="{{ meca_info.workingspeed.value }}"  readonly><br>
 
-            {{ meca_info.id.as_hidden }}
+            <input type="hidden" name="id" value="{{ id }}">
             <input type="submit" value="- 登録する -">
 
     </form>

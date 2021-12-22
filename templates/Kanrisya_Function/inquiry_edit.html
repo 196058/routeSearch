@@ -29,12 +29,17 @@
 
 	<h4>必要な箇所を修正してください</h4>
 
-	<table class="write">
-		<td>
-			●内容名：<input type="text" id=""><br>
-			●内容：<input type="text" id=""><br>
-		</td>
-	</table>
+    <form action="{% url 'inquiry_edit_confirm' %}" method="post">
+        {% csrf_token %}
+        <table class="write">
+            <td>
+                対応ID：<input type="text" name="inquiry_id" id="" value="{{ inquiry_info.inquiry_id }}"><br>
+                タイトル：<input type="text" name="title" id="" value="{{ inquiry_info.title }}"><br>
+                内容：<input type="t" name="contents" id="" value="{{ inquiry_info.contents }}"><br>
+            </td>
+        </table>
+        <input type="submit" value="- 確認する -">
+    </form>
 
 	<br><br>
 	<div class="reset button-bg from-left">

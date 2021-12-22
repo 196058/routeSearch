@@ -30,9 +30,6 @@
     <h3>こちらの機械を削除します</h3>
     <form action="{% url 'kikai_del_comp' %}" method="post">
         {%  csrf_token %}
-            <label class="centering">機械ID</label>
-                <input type="hidden" name="meca_id" id="meca_id" value="{{ meca_info.meca_id }}" readonly ><br>
-
             <label class="centering">機械名</label>
                 <input type="text" name="name" id="name" value="{{ meca_info.name }}" readonly ><br>
 
@@ -57,7 +54,6 @@
             <label class="centering">作業速度</label>
                 <input type="text" name="workingspeed" id="workingspeed" value="{{ meca_info.workingspeed }}"  readonly><br><br>
 
-{#            {{ meca_info.meca_id.as_hidden }}#}
             <input type="submit" value="- 削除する -">
 
     </form>

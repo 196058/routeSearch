@@ -32,22 +32,13 @@
 		名前検索<input type="text" name="name_key" placeholder="名前入力">
 		<input type="submit" value="検索">
 	</form>
-    <form action="{% url 'users_list' %}" method="post">
+    <form action="{% url 'users_master' %}" method="post">
         {% csrf_token %}
         <input type="submit" value="全件表示">
     </form>
 
 	<div class="reset button-bg from-left">
-		<table class="details">
-			<tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th><th>編集</th><th>削除</th></tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a href="{% url 'users_edit' %}"> 編集 </a></td>
-				<td><a href="{% url 'users_del_confirm' %}"> 削除 </a></td>
-			</tr>
-		</table>
+
         <table class="details">
 			<tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th><th>編集</th><th>削除</th></tr>
 

@@ -49,7 +49,6 @@ urlpatterns = [
     path('admin/admin_home/', views.admin_home, name='admin_home'),
     path('admin/admin_master/', views.admin_master, name='admin_master'),
     path('admin/admin_search/', views.admin_search, name='admin_search'),
-    path('admin/admin_list/', views.admin_list, name='admin_list'),
     path('admin/admin_add/', views.admin_add, name='admin_add'),
     path('admin/admin_add_confirm/', views.admin_add_confirm, name='admin_add_confirm'),
     path('admin/admin_add_comp/', views.admin_add_comp, name='admin_add_comp'),
@@ -61,7 +60,6 @@ urlpatterns = [
 
     path('admin/users_master/', views.users_master, name='users_master'),
     path('admin/users_search/', views.users_search, name='users_search'),
-    path('admin/users_list/', views.users_list, name='users_list'),
     path('admin/users_add/', views.users_add, name='users_add'),
     path('admin/users_add_confirm/', views.users_add_confirm, name='users_add_confirm'),
     path('admin/users_add_comp/', views.users_add_comp, name='users_add_comp'),

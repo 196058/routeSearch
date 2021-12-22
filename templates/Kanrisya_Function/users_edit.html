@@ -29,14 +29,23 @@
 	</div>
 
 	<h4>必要な箇所を修正してください</h4>
+    <form action="{% url 'users_edit_confirm'%}" method="post">
+        {%  csrf_token %}
+	    <table class="write">
+		    <td>
+{#			    <label class="centering">ID</label>{{ id }}<br>#}
+                <label class="centering">利用者名</label>
+			        <input type="text" name="user_name" id="user_name" value="{{ user_info.user_name }}" class="validate[required]" data-prompt-position="topLeft"><br>
+                <label class="centering">メールアドレス</label>
+                    <input type="text" name="mail" id="mail" value="{{ user_info.mail }}" class="validate[required]" data-prompt-position="topLeft"><br>
+                <label class="centering">パスワード</label>
+		            <input type="password" name="pass_word" id="pass_word" value="{{ user_info.pass_word }}" class="validate[required]" data-prompt-position="topLeft"><br>
+		    </td>
+	    </table>
+        <br>
+        <input type="submit" value="- 確認する -">
+    </form>
 
-	<table class="write">
-		<td>
-			●氏名：<input type="text" id=""><br>
-			●ＩＤ：<input type="text" id=""><br>
-			●パスワード：<input type="password" id=""><br>
-		</td>
-	</table>
 
 	<br><br>
 	<div class="reset button-bg from-left">

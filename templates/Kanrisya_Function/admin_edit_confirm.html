@@ -29,16 +29,19 @@
 
     <h4>この内容で編集します</h4>
 
-    <form action="{% url 'admin_edit_comp' %}" method="">
-        <table class="details">
-            <tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th></tr>
-            <tr>
-                <td>●</td>
-                <td>●</td>
-                <td>●</td>
-            </tr>
-        </table>
+    <form action="{% url 'admin_edit_comp' %}" method="post">
+        {%  csrf_token %}
+            <input type="hidden" name="id" id="id" value="{{ id }}"><br>
+        <label class="centering">氏名</label>
+            <input type="text" name="user_name" id="user_name" value="{{ admin_info.user_name.value }}" readonly ><br>
+        <label class="centering">メールアドレス</label>
+            <input type="text" name="mail" id="mail" value="{{ admin_info.mail.value }}" readonly ><br>
+        <label class="centering">パスワード</label>
+            <input type="text" name="pass_word" id="pass_word" value="{{ admin_info.pass_word.value }}" readonly ><br>
+        <input type="submit" value="- 編集する -">
     </form>
+    <input type="button" value="- 修正する -" onClick="javascript:history.go(-1);">
+
 
     <br><br>
     <div class="reset button-bg from-left">

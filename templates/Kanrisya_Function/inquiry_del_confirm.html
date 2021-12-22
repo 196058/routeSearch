@@ -28,14 +28,19 @@
     </div>
 
     <h4>この内容を削除します</h4>
-
-    <table class="details">
-        <tr><th>タイトル</th><th>内容</th></tr>
-        <tr>
-            <td>●</td>
-            <td>●</td>
-        </tr>
-    </table>
+    <form action="{% url 'inquiry_del_comp' %}" method="post">
+        {% csrf_token %}
+        <table class="details">
+            <tr><th>対応ID</th><th>タイトル</th><th>内容</th></tr>
+            <tr>
+                <td>{{ inquiry_info.inquiry_id }}</td>
+                <td>{{ inquiry_info.title }}</td>
+                <td>{{ inquiry_info.contents }}</td>
+            </tr>
+        </table>
+        <input type="hidden" name="inquiry_no" value="{{ inquiry_info.inquiry_no }}">
+        <input type="submit" value="削除">
+    </form>
 
     <br><br>
     <div class="reset button-bg from-left">

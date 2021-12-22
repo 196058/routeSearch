@@ -28,45 +28,37 @@
 	</div>
 
 	<form action="{% url 'inquiry_search' %}" method="post">
-		タイトル検索<input type="text" name="inquiry_key" placeholder="タイトル入力">
+        {% csrf_token %}
+		タイトル検索<input type="text" name="title_key" placeholder="タイトル入力">
 		<input type="submit" value="検索">
 	</form>
+    <form action="{% url 'inquiry_master' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="全件表示">
+    </form>
 
 	<div class="reset button-bg from-left">
-		<table class="details">
-			<tr><th>タイトル</th><th>内容</th><th>編集</th><th>削除</th></tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td><a href="{% url 'inquiry_edit' %}"> 編集 </a></td>
-				<td><a href="{% url 'inquiry_del_confirm' %}"> 削除 </a></td>
-			</tr>
-		</table>
-        -----------仮置き------------------------------------------------------------<br>
         <table class="details">
-			<tr><th>タイトル</th><th>内容</th><th>編集</th><th>削除</th></tr>
+			<tr><th>No</th><th>対応ID</th><th>タイトル</th><th>内容</th><th>編集</th><th>削除</th></tr>
 			<tr>
-                {% for info in inquiry_info %}
-                    <td>{{ info.title }}</td>
-                    <td>{{ info.contents }}</td>
+                {% for inquiry_info in inquiry_info %}
+                    <td>{{ inquiry_info.inquiry_no }}</td>
+                    <td>{{ inquiry_info.inquiry_id }}</td>
+                    <td>{{ inquiry_info.title }}</td>
+                    <td>{{ inquiry_info.contents }}</td>
                     <td><form action="{% url 'inquiry_edit' %}" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="inquiry_id" value="{{ info.inquiry_id }}">
+                            <input type="hidden" name="inquiry_no" value="{{ inquiry_info.inquiry_no }}">
                             <input type="submit" value="編集">
                         </form>
                     </td>
                     <td><form action="{% url 'inquiry_del_confirm' %}" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="inquiry_id" value="{{ info.inquiry_id }}">
+                            <input type="hidden" name="inquiry_no" value="{{ inquiry_info.inquiry_no }}">
                             <input type="submit" value="削除">
                         </form>
                     </td>
                 {% endfor %}
-
-                <td></td>
-				<td></td>
-				<td><a href="{% url 'inquiry_edit' %}"> 編集 </a></td>
-				<td><a href="{% url 'inquiry_del_confirm' %}"> 削除 </a></td>
 			</tr>
 		</table>
 

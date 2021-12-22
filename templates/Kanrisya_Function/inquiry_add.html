@@ -41,8 +41,10 @@
 	<h4>必要項目を入力してください</h4>
 
     <form action="{% url 'inquiry_add_confirm' %}" method="post" id="formID">
+        {% csrf_token %}
 	    <table class="write">
 		    <td>
+			    ID：<input type="text" name="inquiry_id" id="inquiry_id" class="validate[required]" data-prompt-position="topLeft"><br>
 			    タイトル：<input type="text" name="title" id="" class="validate[required]" data-prompt-position="topLeft"><br>
 			    内容：<input type="text" name="contents" id="" class="validate[required]" data-prompt-position="topLeft"><br>
 		    </td>

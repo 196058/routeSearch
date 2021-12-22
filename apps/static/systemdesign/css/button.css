@@ -1,5 +1,9 @@
 /*田んぼルート検索 ボタン
 ---------------------------------------------------------------------------*/
+#click-down input {
+  background-color: #01b6ed;
+}
+
 header h1 a {
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;;
     font-size: 100%;                        /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/

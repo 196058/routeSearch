@@ -22,14 +22,13 @@
 </h1>
 <!--</header>-->
 
-<article class="backsayuu">
-	<div class="contents-have">
-		<h1>入力<span>-田んぼ新規登録-</span></h1>
+<article class="backsayuu"><div class="contents-have"><h1>入力<span>-田んぼ新規登録-</span></h1>
 	</div>
 
 	<h3>登録に必要な田んぼ情報を入力してください</h3>
 
     <form action="{% url 'tanbo_add_confirm' %}" method="post">
+        {% csrf_token %}
 	    <table class="write">
 		    <td>
 			    田んぼ名：<input type="text" id="name" class="validate[required]" data-prompt-position="topLeft"><br>

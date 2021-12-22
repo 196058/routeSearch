@@ -30,14 +30,20 @@
 
     <h4>この内容を削除します</h4>
 
-    <table class="details">
-        <tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th></tr>
-        <tr>
-            <td>●</td>
-            <td>●</td>
-            <td>●</td>
-        </tr>
-    </table>
+    <form action="{% url 'users_del_comp' %}" method="post">
+            {%  csrf_token %}
+            <label class="centering">利用者名</label>
+                <input type="text" name="user_name" id="user_name" value="{{ user_info.user_name }}" readonly ><br>
+
+            <label class="centering">メールアドレス</label>
+                <input type="email" name="mail" id="mail" value="{{ user_info.mail }}"  readonly><br>
+
+            <label class="centering">パスワード</label>
+                <input type="password" name="pass_word" id="pass_word" value="{{ user_info.pass_word }}"  readonly><br>
+
+            <input type="hidden" name="id" value="{{ user_info.id }}">
+            <input type="submit" value="- 削除する -">
+        </form>
 
     <br><br>
     <div class="reset button-bg from-left">

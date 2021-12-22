@@ -27,21 +27,38 @@
 		<h1>管理者一覧</h1>
 	</div>
 
-    <form action="{% url 'admin_master' %}" method="post">
-		名前検索<input type="text" placeholder="名前入力">
+    <form action="{% url 'admin_search' %}" method="post">
+        {% csrf_token %}
+		名前検索<input type="text" name="name_key" placeholder="名前入力">
 		<input type="submit" value="検索">
 	</form>
+    <form action="{% url 'admin_master' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="全件表示">
+    </form>
 
 	<div class="reset button-bg from-left">
 		<table class="details">
 			<tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th><th>編集</th><th>削除</th></tr>
+            {% for admin_info in admin_info %}
 			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a href="{% url 'admin_edit' %}"> 編集 </a></td>
-				<td><a href="{% url 'admin_del_confirm' %}"> 削除 </a></td>
+				<td>{{ admin_info.user_name }}</td>
+				<td>{{ admin_info.id }}</td>
+				<td>{{ admin_info.pass_word }}</td>
+				<td><form action="{% url 'admin_edit' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ admin_info.id }}">
+                        <input type="submit" value="編集">
+                    </form>
+                </td>
+				<td><form action="{% url 'admin_del_confirm' %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="id" value="{{ admin_info.id }}">
+                        <input type="submit" value="削除">
+                    </form>
+                </td>
 			</tr>
+            {% endfor %}
 		</table>
 
 		<br><br>

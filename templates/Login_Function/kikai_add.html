@@ -37,18 +37,17 @@
 			        機械名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"><br>
 			        全長：<input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
 			        全幅：<input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
-			        条数：<input type="text" name="jousu" id="joukan" class="validate[required]" data-prompt-position="topLeft">(条)<br>
+			        条数：<input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(条)<br>
 			        条間：<input type="text" name="joukan" id="joukan" class="validate[required]" data-prompt-position="topLeft">(cm)<br>
 			        株間：<input type="text" name="kabuma" id="kabuma" class="validate[required]" data-prompt-position="topLeft">(cm)<br>
 			        一株本数調節量：<input type="text" name="adjusting" id="kabuma" class="validate[required]" data-prompt-position="topLeft">(本)<br>
 			        作業速度：<input type="text" name="workingspeed" id="kabuma" class="validate[required]" data-prompt-position="topLeft">(cm/m)<br>
 		        </td>
 	        </table>
-            <input type="submit" value="確認する">
+            <input type="submit" id="click-down" value="確認する">
         </form>
 
 	    <br><br>
-
 		<a href="{% url 'kikai_add_confirm' %}">- 確認する -</a><br>
 		<a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
 	</div>

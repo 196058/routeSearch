@@ -29,22 +29,10 @@
 
     <h4>この内容で登録します</h4>
 
-    <table class="details">
-        <tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th></tr>
-        <tr>
-            <td>●</td>
-            <td>●</td>
-            <td>●</td>
-        </tr>
-    </table>
-
-    <form action="{% url 'users_add_confirm' %}" method="post">
+    <form action="{% url 'users_add_comp' %}" method="post">
             {%  csrf_token %}
             <label class="centering">利用者名</label>
                 <input type="text" name="user_name" id="user_name" value="{{ user_info.user_name.value }}" readonly ><br>
-
-            <label class="centering">ユーザＩＤ</label>
-                <input type="text" name="id" id="id" value="{{ user_info.id.value }}"  readonly><br>
 
             <label class="centering">メールアドレス</label>
                 <input type="email" name="mail" id="mail" value="{{ user_info.mail.value }}"  readonly><br>

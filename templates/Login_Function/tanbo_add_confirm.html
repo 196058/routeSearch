@@ -29,6 +29,7 @@
     <h3>こちらの田んぼを登録します</h3>
 
     <form action="{% url 'tanbo_add_comp' %}" method="get">
+        {% csrf_token %}
         <table class="details">
             <tr><th>田んぼ名</th><th>内容</th></tr>
             <tr>

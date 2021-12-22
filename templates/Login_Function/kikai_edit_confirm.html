@@ -40,7 +40,7 @@
                 <input type="text" name="full_width" id="full_width" value="{{ meca_info.full_width.value }}"  readonly><br>
 
             <label class="centering">条数</label>
-                <input type="text" name="jousu" id="jousu" value="{{ meca_info.jousu.value }}"  readonly><br>
+                <input type="text" name="plant" id="plant" value="{{ meca_info.plant.value }}"  readonly><br>
 
             <label class="centering">条間</label>
                 <input type="text" name="joukan" id="joukan" value="{{ meca_info.joukan.value }}" readonly ><br>
@@ -67,7 +67,7 @@
     <br><br>
     <div class="reset button-bg from-left">
         <a href="{% url 'kikai_edit_comp' %}">- 登録する -</a><br>
-{#        <a href="{% url 'kikai_edit' %}">- 修正する -</a><br><br>#}
+        <a href="{% url 'kikai_edit' %}">- 修正する -</a><br><br>
         <a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
     </div>
 </article>
