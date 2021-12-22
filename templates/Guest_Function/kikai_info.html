@@ -20,8 +20,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -37,12 +37,20 @@
             <div class="hidden_box1">
                 <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
                 <label for="label1">機械で植える</label>
-
                 <div class="hidden_show1">
-                    1:<input type="text" id="a" onclick="clickBtn1()"><br>
-                    2:<input type="text" id="b" onclick="clickBtn1()"><br>
-                    3:<input type="text" id="c" onclick="clickBtn1()"><br>
-                    4:<input type="text" id="d" onclick="clickBtn1()"><br>
+
+                    <table class="write">
+                        <td>
+                            機械名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"><br>
+                            全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
+                            全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
+                            条数 ： <input type="text" name="jousu" id="joukan" class="validate[required]" data-prompt-position="topLeft">(条)<br>
+                            条間 ： <input type="text" name="joukan" id="joukan" class="validate[required]" data-prompt-position="topLeft">(cm)<br>
+                            株間 ： <input type="text" name="kabuma" id="kabuma" class="validate[required]" data-prompt-position="topLeft">(cm)<br>
+                            一株本数調節量：<input type="text" name="adjusting" id="kabuma" class="validate[required]" data-prompt-position="topLeft">(本)<br>
+                            作業速度：<input type="text" name="workingspeed" id="kabuma" class="validate[required]" data-prompt-position="topLeft">(cm/m)<br>
+                        </td>
+                    </table>
                 </div>
                 <!-- hidden_show1 -->
             </div>
@@ -50,6 +58,7 @@
         </div>
         <!-- hidden_box -->
 
+        <br>
         <h3>手で植える</h3>
 
         <div class="hidden_box">
@@ -57,7 +66,7 @@
                 <input type="checkbox" id="label2" name="group" onclick="clickBtn2()">
                 <label for="label2">手で植える</label>
                 <div class="hidden_show2">
-                    間隔:<input type="text" id="e" name="hand" onclick="clickBtn2()">
+                    間隔:<input type="text" id="e" name="hand">
                 </div>
                 <!-- hidden_show2 -->
             </div>
@@ -66,10 +75,15 @@
         <!-- hidden_box -->
     </form>
 
+    <br><br><br>
     <div class="reset button-bg from-left">
         <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>
         <a href="{% url 'Guest_tanbo_info' %}">- ひとつ前に戻る -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

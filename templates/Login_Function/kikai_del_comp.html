@@ -17,12 +17,12 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-have">
         <h1>完了<span>-機械削除-</span></h1>
     </div>
@@ -34,5 +34,9 @@
         <a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
     </div>
 </article>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

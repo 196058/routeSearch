@@ -28,8 +28,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -43,9 +43,9 @@
 	<form action="{% url 'admin_add_confirm' %}" method="" id="formID">
 		<table class="write">
 			<td>
-				氏名：<input type="text" id="" class="validate[required]" data-prompt-position="topLeft"><br>
-				ＩＤ：<input type="text"  id="" class="validate[required]" data-prompt-position="topLeft"><br>
-				パスワード：<input type="password"  id="" class="validate[required]" data-prompt-position="topLeft"><br>
+				氏名：<input type="text" name="user_name" id="" class="validate[required]" data-prompt-position="topLeft"><br>
+				ＩＤ：<input type="text" name="id" id="" class="validate[required]" data-prompt-position="topLeft"><br>
+				パスワード：<input type="password" name="pass_word" id="" class="validate[required]" data-prompt-position="topLeft"><br>
 			</td>
 		</table>
     </form>
@@ -56,5 +56,6 @@
         <a href="{% url 'admin_master' %}"> 一覧に戻る </a>
     </div>
 </article>
+
 </body>
 </html>

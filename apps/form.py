@@ -64,3 +64,14 @@ class PaddyAddForm(forms.ModelForm):
             'id': forms.HiddenInput
         }
 
+
+# class FieldAddForm(forms.ModelForm):
+#     class Meta:
+#         model = Field
+#         fields = (
+#             'id', 'lon', 'lat'
+#         )
+#         widgets = {
+#             'id': forms.HiddenInput
+#         }
+
