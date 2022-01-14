@@ -7,6 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>-田んぼルート検索-</title>
 
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta name="theme-color" content="#493174">
+    <link rel="apple-touch-icon" href="{% static 'icon-192x192.png' %}">
+    <script>
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('{% url "sw.js" %}', { scope: '/' }).then(function(reg) {
+                    // registration worked
+                    console.log('Registration succeeded. Scope is ' + reg.scope);
+                }).catch(function(error) {
+                    // registration failed
+                    console.log('Registration failed with ' + error);
+                });
+            }
+        </script>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" type="text/css"><!--googlewebフォント-->
 

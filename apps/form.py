@@ -1,7 +1,7 @@
 from django import forms
 from .models import User, Mecainfo, Paddy, Admin, Field, Inquiry
 
-# UserAddForm
+
 class UserAddForm(forms.ModelForm):
     pass_word = forms.CharField(widget=forms.PasswordInput, label='パスワード')
     mail = forms.EmailField(label='電子メール', widget=forms.TextInput(attrs={'class': 'myfieldclass'}))
@@ -89,15 +89,15 @@ class PaddyAddForm(forms.ModelForm):
         }
 
 
-# class FieldAddForm(forms.ModelForm):
-#     class Meta:
-#         model = Field
-#         fields = (
-#             'id', 'lon', 'lat'
-#         )
-#         widgets = {
-#             'id': forms.HiddenInput
-#         }
+class FieldAddForm(forms.ModelForm):
+    class Meta:
+        model = Field
+        fields = (
+            'id', 'paddy', 'position', 'lng', 'lat'
+        )
+        widgets = {
+            'id': forms.HiddenInput
+        }
 
 
 class InquiryAddForm(forms.ModelForm):

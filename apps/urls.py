@@ -1,8 +1,13 @@
 from django.urls import path
 from . import views
 urlpatterns = [
-    # path('', views.home, name='home'),
+    # テストJSON表示用パス
+    path('route/', views.route, name='route'),
+    path('map/', views.map, name='map'),
+    path('position/', views.position, name='position'),
+
     path('', views.index, name='index'),
+
     # 新規
     path('sign_up/add/', views.shinki_add, name='shinki_add'),
     path('sign_up/add_confirm/', views.shinki_add_confirm, name='shinki_add_confirm'),
@@ -37,9 +42,9 @@ urlpatterns = [
     path('member/kikai_edit_comp/', views.kikai_edit_comp, name='kikai_edit_comp'),
 
     # ゲスト
-    path('gest/route_search/', views.Guest_route_search, name='Guest_route_search'),
-    path('gest/tanbo_info/', views.Guest_tanbo_info, name='Guest_tanbo_info'),
-    path('gest/kikai_info/', views.Guest_kikai_info, name='Guest_kikai_info'),
+    path('gest/route_search/', views.guest_route_search, name='Guest_route_search'),
+    path('gest/tanbo_info/', views.guest_tanbo_info, name='Guest_tanbo_info'),
+    path('gest/kikai_info/', views.guest_kikai_info, name='Guest_kikai_info'),
     # path('gest/solicit_create_account', views.solicit_create_account, name='soliit_create_account'),
     path('gest/proposal', views.proposal, name='proposal'),
 

@@ -1,9 +1,31 @@
+from idlelib.rpc import request_queue
+
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth import logout
 from django.template.context_processors import request
+from apps.paddy.exception import Exception
+from apps.paddy.Model.paddyModel import PaddyParameter, StartEndPosition
+from apps.paddy import paddyproperty as paddy_property
+from apps.paddy.Model.machineModel import Machine
 
-from .form import UserAddForm, LoginForm, MecaAddForm, PaddyAddForm, AdminLoginForm, AdminAddForm, InquiryAddForm
+from .form import UserAddForm, LoginForm, MecaAddForm, PaddyAddForm, FieldAddForm, AdminLoginForm, AdminAddForm, \
+    InquiryAddForm
 from .models import User, Mecainfo, Paddy, Admin, Inquiry
+from django.views.generic import TemplateView
+
+from apps import version
+
+
+# pwa
+class ServiceWorkerView(TemplateView):
+    template_name = 'sw.js'
+    content_type = 'application/javascript'
+    name = 'sw.js'
+
+    def get_context_data(self, **kwargs):
+        return {
+            'version': version,
+        }
 
 
 def index(request):
@@ -459,28 +481,59 @@ def kikai_edit_comp(request):
 
 
 # ゲスト
-def Guest_route_search(request):
+def guest_route_search(request):
     # 田んぼsessionと機械情報を取得
-    # paddy_info = request.session.get('paddy_info')
-    # if request.method == 'POST':
-    #     meca_info = MecaAddForm(request.POST)
-    #     request.session['meca_info'] = meca_info
-    #
-    #
-    #
-    #
+    # paddy_info = request.session.get('guest_paddy')
+    if request.method == 'POST':
+        print('name', request.POST.get('name'))
+        if request.POST.get('name') != '':
+            print("機械で植えるを選択")
+            meca_info = MecaAddForm(request.POST)
+            if meca_info.is_valid():
+                context = {
+                    'name': request.POST.get('name'),
+                    'full_length': request.POST.get('full_length'),
+                    'full_width': request.POST.get('full_width'),
+                    'plant': request.POST.get('plant'),
+                }
+                # 機械情報をsessionに保持
+                request.session['guest_meca'] = context
+            else:
+                return HttpResponse('フォームの入力に誤りがあります')
+        elif request.POST.get('hand') != '':
+            print("手で植えるを選択")
+            hand = request.POST.get('hand')
     # ルート検索プログラム
+    #
     return render(request, 'Guest_Function/route_search.html')
 
 
-def Guest_tanbo_info(request):
+def guest_tanbo_info(request):
+    if request.session.get('guest_meca') is None:
+        print('sessionはありません。')
+    else:
+        print('sessionを削除します', request.session.get('guest_meca'))
+        del request.session['guest_meca']
     # マップ表示プログラム
     return render(request, 'Guest_Function/tanbo_info.html')
 
 
-def Guest_kikai_info(request):
+def guest_kikai_info(request):
     # tanbo_info.htmlから田んぼ情報を取得
-    # 田んぼ情報をsessionに保持
+    if request.method == 'POST':
+        paddy = PaddyAddForm(request.POST)
+        field = FieldAddForm(request.POST)
+        if paddy.is_valid():
+            if field.is_valid():
+                context = {
+                    # paddyとfieldの情報
+                }
+                # 田んぼ情報をsessionに保持
+                # request.session['guest_paddy'] = context
+            else:
+                return HttpResponse('fieldのフォームの入力に誤りがあります')
+        else:
+            return HttpResponse('paddyのフォームの入力に誤りがあります')
     return render(request, 'Guest_Function/kikai_info.html')
 
 
@@ -554,7 +607,7 @@ def admin_search(request):
         'admin_info': admin_info
     }
     return render(request, 'Kanrisya_Function/admin_master.html', context)
-    # return render(request, 'Kanrisya_Function/users_master.html')
+    # return render(request, 'Kanrisya_Function/admin_master.html')
 
 
 def admin_add(request):
@@ -971,3 +1024,65 @@ def map_error(request):
 def register_error(request):
     # 処理なし
     return render(request, 'error/register_error.html')
+
+
+# ルート表示テスト用
+def route(request):
+    return render(request, 'route.html')
+
+
+# Mapテスト用
+def map(request):
+    return render(request, 'Map/paddy_field.html')
+
+
+def position(request):
+    if request.method == 'GET':
+        # JSON情報を取得
+        pram = request.GET.get("location_json_data")
+        start_end_point = request.GET.get("location_start_end_point_data")
+
+        if pram is None:
+            return HttpResponse("田んぼの範囲を指定してください")
+        if start_end_point is None:
+            return HttpResponse("出入り口を指定してください")
+
+        # 受け取った値をJSONに整形
+        paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
+        startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
+        machineInfo = Machine(plant=6, length=3320, width=1920)
+
+        try:
+            p = paddy_property.PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
+        except Exception.PointException as e:
+            return HttpResponse(e)
+        return HttpResponse(p.paddyDistance)
+    else:
+        return HttpResponse("違うメソッドを使用しています。")
+
+
+# def call_fill_paddy(request):
+#     paddy_property.PaddyProperty()
+#     if request.method == 'GET':
+#         # JSON情報を取得
+#         pram = request.GET.get("location_json_data")
+#         start_end_point = request.GET.get("location_start_end_point_data")
+#
+#         if pram is None:
+#             return HttpResponse("田んぼの範囲を指定してください")
+#         if start_end_point is None:
+#             return HttpResponse("出入り口を指定してください")
+#
+#         # 受け取った値をJSONに整形
+#         paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
+#         startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
+#         machineInfo = request.session.get('guest_meca')
+#
+#         try:
+#             p = paddy_property.PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
+#         except Exception.PointException as e:
+#             return HttpResponse(e)
+#         return HttpResponse(p.paddyDistance)
+#     else:
+#         return HttpResponse("違うメソッドを使用しています。")
+

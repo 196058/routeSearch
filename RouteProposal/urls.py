@@ -15,9 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps import views as pwa_views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('admin/', include('apps.urls')),
     path('', include('apps.urls')),
-]
+    path('sw.js',
+         pwa_views.ServiceWorkerView.as_view(),
+         name=pwa_views.ServiceWorkerView.name,
+         ),
+] + static(settings.MEDIA_URL, doucument_root=settings.MEDIA_ROOT)
