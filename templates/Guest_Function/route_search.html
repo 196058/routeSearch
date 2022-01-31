@@ -6,13 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>ルート表示中</title>
+    {#  ルート表示  #}
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <script>
+        const image ="{% static 'systemdesign/images/arrow1.png' %}";
+        const image1 ="{% static 'systemdesign/images/arrow2.png' %}";
+        const image2 ="{% static 'systemdesign/images/doorway1.png' %}";
+        const route = {{ request.session.moveList|safe }};
+    </script>
 
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/responsive_menu.css' %}"><!--レスポンシブメニュー-->
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
 </head>
 <body>
 <!--<header>-->
@@ -26,8 +38,10 @@
     <div class="contents-miss">
         <h1>ルート表示中</h1>
     </div>
-
     <h3>入力された情報をもとに、ルートを検索しました</h3>
+    <div id="route">
+        <script src="{% static 'systemdesign/js/route_search.js' %}"></script>
+    </div>
     <form action="{% url 'Guest_route_search' %}" method="get">
 
         <!-- いい感じに間隔を決める -->
@@ -35,13 +49,16 @@
     </form>
 
     <br><br><br>
-    <div class="reset button-bg from-left">
-        <a href="{% url 'Guest_route_search' %}">- 再検索 -</a><br><br>
-        <a href="">- ルートを印刷 -</a><br><br>
-        <a href="{% url 'Guest_tanbo_info' %}">- 別の田んぼに植える -</a><br><br><br>
-
-        <a href="{% url 'proposal' %}">- 田植えを終了する -</a>
-    </div>
+{#    <div class="reset button-bg from-left">#}
+        <a href="{% url 'Guest_route_search' %}" class="button-default"> 再検索 </a><br><br>
+        <a href="" class="button-default"> ルートを印刷 </a><br><br>
+{#    <form action="{% url 'route_session' %}">#}
+        <a href="{% url 'Guest_tanbo_info' %}" class="button-default"> 別の田んぼに植える </a><br><br><br>
+{#        <input type="submit" value="別の田んぼに植える" class="button-default">#}
+{#    </form>#}
+    <br><br>
+        <a href="{% url 'proposal' %}" class="button-default"> 田植えを終了する </a>
+{#    </div>#}
 </article>
 
 <a href="tel:000-0000-0000">

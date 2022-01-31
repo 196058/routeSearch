@@ -35,7 +35,12 @@
 
     <div id="mapid"></div>
     <button id="button1" type="button">GETボタン</button>
-    <div id="resultGET"></div>
+    <form action="{% url 'route' %}" method="post" id="test">
+        {% csrf_token %}
+        <div id="resultGET"></div>
+        <input type="submit" value="test">
+    </form>
+{#    <div id="resultGET"></div>#}
 
     <script>
 
@@ -367,7 +372,7 @@
                 return crossCount % 2 === 1;
             }
 
-            $('#button1').on('click', function(){
+            $('#test').on('click', function(){
                 location_json = [];
                 start_end_point_json = [];
                 position = [];
@@ -425,6 +430,7 @@
                 }).done(function(data) {
                     // 通信成功時の処理を記述
                     $('#resultGET').text('GET処理成功：' + data + '.');
+                    {#document.location.href = "{% url 'route' %}"#}
                 }).fail(function() {
                     // 通信失敗時の処理を記述
                     $('#resultGET').text('GET処理失敗.');

@@ -5,7 +5,7 @@
     font-weight: bold;
     padding: 0% 10%;
     text-align: left;
-    /*width: 100%;*/
+    width: 100%;
     background-color: #fff;
 }
 
@@ -14,7 +14,7 @@ h1 a{
 }
 
 img.toicon{
-    margin: 0.3em 0.5em 0.5em 1em;
+    margin: 0.5em 0.5em 0.5em 1em;
     width: 2.2em;
     float: right;
 }
@@ -59,8 +59,8 @@ body h5 {
     font-weight: bold;
 }
 
-.hidden_box {
-    font-size: 100%;
+.hidden_box h4{
+    font-size: 80%;
     font-weight: bold;
 }
 
@@ -75,11 +75,13 @@ body h5 {
 .contents-have h1 {
     clear: both;
     font-size: 200%;	                    /*文字サイズ*/
-    line-height: 1em;                         /*行間*/
+    line-height: 1;                         /*行間*/
     margin-bottom: 20px;
     padding: 5px 10px;	                    /*上下、左右への余白*/
+    /*background: #aeaeae;	                !*背景色（古いブラウザ用）*!*/
+    /*background-image: url("../images/inaho.jpg"); !*背景画像*!*/
     border-bottom: 1px solid #666;	        /*メニュー下の線の幅、線種、色*/
-    border-top: 1px solid #eeeeee;	        /*メニュー上の線の幅、線種、色*/
+    /*border-top: 1px solid #eeeeee;	        !*メニュー上の線の幅、線種、色*!*/
     color: #000;	                        /*文字色*/
     width: 60%;
     margin-right: auto;
@@ -112,8 +114,9 @@ body h5 {
     font-size: 200%;	                    /*文字サイズ*/
     margin-bottom: 1em;
     padding: 5px 10px;	                    /*上下、左右への余白*/
+    /*background: #aeaeae;	                !*背景色（古いブラウザ用）*!*/
+    /*background-image: url("../images/inaho.jpg"); !*背景画像*!*/
     border-bottom: 1px solid #666;	        /*メニュー下の線の幅、線種、色*/
-    border-top: 1px solid #eeeeee;	        /*メニュー上の線の幅、線種、色*/
     color: #000;	                        /*文字色*/
     width: 60%;
     margin-right: auto;
@@ -146,18 +149,19 @@ input {
 /*レスポンシブ設定
 ---------------------------------------------------------------------------*/
 @media screen and (max-width: 768px) {
-    /*article (メイン画面設定)
-    ---------------------------------------------------------------------------*/
-    .h1title {
+
+    .h1title{
         font-size: 150%;
         font-weight: bold;
-        padding: 0 4%;
+        padding: 0% 4%;
         text-align: left;
+        width: 100%;
         height: 2.5em;
         background-color: #458506;
+
     }
 
-    h1 a {
+    h1 a{
         width: 50%;
     }
 
@@ -169,25 +173,27 @@ input {
     img.toicon{
         margin: 0.5em 0 0.5em 1em;
         width: 2.5em;
-        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(229deg) brightness(500%) contrast(150%)
+        filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(229deg) brightness(500%) contrast(150%);
+        display: none;
     }
 
     /*メインの内容
     ---------------------------------------------------------------------------*/
     article h3 {
-        font-size: 100%;
+        font-size: 100%;                       /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
         font-weight: bold;
     }
 
     article h4 {
-        font-size: 120%;
+        font-size: 120%;                       /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
+        /*margin-bottom: 10px;                    !*ボックス外側下の余白*!*/
         font-weight: bold;
         margin: 0 auto;
     }
 
-    body h5 {
+    article h5 {
         font-size: 150%;
-        /*margin-bottom: 10px;*/
+        margin-bottom: 10px;
         font-weight: bold;
     }
 
@@ -199,17 +205,19 @@ input {
         font-size: 100%;                        /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
     }
 
+
     /*見出しバー設定　span有
     ---------------------------------------------------------------------------*/
     .contents-have h1 {
         clear: both;
-        font-size: 200%; /*文字サイズ*/
-        line-height: 1; /*行間*/
+        font-size: 200%;	                    /*文字サイズ*/
+        line-height: 1;                         /*行間*/
         margin-bottom: 20px;
-        padding: 5px 10px; /*上下、左右への余白*/
-        border-bottom: 1px solid #666; /*メニュー下の線の幅、線種、色*/
-        border-top: 1px solid #eeeeee; /*メニュー上の線の幅、線種、色*/
-        color: #000; /*文字色*/
+        padding: 5px 10px;	                    /*上下、左右への余白*/
+        /*background: #aeaeae;	                !*背景色（古いブラウザ用）*!*/
+        /*background-image: url("../images/inaho.jpg"); !*背景画像*!*/
+        border-bottom: 1px solid #666;	        /*メニュー下の線の幅、線種、色*/
+        color: #000;	                        /*文字色*/
         width: 60%;
         margin-right: auto;
         margin-left: auto;
@@ -218,9 +226,9 @@ input {
     }
     .contents-have h1 span {
         display: block;
-        color: #000; /*文字色*/
-        font-size: 65%; /*文字サイズ*/
-        letter-spacing: 0.5em; /*文字間隔を少し広げる設定*/
+        color: #000;	                        /*文字色*/
+        font-size: 65%;	                        /*文字サイズ*/
+        letter-spacing: 0.1em;	                /*文字間隔を少し広げる設定*/
     }
 
 
@@ -232,6 +240,9 @@ input {
         line-height: 1.5;                         /*行間*/
         margin-bottom: 20px;
         padding: 5px 10px;	                    /*上下、左右への余白*/
+        /*background: #aeaeae;	                !*背景色（古いブラウザ用）*!*/
+        /*background-image: url("../images/inaho.jpg"); !*背景画像*!*/
+        /*border-bottom: 1px solid #666;	        !*メニュー下の線の幅、線種、色*!*/
         border-top: 1px solid #eeeeee;	        /*メニュー上の線の幅、線種、色*/
         color: #000;	                        /*文字色*/
         width: 60%;
@@ -239,23 +250,14 @@ input {
         font-weight: bold;
     }
 
+
     /*入力欄・センタリング
-        ---------------------------------------------------------------------------*/
-    .centering {
+    ---------------------------------------------------------------------------*/
+    .centering{
         text-align: left;
         font-size: 115%;
         font-weight: bold;
         display: inline-block;
         width: 40%;
-    }
-
-
-    /*入力欄・色付け.フォント替え
-    ---------------------------------------------------------------------------*/
-    input {
-        color: #FFFFFF;
-        font-size: 130%;
-        width: 200px;
-        background-color: #999999;
     }
 }

@@ -6,10 +6,96 @@
 @import url('https://fonts.googleapis.com/css?family=Julius+Sans+One');
 
 
+.slider {/*横幅94%で左右に余白を持たせて中央寄せ*/
+    width:94%;
+    margin:0 auto;
+}
+
+.slider img {
+    width:100%;/*スライダー内の画像を横幅100%に*/
+    height:auto;
+}
+
+/*slickのJSで書かれるタグ内、スライド左右の余白調整*/
+
+.slider .slick-slide {
+    margin:0 10px;
+}
+
+/*矢印の設定*/
+
+/*戻る、次へ矢印の位置*/
+.slick-prev,
+.slick-next {
+    position: absolute;/*絶対配置にする*/
+    top: 42%;
+    cursor: pointer;/*マウスカーソルを指マークに*/
+    outline: none;/*クリックをしたら出てくる枠線を消す*/
+    border-top: 2px solid #666;/*矢印の色*/
+    border-right: 2px solid #666;/*矢印の色*/
+    height: 15px;
+    width: 15px;
+}
+
+.slick-prev {/*戻る矢印の位置と形状*/
+    left: -1.5%;
+    transform: rotate(-135deg);
+}
+
+.slick-next {/*次へ矢印の位置と形状*/
+    right: -1.5%;
+    transform: rotate(45deg);
+}
+
+/*ドットナビゲーションの設定*/
+
+.slick-dots {
+    text-align:center;
+    margin:20px 0 0 0;
+}
+
+.slick-dots li {
+    display:inline-block;
+    margin:0 5px;
+}
+
+.slick-dots button {
+    color: transparent;
+    outline: none;
+    width:8px;/*ドットボタンのサイズ*/
+    height:8px;/*ドットボタンのサイズ*/
+    display:block;
+    border-radius:50%;
+    background:#ccc;/*ドットボタンの色*/
+}
+
+.slick-dots .slick-active button{
+    background:#333;/*ドットボタンの現在地表示の色*/
+}
+
+
+@media screen and (max-width:768px) {
+    .slide-pic{
+        height: 250px;
+    }
+    .disc{
+        padding-top:5%;
+    }
+    /*>*/
+    .next{
+        top: 30px;
+    }
+    /*<*/
+    .back{
+        top: 30px;
+    }
+}
+
 /*全体の設定
 ---------------------------------------------------------------------------*/
 html,body {
-    height: 100%;
+    /*height: 100%;*/
+    bottom: auto;
 }
 
 /*背景
@@ -85,14 +171,14 @@ header {
 /*ページ下の内容
 ---------------------------------------------------------------------------*/
 .footer {
-     background-color: #FFFFFF;
-     /*padding-top: 5em;*/
-     margin: 8em 5em 0 5em;
-     position: relative;
-     padding: 1em 1.5em;
-     border-top: solid 2px black;
-     border-bottom: solid 2px black;
- }
+    background-color: #FFFFFF;
+    /*padding-top: 5em;*/
+    margin: 8em 5em 0 5em;
+    position: relative;
+    padding: 1em 1.5em;
+    border-top: solid 2px black;
+    border-bottom: solid 2px black;
+}
 .footer:before, .footer:after{
     content: '';
     position: absolute;
@@ -212,7 +298,6 @@ article {
     border: none;                           /*テーブルの枠線の幅、線種、色*/
     table-layout: auto;
     background-color:#CCFFCC;
-    text-align: center;
     margin-right: auto;
     margin-left: auto;
 }
@@ -223,7 +308,7 @@ article {
 
 .write td {
     text-align: center;
-    /*font-size: 150%;*/
+    font-size: 150%;
 
 }
 
@@ -250,23 +335,13 @@ div#box3 {
 }
 
 
-/*入力欄センタリング
----------------------------------------------------------------------------*/
-.centering{
-    display: inline-block;
-    text-align: center;
-    width: 300px;
-}
-
-
 /*植え方選択（プルダウン）
 ---------------------------------------------------------------------------*/
 .hidden_box1 .hidden_show1 {
     height: 0;
-    width: 300%;
     overflow: hidden;
-    transition: 0.5s;
     text-align: center;
+    transition: 0.5s;
     margin-left: auto;
     margin-right: auto;
 }
@@ -274,19 +349,16 @@ div#box3 {
     height: auto;
     opacity: 1;
     padding: 10px 0;
-    /*text-align: center;*/
+    text-align: center;
 
 }
 
 
 .hidden_box2 .hidden_show2 {
     height: 0;
-    width: 300%;
     overflow: hidden;
     text-align: center;
     transition: 0.5s;
-    margin-right: auto;
-    margin-left: auto;
 }
 .hidden_box2 input:checked ~ .hidden_show2 {
     height: auto;
@@ -297,7 +369,6 @@ div#box3 {
 
 .hidden_box3 .hidden_show3 {
     height: 0;
-    width: 300%;
     overflow: hidden;
     text-align: center;
     transition: 0.5s;
@@ -346,6 +417,10 @@ div#popup{
     margin-right: auto;
 }
 
+/*img{
+    width:2.5%;
+}*/
+
 label{
     display:block;
 }
@@ -379,22 +454,22 @@ input[type="checkbox"]:checked + #popup{
 @media screen and (max-width: 768px) {
 
     body {
-        color: #333;                            /*文字色指定*/
+        color: #333; /*文字色指定*/
         font-family: 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', Osaka, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', serif; /*フォントの種類指定(左から優先順位)*/
-        line-height: 2;                         /*行の高さ指定(数値のみの場合はfont-sizeの倍数)*/
-        background-position:50% 0;
+        line-height: 2; /*行の高さ指定(数値のみの場合はfont-sizeの倍数)*/
+        background-position: 50% 0;
         background-size: cover;
-        text-align:center;                      /* 水平方向の揃え方指定 */
+        text-align: center; /* 水平方向の揃え方指定 */
         -webkit-text-size-adjust: none;
         background-color: #FFFFFF;
     }
 
     header {
-        height:55px;                           /*領域の高さ指定*/
+        height: 55px; /*領域の高さ指定*/
         background-color: #8a8a8a;
     }
 
-    .backsayuu{
+    .backsayuu {
         background-color: #ffffff;
         width: 100%;
         margin-right: auto;
@@ -403,7 +478,7 @@ input[type="checkbox"]:checked + #popup{
         height: inherit;
     }
 
-    .backsayuu2{
+    .backsayuu2 {
         background-color: #ffffff;
         width: 100%;
         margin-right: auto;
@@ -427,36 +502,43 @@ input[type="checkbox"]:checked + #popup{
         font-size: 0.8em;
     }
 
-
     /*メインの内容
     ---------------------------------------------------------------------------*/
     article {
-        width: 80%;                            /*幅指定(100%は画面横幅いっぱいに表示)*/
+        width: 80%; /*幅指定(100%は画面横幅いっぱいに表示)*/
         margin-left: auto;
         margin-right: auto;
         padding-top: 65px;
     }
+
     /*index.html ボタン位置設定
     ---------------------------------------------------------------------------*/
     #item {
         /*width: 100%;*/
         /*position: relative;*/
         /*text-align: center;*/
-
-        display: flex;
-        flex-direction:column;
-        align-items: center;
+        /**/
+        /*display: flex;*/
+        /*flex-direction: row;*/
         /*justify-content: space-between;*/
+        display: flex;
+        /*コレ*/
+        flex-direction: column;
+        align-items: center;
     }
 
     .unification {
         width: 11em;
         /*margin-right: 35%;*/
+    }
+
+    .unification {
         display: -webkit-box;
         width: 15em;
-        height: 4em;
+        height: 6em;
         padding: 1.5em 0 0 1.5em;
     }
+
     .unification a {
         width: 30%;
     }
@@ -469,23 +551,27 @@ input[type="checkbox"]:checked + #popup{
         margin-right: auto;
         margin-left: auto;
     }
+
     .details, .details td, .details th {
-        border: 1px solid #000000;              /*テーブルの枠線の幅、線種、色*/
+        border: 1px solid #000000; /*テーブルの枠線の幅、線種、色*/
         table-layout: fixed;
         word-break: break-all;
         text-align: center;
     }
+
     .details th {
-        width: 60%;	                            /*幅*/
-        text-align: center;	                    /*センタリング*/
+        width: 60%; /*幅*/
+        text-align: center; /*センタリング*/
         font-size: 60%;
     }
+
     .details td {
         text-align: left;
         font-weight: bold;
         font-size: 10px;
 
     }
+
     .details td img {
         width: 100%;
     }
@@ -495,9 +581,9 @@ input[type="checkbox"]:checked + #popup{
     ---------------------------------------------------------------------------*/
     .write {
         width: 100%;
-        border: none;                           /*テーブルの枠線の幅、線種、色*/
+        border: none; /*テーブルの枠線の幅、線種、色*/
         table-layout: auto;
-        background-color:#CCFFCC;
+        background-color: #CCFFCC;
         margin-right: auto;
         margin-left: auto;
     }
@@ -505,6 +591,7 @@ input[type="checkbox"]:checked + #popup{
     .write tr {
         text-align: center;
     }
+
     .write td {
         text-align: center;
         font-size: 150%;
@@ -513,13 +600,13 @@ input[type="checkbox"]:checked + #popup{
 
     /*テーブル設定
     ---------------------------------------------------------------------------*/
-    .ta th{
+    .ta th {
         border-collapse: collapse;
         font-size: 1em;
         width: 6em;
     }
 
-    .ta td{
+    .ta td {
         border-collapse: collapse;
     }
 
@@ -544,7 +631,6 @@ input[type="checkbox"]:checked + #popup{
     ---------------------------------------------------------------------------*/
     .hidden_box1 .hidden_show1 {
         height: 0;
-        width: 300%;
         overflow: hidden;
         text-align: center;
         transition: 0.5s;
@@ -552,6 +638,7 @@ input[type="checkbox"]:checked + #popup{
         margin-right: auto;
         font-size: 0.6em;
     }
+
     .hidden_box1 input:checked ~ .hidden_show1 {
         height: auto;
         opacity: 1;
@@ -563,7 +650,6 @@ input[type="checkbox"]:checked + #popup{
 
     .hidden_box2 .hidden_show2 {
         height: 0;
-        width: 300%;
         overflow: hidden;
         text-align: center;
         transition: 0.5s;
@@ -571,6 +657,7 @@ input[type="checkbox"]:checked + #popup{
         margin-right: auto;
         font-size: 0.6em;
     }
+
     .hidden_box2 input:checked ~ .hidden_show2 {
         height: auto;
         opacity: 1;
@@ -584,6 +671,7 @@ input[type="checkbox"]:checked + #popup{
         text-align: center;
         transition: 0.5s;
     }
+
     .hidden_box3 input:checked ~ .hidden_show3 {
         height: auto;
         opacity: 1;
@@ -593,7 +681,7 @@ input[type="checkbox"]:checked + #popup{
 
     /*ログイン画面（左右分割）
     ---------------------------------------------------------------------------*/
-    .login input{
+    .login input {
         width: 120px;
     }
 
@@ -620,12 +708,4 @@ input[type="checkbox"]:checked + #popup{
         clear: both;
     }
 
-
-    /*入力欄センタリング
-    ---------------------------------------------------------------------------*/
-    .centering{
-        display: inline-block;
-        text-align: left;
-        width: 40%;
-    }
 }

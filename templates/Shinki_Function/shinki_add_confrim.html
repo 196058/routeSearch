@@ -29,7 +29,7 @@
 
     <h3>こちらの情報で登録します</h3>
 
-    <div class="reset button-bg from-left">
+{#    <div class="reset button-bg from-left">#}
         <form action="{% url 'shinki_add_comp' %}" method="post">
             {%  csrf_token %}
             <label class="centering">利用者名</label>
@@ -46,7 +46,7 @@
 
             <input type="submit" value="- 登録する -">
         </form>
-        <input type="button" value="- 修正する -" onClick="javascript:history.go(-1);">
+        <input type="button" value="- 修正する -" class="button-default" onClick="javascript:history.go(-1);">
 
         <br>
         <h3>よろしいですか？</h3>
@@ -54,9 +54,9 @@
         <br>
         <a href="{% url 'shinki_add_comp' %}">- 登録する -</a><br>
 
-        <a href="{% url 'shinki_add' %}">- 内容 修正 -</a><br>
-        <a href="{% url 'index' %}">- メニューに戻る -</a>
-    </div>
+{#        <a href="{% url 'shinki_add' %}">- 内容 修正 -</a><br>#}
+        <a href="{% url 'index' %}" class="fas fa-home">- メニューに戻る -</a>
+{#    </div>#}
 </article>
 
 <a href="tel:000-0000-0000">

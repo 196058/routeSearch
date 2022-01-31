@@ -1,18 +1,19 @@
 from idlelib.rpc import request_queue
 
+from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth import logout
 from django.template.context_processors import request
-from apps.paddy.exception import Exception
+from apps.exception import Exception
 from apps.paddy.Model.paddyModel import PaddyParameter, StartEndPosition
-from apps.paddy import paddyproperty as paddy_property
+from .paddy.paddyproperty import PaddyProperty
 from apps.paddy.Model.machineModel import Machine
 
 from .form import UserAddForm, LoginForm, MecaAddForm, PaddyAddForm, FieldAddForm, AdminLoginForm, AdminAddForm, \
     InquiryAddForm
 from .models import User, Mecainfo, Paddy, Admin, Inquiry
 from django.views.generic import TemplateView
-
+import json
 from apps import version
 
 
@@ -112,13 +113,14 @@ def member_login(request):
     try:
         if request.method == 'POST':
             user_name = request.POST.get('user_name')
+            print(user_name)
             user = User.objects.get(user_name=user_name)
             if user.pass_word == request.POST['pass_word']:
                 context = {
                     'id': user.id,
                     'user_name': user.user_name,
                     'pass_word': user.pass_word,
-                    'mail': user.mail,
+                    'mail': user.mail
                 }
                 request.session['user_info'] = context
                 return render(request, 'Login_Function/home.html')
@@ -197,39 +199,111 @@ def tanbo_add(request):
 
 
 def tanbo_add_confirm(request):
-    if request.method == 'POST':
-        user_info = request.session.get('user_info')
-        user_id = user_info['id']
-        paddy_name = request.POST.get('name')
-        paddy_info = PaddyAddForm(request.POST)
-        # DBのpaddy_nameの重複チェック
-        try:
-            check = Mecainfo.objects.get(id=user_id, name=paddy_name)
-            if check is not None:
-                return HttpResponse('入力された田んぼ名はすでに登録されています。<br>田んぼ名を変えてください。')
-        except Paddy.DoesNotExist:
-            if paddy_info.is_valid():
-                context = {
-                    'paddy_info': paddy_info,
-                    'id': user_id,
-                }
-                return render(request, 'Login_Function/kikai_add_confirm.html', context)
-            else:
-                return HttpResponse('フォームの入力に誤りがあります')
+    # if request.method == 'POST':
+    #     paddy_name = request.POST.get('name')
+    #     print('paddy_name', paddy_name)
+    if request.method == 'GET':
+        # JSON情報を取得
+        field = request.GET.get("location_json_data")
+        print('pram', field)
+        start_end_point = request.GET.get("location_start_end_point_data")
+        paddy_name = request.GET.get('name')
+        print('field: ', field, ' , start_end_point: ', start_end_point, 'paddy_name: ', paddy_name)
+        # if field is None:
+        #     return HttpResponse("田んぼの範囲を指定してください")
+        # if start_end_point is None:
+        #     return HttpResponse("出入り口を指定してください")
+        #
+        # paddy = PaddyAddForm(request.GET)
+        # paddy_id = Paddy.objects.all().aggregate(max('paddy_id'))
+        # field = FieldAddForm(request.GET)
+        # field.paddy = paddy_id
+        # print(paddy_id)
+        # print(field)
+        # # if paddy.is_valid():
+        # #     paddy.save()
+        # user_info = request.session.get('user_info')
+        # user_id = user_info['id']
+        # paddy_name = request.GET.get('name')
+        # # paddy_info = PaddyAddForm(request.POST)
+        # # DBのpaddy_nameの重複チェック
+        # try:
+        #     check = Mecainfo.objects.get(id=user_id, name=paddy_name)
+        #     if check is not None:
+        #         return HttpResponse('入力された田んぼ名はすでに登録されています。<br>田んぼ名を変えてください。')
+        # except Paddy.DoesNotExist:
+        #
+        #     if paddy_info.is_valid():
+        #         context = {
+        #             'paddy_info': paddy_info,
+        #             'id': user_id,
+        #         }
+    #             return render(request, 'Login_Function/kikai_add_confirm.html', context)
+    #         else:
+    #             return HttpResponse('フォームの入力に誤りがあります')
+        return HttpResponse('完了')
     else:
         return HttpResponse('フォームの送信に使用しているメソッドが違います')
+
+
+# def tanbo_position(request):
+#     if request.method == 'GET':
+#         # JSON情報を取得
+#         filed = request.GET.get("location_json_data")
+#         start_end_point = request.GET.get("location_start_end_point_data")
+#
+#         if filed is None:
+#             return HttpResponse("田んぼの範囲を指定してください")
+#         if start_end_point is None:
+#             return HttpResponse("出入り口を指定してください")
+#
+#         # # 受け取った値をJSONに整形
+#         # paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
+#         # startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
+#         # machineInfo = Machine(plant=int(machine_plant), length=int(machine_length), width=int(machine_width))
+#         # print('machineInfo  ', machineInfo)
+#
+#         try:
+#             # FieldAddForm.position = filed['paddyFields'][]
+#             # p = PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
+#         except Exception.PointException as e:
+#             return HttpResponse(e)
+#         # JSONデータのsession作成
+#         # request.session['moveList'] = p.moveList.to_json(ensure_ascii=False)
+#         print('session作成しました。')
+#         # print(p.moveList.to_json(indent=4, ensure_ascii=False))
+#         # return HttpResponse(p.moveList.to_json(indent=4, ensure_ascii=False))
+#         return HttpResponse(p.paddyDistance)
+#     else:
+#         return HttpResponse("違うメソッドを使用しています。")
 
 
 def tanbo_add_comp(request):
-    if request.method == 'POST':
-        paddy = PaddyAddForm(request.POST)
-        if paddy.is_valid():
-            paddy.save()
-            return render(request, 'Login_Function/tanbo_add_comp.html')
-        else:
-            return HttpResponse('フォームの入力に誤りがあります')
-    else:
-        return HttpResponse('フォームの送信に使用しているメソッドが違います')
+    # if request.method == 'GET':
+    #     # # JSON情報を取得
+    #     # pram = request.GET.get("location_json_data")
+    #     # print('pram', pram)
+    #     # start_end_point = request.GET.get("location_start_end_point_data")
+    #     #
+    #     # if pram is None:
+    #     #     return HttpResponse("田んぼの範囲を指定してください")
+    #     # if start_end_point is None:
+    #     #     return HttpResponse("出入り口を指定してください")
+    #     #
+    #     paddy = PaddyAddForm(request.GET)
+    #     # paddy_id = Paddy.objects.all().aggregate(max('paddy_id'))
+    #     # field = FieldAddForm(request.GET)
+    #     # field.paddy = paddy_id
+    #     # print(paddy_id)
+    #     # print(field)
+    #     if paddy.is_valid():
+    #         paddy.save()
+    #         return render(request, 'Login_Function/tanbo_add_comp.html')
+    #     else:
+    #         return HttpResponse('フォームの入力に誤りがあります')
+    # else:
+    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
+    return render(request, 'Login_Function/tanbo_add_comp.html')
 
 
 def tanbo_del_confirm(request):
@@ -481,8 +555,37 @@ def kikai_edit_comp(request):
 
 
 # ゲスト
-def guest_route_search(request):
+def guest_kikai_info(request):
+    # tanbo_info.htmlから田んぼ情報を取得
+    if request.session.get('guest_paddy') is None:
+        print('sessionはありません。')
+    else:
+        print('sessionを削除します', request.session.get('guest_paddy'))
+        del request.session['guest_paddy']
+    # マップ表示プログラム
+    # if request.method == 'POST':
+    #     paddy = PaddyAddForm(request.POST)
+    #     field = FieldAddForm(request.POST)
+    #     if paddy.is_valid():
+    #         if field.is_valid():
+    #             context = {
+    #                 # paddyとfieldの情報
+    #             }
+    #             # 田んぼ情報をsessionに保持
+    #             # request.session['guest_paddy'] = context
+    #         else:
+    #             return HttpResponse('fieldのフォームの入力に誤りがあります')
+    #     else:
+    #         return HttpResponse('paddyのフォームの入力に誤りがあります')
+    return render(request, 'Guest_Function/kikai_info.html')
+
+
+def guest_tanbo_info(request):
     # 田んぼsessionと機械情報を取得
+    if request.session.get('moveList') is None:
+        print('moveListのsessionはありません。')
+    else:
+        del request.session['moveList']
     # paddy_info = request.session.get('guest_paddy')
     if request.method == 'POST':
         print('name', request.POST.get('name'))
@@ -498,43 +601,64 @@ def guest_route_search(request):
                 }
                 # 機械情報をsessionに保持
                 request.session['guest_meca'] = context
+                print('meca   ', request.session.session_key)
             else:
                 return HttpResponse('フォームの入力に誤りがあります')
         elif request.POST.get('hand') != '':
             print("手で植えるを選択")
             hand = request.POST.get('hand')
-    # ルート検索プログラム
-    #
-    return render(request, 'Guest_Function/route_search.html')
-
-
-def guest_tanbo_info(request):
-    if request.session.get('guest_meca') is None:
-        print('sessionはありません。')
-    else:
-        print('sessionを削除します', request.session.get('guest_meca'))
-        del request.session['guest_meca']
+    # if request.session.get('guest_meca') is None:
+    #     print('sessionはありません。')
+    # else:
+    #     print('sessionを削除します', request.session.get('guest_meca'))
+    #     del request.session['guest_meca']
     # マップ表示プログラム
     return render(request, 'Guest_Function/tanbo_info.html')
 
 
-def guest_kikai_info(request):
-    # tanbo_info.htmlから田んぼ情報を取得
-    if request.method == 'POST':
-        paddy = PaddyAddForm(request.POST)
-        field = FieldAddForm(request.POST)
-        if paddy.is_valid():
-            if field.is_valid():
-                context = {
-                    # paddyとfieldの情報
-                }
-                # 田んぼ情報をsessionに保持
-                # request.session['guest_paddy'] = context
-            else:
-                return HttpResponse('fieldのフォームの入力に誤りがあります')
-        else:
-            return HttpResponse('paddyのフォームの入力に誤りがあります')
-    return render(request, 'Guest_Function/kikai_info.html')
+def position(request):
+    if request.method == 'GET':
+        # JSON情報を取得
+        pram = request.GET.get("location_json_data")
+        print('pram', pram)
+        start_end_point = request.GET.get("location_start_end_point_data")
+        machine = request.session.get('guest_meca')
+        machine_plant = machine['plant']
+        machine_length = machine['full_length']
+        machine_width = machine['full_width']
+
+        if pram is None:
+            return HttpResponse("田んぼの範囲を指定してください")
+        if start_end_point is None:
+            return HttpResponse("出入り口を指定してください")
+
+        # 受け取った値をJSONに整形
+        paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
+        startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
+        machineInfo = Machine(plant=int(machine_plant), length=int(machine_length), width=int(machine_width))
+        print('machineInfo  ', machineInfo)
+
+        try:
+            p = PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
+        except Exception.PointException as e:
+            return HttpResponse(e)
+        # JSONデータのsession作成
+        request.session['moveList'] = p.moveList.to_json(ensure_ascii=False)
+        print('session作成しました。')
+        # print(p.paddyFields)
+        # print(p.startEndPosition)
+        # print(p.paddyDistance)
+        # return HttpResponse(p.moveList.to_json(indent=4, ensure_ascii=False))
+        return HttpResponse(p.paddyDistance)
+    else:
+        return HttpResponse("違うメソッドを使用しています。")
+
+
+def guest_route_search(request):
+
+    # ルート検索プログラム
+    #
+    return render(request, 'Guest_Function/route_search.html')
 
 
 # def solicit_create_account(request):
@@ -543,6 +667,8 @@ def guest_kikai_info(request):
 
 def proposal(request):
     # 処理なし
+    del request.session['moveList']
+    del request.session['guest_meca']
     return render(request, 'Guest_Function/proposal.html')
 
 
@@ -1031,58 +1157,17 @@ def route(request):
     return render(request, 'route.html')
 
 
+def route_session(request):
+    del request.session['moveList']
+    del request.session['guest_meca']
+    return render(request, 'Guest_Function/kikai_info.html')
+
+
 # Mapテスト用
 def map(request):
     return render(request, 'Map/paddy_field.html')
 
 
-def position(request):
-    if request.method == 'GET':
-        # JSON情報を取得
-        pram = request.GET.get("location_json_data")
-        start_end_point = request.GET.get("location_start_end_point_data")
-
-        if pram is None:
-            return HttpResponse("田んぼの範囲を指定してください")
-        if start_end_point is None:
-            return HttpResponse("出入り口を指定してください")
-
-        # 受け取った値をJSONに整形
-        paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
-        startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
-        machineInfo = Machine(plant=6, length=3320, width=1920)
-
-        try:
-            p = paddy_property.PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
-        except Exception.PointException as e:
-            return HttpResponse(e)
-        return HttpResponse(p.paddyDistance)
-    else:
-        return HttpResponse("違うメソッドを使用しています。")
-
-
 # def call_fill_paddy(request):
 #     paddy_property.PaddyProperty()
-#     if request.method == 'GET':
-#         # JSON情報を取得
-#         pram = request.GET.get("location_json_data")
-#         start_end_point = request.GET.get("location_start_end_point_data")
-#
-#         if pram is None:
-#             return HttpResponse("田んぼの範囲を指定してください")
-#         if start_end_point is None:
-#             return HttpResponse("出入り口を指定してください")
-#
-#         # 受け取った値をJSONに整形
-#         paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
-#         startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
-#         machineInfo = request.session.get('guest_meca')
-#
-#         try:
-#             p = paddy_property.PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
-#         except Exception.PointException as e:
-#             return HttpResponse(e)
-#         return HttpResponse(p.paddyDistance)
-#     else:
-#         return HttpResponse("違うメソッドを使用しています。")
 

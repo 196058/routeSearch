@@ -7,12 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>ルート検索 -ルート表示中-</title>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
+    <link rel="stylesheet" href="{% static 'systemdesign/css/responsive_menu.css' %}"><!--レスポンシブメニュー-->
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
 </head>
 <body>
 <!--<header>-->
@@ -35,13 +39,13 @@
     </form>
 
     <br><br><br>
-    <div class="reset button-bg from-left">
-        <a href="{% url 'route_search' %}">- 再検索 -</a><br>
-        <a href="">- ルートを印刷 -</a><br><br>
-        <a href="{% url 'tanbo_info' %}">- 別の田んぼに植える -</a><br><br>
+{#    <div class="reset button-bg from-left">#}
+        <a href="{% url 'route_search' %}" class="button-default"> 再検索 </a><br>
+        <a href="" class="button-default"> ルートを印刷 </a><br><br>
+        <a href="{% url 'tanbo_info' %}" class="button-default"> 別の田んぼに植える </a><br><br>
 
-        <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">- 田植えを終了する -</a>
-    </div>
+        <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" class="fas fa-home"> 田植えを終了する </a>
+{#    </div>#}
 </article>
 
 <a href="tel:000-0000-0000">

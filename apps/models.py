@@ -18,6 +18,8 @@ class Field(models.Model):
     position = models.IntegerField(blank=True, null=True)
     lng = models.FloatField(blank=True, null=True)
     lat = models.FloatField(blank=True, null=True)
+    location_json_data = models.JSONField(blank=True, null=True)
+    location_start_end_point_data = models.JSONField(blank=True, null=True)
 
     class Meta:
         managed = False

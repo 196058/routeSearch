@@ -1,9 +1,5 @@
 /*田んぼルート検索 ボタン
 ---------------------------------------------------------------------------*/
-#click-down input {
-  background-color: #01b6ed;
-}
-
 header h1 a {
     font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;;
     font-size: 100%;                        /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
@@ -38,9 +34,8 @@ header h1 a:hover {
 }
 
 .tel-fixed{
-    margin: 0.3em 0.5em 0.5em 1em;
+    margin: 0.5em 0.5em 0.5em 1em;
     width: 2.2em;
-    display: block;
     float: right;
 }
 
@@ -96,22 +91,126 @@ header h1 a:hover {
 
 /*ボタン（長方形）
 ---------------------------------------------------------------------------*/
+.fa-home{
+    display: block;
+    width: 13em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-weight: 600;
+    border: groove;
+    padding: 0.7em 1.5em;
+    font-size: 1.2em;
+    background: #fff;
+    border-radius: 0.5em;
+    text-decoration: none;
+    color: #205406;
+    border-bottom: solid 0.2em #205406;
+    border-right: solid 0.2em #245d07;
+}
 
-.button-bg a{
-    display: inline-block;
-    padding: 1em 2em;
+.fa-chevron-circle-left{
+    display: block;
+    width: 13em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-weight: 600;
+    border: groove;
+    padding: 0.7em 1.5em;
+    font-size: 1.2em;
+    background: #fff;
+    border-radius: 0.5em;
+    text-decoration: none;
+    color: #205406;
+    border-bottom: solid 0.2em #205406;
+    border-right: solid 0.2em #245d07;
+}
+
+.fa-sign-out-alt{
+    display: block;
+    width: 13em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-weight: 600;
+    border: groove;
+    padding: 0.7em 1.5em;
+    font-size: 1.2em;
+    background: #fff;
+    border-radius: 0.5em;
+    text-decoration: none;
+    color: #205406;
+    border-bottom: solid 0.2em #205406;
+    border-right: solid 0.2em #245d07;
+}
+
+.button-default {
+    display: block;
+    width: 12em;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.6em 0 0.4em;
     background: #407e02;
-    border-bottom: solid 0.3em #205406;
+    border-bottom: solid 0.2em #205406;
     border-right: solid 0.2em #245d07;
     border-radius: 0.5em;
     color: #ffffff;
     text-decoration: none;
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.3em;
+    font-weight: 600;
     line-height: 1.2em;
     -webkit-transition: .100s;
     transition: .100s;
 }
+
+.back-button{
+    display: block;
+    width: 12em;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    font-weight: 600;
+    border: groove;
+    padding: 10px 20px 10px 47px;
+    font-size: 1.3em;
+    background: #fff;
+    border-radius: 0.5em;
+    text-decoration: none;
+    color: #205406;
+    transition: background-color 1s, box-shadow 1.5s;
+    border-bottom: solid 0.2em #205406;
+    border-right: solid 0.2em #245d07;
+}
+
+.back-button::before{
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 18px;
+    width: 10px;
+    height: 10px;
+    border-top: 3px solid #205406;
+    border-right: 3px solid #205406;
+    transform: rotate(225deg);
+}
+.back-button::after{
+    content: "";
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 9px;
+    width: 23px;
+    height: 23px;
+    border: 3px solid #205406;
+    border-radius: 50%;
+}
+
+
+
 .button-bg a:active {
     border-bottom: none;
     -webkit-transform: translateY(4px);
@@ -123,7 +222,7 @@ header h1 a:hover {
     display: block;
     width: 100%;
     height: 100%;
-    background: #ffffff;  /*動く背景　画像でも可　background-image: url(images/ );  */
+    /*background: #ffffff;  動く背景　画像でも可　background-image: url(images/ );  */
     position: absolute;
     top: 0;
     left: 0;
@@ -138,7 +237,7 @@ header h1 a:hover {
     transform: translate(0, 200%);
 }
 .button-bg a:hover {
-    color: #ffffff;
+   /* color: #ffffff;*/
 }
 .button-bg a:hover::after {
     transform: translate(0);
@@ -234,15 +333,15 @@ header h1 a:hover {
     .tel-fixed{
         position: fixed;
         right: 1em;
-        top: 2em;
-        width: 0.5em;
+        top: 5em;
+        width: 4.5em;
         display: none;
     }
 
     .tel-fixed-phone{
         position: fixed;
         right: 1em;
-        top: 6em;
+        top: 5em;
         width: 4.5em;
         display: block;
     }
@@ -260,6 +359,79 @@ header h1 a:hover {
 
     /*今全部これ
     ---------------------------------------------------------------------------*/
+    .fa-home{
+        display: block;
+        width: 14.3em;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        font-weight: 600;
+        border: groove;
+        padding: 0.7em 1.5em;
+        font-size: 1em;
+        background: #fff;
+        border-radius: 0.5em;
+        text-decoration: none;
+        color: #205406;
+        border-bottom: solid 0.2em #205406;
+        border-right: solid 0.2em #245d07;
+    }
+
+    .fa-chevron-circle-left{
+        display: block;
+        width: 14.3em;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        font-weight: 600;
+        border: groove;
+        padding: 0.7em 1.5em;
+        font-size: 1em;
+        background: #fff;
+        border-radius: 0.5em;
+        text-decoration: none;
+        color: #205406;
+        border-bottom: solid 0.2em #205406;
+        border-right: solid 0.2em #245d07;
+    }
+
+    .fa-sign-out-alt{
+        display: block;
+        width: 14.3em;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        font-weight: 600;
+        border: groove;
+        padding: 0.7em 1.5em;
+        font-size: 1em;
+        background: #fff;
+        border-radius: 0.5em;
+        text-decoration: none;
+        color: #205406;
+        border-bottom: solid 0.2em #205406;
+        border-right: solid 0.2em #245d07;
+    }
+
+    .button-default {
+        display: block;
+        width: 13em;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0.6em 0 0.4em;
+        background: #407e02;
+        border-bottom: solid 0.2em #205406;
+        border-right: solid 0.2em #245d07;
+        border-radius: 0.5em;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1.1em;
+        font-weight: 600;
+        line-height: 1.2em;
+        -webkit-transition: .100s;
+        transition: .100s;
+    }
+
     .button-bg a {
         display: inline-block;
         padding: 0.5em 1.5em;
@@ -418,4 +590,6 @@ header h1 a:hover {
         filter: alpha(opacity=60);
         -moz-opacity: 0.6;
     }
+
+
 }

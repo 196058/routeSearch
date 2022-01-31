@@ -12,9 +12,21 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
+    <link rel="stylesheet" href="{% static 'systemdesign/css/responsive_menu.css' %}"><!--レスポンシブメニュー-->
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/twilight.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/grey.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/masonry.css' %}">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="{% static 'systemdesign/js/vertical-responsive-menu.min.js' %}"></script>
+    <script src="{% static 'systemdesign/js/scrolltopcontrol.js' %}"></script>
+    <script src="{% static 'systemdesign/js/icheck.min.js' %}"></script>
+    <script src="{% static 'systemdesign/js/jquery.customSelect.min.js' %}"></script>
+    <script src="{% static 'systemdesign/js/jquery.infinitescroll.min.js' %}"></script>
+    <script src="{% static 'systemdesign/js/jquery.masonry.min.js' %}"></script>
+    <script src="{% static 'systemdesign/js/twilight.js' %}"></script>
 </head>
 <body>
 <!--<header>-->
@@ -30,39 +42,23 @@
 	</div>
 
 	<h3>ＩＤとパスワードを入力してください</h3>
+    <br><br>
+    <form action="{% url 'member_login' %}" method="post">
+        {% csrf_token %}
+        <label class="centering">ユーザＩＤ</label>
+            <input type="text" name="user_name" id="user_name"><br>
+        <label class="centering">パスワード</label>
+            <input type="password" name="pass_word" id="pass_word"><br>
+        <br><br>
 
-	<div id="box">
-		<div id="box1">
-			<br><br>
-            <form action="{% url 'member_login' %}" method="post">
-                {% csrf_token %}
-			    <table class="login">
+        <input type="submit" class="button-default" value=" ログイン ">
+    </form>
 
-                    {{ form.as_table }}
-			    </table>
-                    <input type="submit" class="reset button-bg from-left" value="- ログイン -">
-            </form>
-		</div>
-		<!-- box1 -->
+    <br><br>
+    <a href="{% url 'index' %}" class="fas fa-home"> メニューへ戻る </a>
+    <br><br>
 
-		<div class="reset button-bg from-left">
-			<div id="box2">
-				<br><br>
-				<a href="{% url 'member_login' %}">- ログイン -</a>
-			</div>
-			<!-- box2 -->
-
-			<div id="box3">
-				<br>
-				<a href=""><span style="background-color:#fff;">ID,PWをお忘れの場合</span></a>
-
-				<br><br><br><br>
-				<a href="{% url 'index' %}">- メニューへ戻る -</a>
-			</div>
-			<!-- box3 -->
-		</div>
-	</div>
-	<!-- box -->
+	<a href=""><span style="background-color:#fff;"><b>ID,PWをお忘れの方はこちら</b></span></a>
     <!--    <footer class="footer">-->
     <div class="footer" id="footer">
         <h5>チーム定時退社</h5>

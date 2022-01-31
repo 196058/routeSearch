@@ -3,6 +3,7 @@ from . import views
 urlpatterns = [
     # テストJSON表示用パス
     path('route/', views.route, name='route'),
+    path('route_session/', views.route_session, name='route_session'),
     path('map/', views.map, name='map'),
     path('position/', views.position, name='position'),
 
