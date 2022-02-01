@@ -2,10 +2,10 @@ import math
 import numpy as np
 
 from .routeProposal import RouteProposal as rp
-from apps.paddy.Repository.paddyRepository import Paddy, Position
+from ..paddy.Repository.paddyRepository import Paddy, Position
 from geopy.distance import geodesic
 from ..paddy.Repository.machineRepository import Machine
-from apps.paddy.Parameters import paddyParameters as pp
+from ..paddy.Parameters import paddyParameters as pp
 from .util import util
 
 """
@@ -499,6 +499,8 @@ class PaddyProperty:
 
     def create_list(self):
         #   配列の生成   列、行で生成
+        column_length = self.outsideMaxColumn + self.xCorrection
+        row_length = self.outsideMaxRow + self.yCorrection
         paddyArray = [
             [0] * (self.outsideMaxColumn + self.xCorrection)
             for _ in range(self.outsideMaxRow + self.yCorrection)
@@ -562,9 +564,30 @@ class PaddyProperty:
             outside=outside,
             inside=inside,
             machineInfo=self.machineInfo,
-            rowFlag=self.rowFlag
+            rowFlag=self.rowFlag,
+            row_length=row_length,
+            column_length=column_length
         )
         moveList = rs.search_route()
+
+        for i in range(len(inside_paddy)):
+            for j in range(len(inside_paddy[0])):
+                if util.is_position_inside_polygon(
+                        self.outsideCircumferenceRowList,
+                        self.outsideCircumferenceColumnList,
+                        [j, i]
+                ):
+                    if util.is_position_inside_polygon(
+                            self.insideCircumferenceRowList,
+                            self.insideCircumferenceColumnList,
+                            [j, i]
+                    ):
+                        util.fill_position(outside_paddy, j, i, "IN", False)
+                    util.fill_position(outside_paddy, j, i, "OUT", False)
+                else:
+                    util.fill_position(outside_paddy, j, i, "0", False)
+
+        util.export_to_file(outside_paddy, fileName='paddy_array')
 
         for i in moveList.all_move_list:
             for j in i.step_move_list:

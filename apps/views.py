@@ -199,9 +199,6 @@ def tanbo_add(request):
 
 
 def tanbo_add_confirm(request):
-    # if request.method == 'POST':
-    #     paddy_name = request.POST.get('name')
-    #     print('paddy_name', paddy_name)
     if request.method == 'GET':
         # JSON情報を取得
         field = request.GET.get("location_json_data")
@@ -209,17 +206,17 @@ def tanbo_add_confirm(request):
         start_end_point = request.GET.get("location_start_end_point_data")
         paddy_name = request.GET.get('name')
         print('field: ', field, ' , start_end_point: ', start_end_point, 'paddy_name: ', paddy_name)
-        # if field is None:
-        #     return HttpResponse("田んぼの範囲を指定してください")
-        # if start_end_point is None:
-        #     return HttpResponse("出入り口を指定してください")
-        #
-        # paddy = PaddyAddForm(request.GET)
-        # paddy_id = Paddy.objects.all().aggregate(max('paddy_id'))
-        # field = FieldAddForm(request.GET)
-        # field.paddy = paddy_id
-        # print(paddy_id)
-        # print(field)
+        if field is None:
+            return HttpResponse("田んぼの範囲を指定してください")
+        if start_end_point is None:
+            return HttpResponse("出入り口を指定してください")
+
+        paddy = PaddyAddForm(request.GET)
+        paddy_id = Paddy.objects.all().aggregate(max('paddy_id'))
+        field = FieldAddForm(request.GET)
+        field.paddy = paddy_id
+        print(paddy_id)
+        print(field)
         # # if paddy.is_valid():
         # #     paddy.save()
         # user_info = request.session.get('user_info')
@@ -628,8 +625,10 @@ def position(request):
         machine_width = machine['full_width']
 
         if pram is None:
+            print("田んぼの範囲を指定してください")
             return HttpResponse("田んぼの範囲を指定してください")
         if start_end_point is None:
+            print("出入り口を指定してください")
             return HttpResponse("出入り口を指定してください")
 
         # 受け取った値をJSONに整形
@@ -649,9 +648,11 @@ def position(request):
         # print(p.startEndPosition)
         # print(p.paddyDistance)
         # return HttpResponse(p.moveList.to_json(indent=4, ensure_ascii=False))
-        return HttpResponse(p.paddyDistance)
+        print(p.moveList.to_json(ensure_ascii=False))
+        return HttpResponse("成功")
     else:
-        return HttpResponse("違うメソッドを使用しています。")
+        print(request.method)
+        return HttpResponse(request.method)
 
 
 def guest_route_search(request):

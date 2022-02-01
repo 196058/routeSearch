@@ -40,14 +40,17 @@ L.Control.OSMGeocoder = L.Control.extend({
 		L.DomEvent.disableClickPropagation(container);
 
 		var form = this._form = L.DomUtil.create('form', className + '-form');
+		form.id = "form1";
 
 		var input = this._input = document.createElement('input');
 		input.type = "text";
 		input.placeholder = this.options.placeholder || '';
+		input.id = "sbox";
 
 		var submit = document.createElement('input');
 		submit.type = "submit";
 		submit.value = this.options.text;
+		submit.id = "sbtn"
 
 		form.appendChild(input);
 		form.appendChild(submit);

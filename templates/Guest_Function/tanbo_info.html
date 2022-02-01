@@ -22,6 +22,7 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
     {#    searchEngin#}
+    <link rel="stylesheet" href={% static 'rection1/search_box.css' %} />
     <link rel="stylesheet" href={% static 'rection1/OSMGeocoder.css' %} />
     <script src="{% static 'rection1/OSMGeocoder.js' %}"></script>
 
@@ -56,11 +57,7 @@
     <h3>マップを使用して情報を取得してください</h3>
 
     <div id="mapid"></div>
-    <form action="{% url 'Guest_route_search' %}" method="post" id="test">
-        {% csrf_token %}
-        <div id="resultGET"></div>
-        <input type="submit" value=" ルート検索　開始 " class="button-default">
-    </form>
+    <input type="button" id="test" value=" ルート検索　開始 " class="button-default">
 
     <script>
 
@@ -97,7 +94,7 @@
             const option = {
                 position: 'topleft', // topright, topleft, bottomright, bottomleft
                 text: '検索',
-                placeholder: '検索条件を入力してください。',
+                placeholder: 'キーワード',
                 collapsed: false
             };
 
@@ -447,33 +444,17 @@
                         location_json_data: location_json,
                         location_start_end_point_data: start_end_point_json
                     },
-                }).done(function(data) {
+                }).done(function() {
                     // 通信成功時の処理を記述
-                    $('#resultGET').text('GET処理成功：' + data + '.');
-                    {#document.location.href = "{% url 'route' %}"#}
+                    document.location.href = "{% url 'Guest_route_search' %}"
                 }).fail(function() {
                     // 通信失敗時の処理を記述
                     $('#resultGET').text('GET処理失敗.');
+                    alert("失敗")
                 });
             });
-
-            {#$.getJSON("{% static 'rection1/341002019_5.geojson' %}", function(data) {#}
-            {#    const geojson = L.geoJson(data, {#}
-            {#        onEachFeature: function (feature, layer) {#}
-            {#            layer.bindPopup(feature.properties.耕地の種類);#}
-            {#        }#}
-            {#    });#}
-            {#    geojson.addTo(map);#}
-            {#);#}
         }
     </script>
-
-    <form action="{% url 'kikai_info' %}" method="post">
-        <!-- いい感じに間隔を決める -->
-
-    </form>
-	<br><br><br>
-
 {#    <div class="reset button-bg from-left">#}
 {#        <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>#}
         <a href="{% url 'Guest_kikai_info' %}" class="fas fa-chevron-circle-left"> ひとつ前に戻る </a>

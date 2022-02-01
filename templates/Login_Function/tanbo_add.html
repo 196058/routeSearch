@@ -56,13 +56,13 @@
 	<h3>登録に必要な田んぼ情報を入力してください</h3>
 
 {#    <div id="mapid"></div>#}
-{#    <form action="{% url 'tanbo_add_comp' %}" method="post" id="test">#}
-{#        {% csrf_token %}#}
+    <form action="{% url 'tanbo_add_comp' %}" method="post" id="test">
+        {% csrf_token %}
         田んぼ名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft">
         <div id="mapid"></div>
         <div id="resultGET"></div>
-        <input type="button" id="register" value="- 登録する -" class="button-default">
-{#        <input type="submit" id="register" value="- 登録する -" class="button-default">#}
+{#        <input type="button" id="register" value="- 登録する -" class="button-default">#}
+        <input type="submit" id="register" value="- 登録する -" class="button-default">
     </form>
 
     <script>
