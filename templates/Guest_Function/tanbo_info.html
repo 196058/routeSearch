@@ -27,7 +27,7 @@
     <script src="{% static 'rection1/OSMGeocoder.js' %}"></script>
 
     <style>
-      #mapid { height: 750px; width: 1523px; z-index: 1}
+      #mapid { height: 750px; z-index: 1}
     </style>
 
 	<link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
@@ -40,12 +40,18 @@
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
 
+    {# 操作説明 #}
+    <link rel="stylesheet" href="{% static 'systemdesign/css/lightbox.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
+
+
 </head>
 <body onload="init()">
 <!--<header>-->
 <h1 class="h1title">
     <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
-    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -57,7 +63,8 @@
     <h3>マップを使用して情報を取得してください</h3>
 
     <div id="mapid"></div>
-    <input type="button" id="test" value=" ルート検索　開始 " class="button-default">
+    <div id="message"></div>
+    <input type="button" id="route_search" value=" ルート検索　開始 " class="button-default">
 
     <script>
 
@@ -389,7 +396,7 @@
                 return crossCount % 2 === 1;
             }
 
-            $('#test').on('click', function(){
+            $('#route_search').on('click', function(){
                 location_json = [];
                 start_end_point_json = [];
                 position = [];
@@ -432,7 +439,7 @@
                         }
                     }
                 });
-                $('#resultGET').text('通信中...');
+                $('#message').text('通信中...');
                 // Ajax通信を開始
                 $.ajax({
                     url: "{% url 'position' %}",
@@ -444,22 +451,43 @@
                         location_json_data: location_json,
                         location_start_end_point_data: start_end_point_json
                     },
-                }).done(function() {
+                }).done(function(response) {
                     // 通信成功時の処理を記述
-                    document.location.href = "{% url 'Guest_route_search' %}"
+                    if(response === "田んぼの範囲を指定してください"){
+                        $('#message').text(response);
+                    }else if(response === "出入り口を指定してください") {
+                        $('#message').text(response);
+                    }else{
+                        document.location.href = "{% url 'Guest_route_search' %}"
+                    }
+                    {#document.location.href = "{% url 'Guest_route_search' %}"#}
                 }).fail(function() {
                     // 通信失敗時の処理を記述
-                    $('#resultGET').text('GET処理失敗.');
+                    {#$('#message').text('GET処理失敗.');#}
                     alert("失敗")
                 });
             });
         }
     </script>
-{#    <div class="reset button-bg from-left">#}
-{#        <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>#}
-        <a href="{% url 'Guest_kikai_info' %}" class="fas fa-chevron-circle-left"> ひとつ前に戻る </a>
-        <a href="{% url 'index' %}" class="fas fa-home"> メニューに戻る </a>
-{#    </div>#}
+    <table class="ta">
+        <tr>
+            <th>
+                使用例
+            </th>
+            <td>
+                <!--                <ul class="slider">-->
+                <a href="{% static 'systemdesign/images/choice.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice2.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice2.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice3.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice3.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice4.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice4.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice5.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice5.png' %}" alt="" width="30%"></a>
+                <!--                    &lt;!&ndash;/slider&ndash;&gt;</ul>-->
+            </td>
+        </tr>
+    </table>
+    {#    <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>#}
+    <a href="{% url 'Guest_kikai_info' %}" class="fas fa-chevron-circle-left"> ひとつ前に戻る </a>
+    <a href="{% url 'index' %}" class="fas fa-home"> メニューに戻る </a>
 </article>
 
 <a href="tel:000-0000-0000">

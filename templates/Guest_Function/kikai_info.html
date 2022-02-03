@@ -24,7 +24,7 @@
 <!--<header>-->
 <h1 class="h1title">
     <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
-    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -41,7 +41,6 @@
                 <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
                 <label for="label1">機械で植える</label>
                 <div class="hidden_show1">
-{#                    機械名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"><br>#}
                     全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
                     全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
                     条数 ： <input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(条)<br>

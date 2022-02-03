@@ -22,11 +22,12 @@
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
     {#    searchEngin#}
+    <link rel="stylesheet" href={% static 'rection1/search_box.css' %} />
     <link rel="stylesheet" href={% static 'rection1/OSMGeocoder.css' %} />
     <script src="{% static 'rection1/OSMGeocoder.js' %}"></script>
 
     <style>
-      #mapid { height: 750px; width: 1523px; z-index: 1}
+      #mapid { height: 750px; z-index: 1}
     </style>
 
 	<link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
@@ -39,12 +40,17 @@
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
 
+    {# 操作説明 #}
+    <link rel="stylesheet" href="{% static 'systemdesign/css/lightbox.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js" type="text/javascript"></script>
+
 </head>
 <body  onload="init()">
 
 <h1 class="h1title">
     <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
-    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -56,14 +62,14 @@
 	<h3>登録に必要な田んぼ情報を入力してください</h3>
 
 {#    <div id="mapid"></div>#}
-    <form action="{% url 'tanbo_add_comp' %}" method="post" id="test">
-        {% csrf_token %}
+{#    <form action="{% url 'tanbo_add_comp' %}" method="post" id="test">#}
+{#        {% csrf_token %}#}
         田んぼ名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft">
         <div id="mapid"></div>
-        <div id="resultGET"></div>
+        <div id="message"></div>
 {#        <input type="button" id="register" value="- 登録する -" class="button-default">#}
-        <input type="submit" id="register" value="- 登録する -" class="button-default">
-    </form>
+        <input type="button" id="register" value="- 登録する -" class="button-default">
+{#    </form>#}
 
     <script>
 
@@ -102,7 +108,7 @@
             const option = {
                 position: 'topleft', // topright, topleft, bottomright, bottomleft
                 text: '検索',
-                placeholder: '検索条件を入力してください。',
+                placeholder: 'キーワード',
                 collapsed: false
             };
 
@@ -442,7 +448,7 @@
                         }
                     }
                 });
-                $('#resultGET').text('通信中...');
+                $('#message').text('通信中...');
                 // Ajax通信を開始
                 $.ajax({
                     url: "{% url 'tanbo_add_confirm' %}",
@@ -455,41 +461,48 @@
                         location_start_end_point_data: start_end_point_json,
                         name: name
                     },
-                }).done(function(data) {
+                }).done(function(response) {
                     // 通信成功時の処理を記述
-                    $('#resultGET').text('GET処理成功：' + name + '.');
-                    {#document.location.href = "{% url 'route' %}"#}
+                    if(response === "田んぼの範囲を指定してください"){
+                        $('#message').text(response);
+                    }else if(response === "出入り口を指定してください") {
+                        $('#message').text(response);
+                    }else if(response === "田んぼの名前を入力してください"){
+                        $('#message').text(response);
+                    }else{
+                        document.location.href = "{% url 'tanbo_add_comp' %}"
+                    }
+                    {#$('#resultGET').text('GET処理成功：' + name + '.');#}
+
                 }).fail(function() {
                     // 通信失敗時の処理を記述
-                    $('#resultGET').text('GET処理失敗.');
+                    alert('失敗')
+                    {#$('#resultGET').text('GET処理失敗.');#}
                 });
             });
-
-            {#$.getJSON("{% static 'rection1/341002019_5.geojson' %}", function(data) {#}
-            {#    const geojson = L.geoJson(data, {#}
-            {#        onEachFeature: function (feature, layer) {#}
-            {#            layer.bindPopup(feature.properties.耕地の種類);#}
-            {#        }#}
-            {#    });#}
-            {#    geojson.addTo(map);#}
-            {#);#}
         }
     </script>
-    <form action="{% url 'tanbo_add_confirm' %}" method="post">
-        {% csrf_token %}
-	    <table class="write">
-		    <td>
-			    田んぼ名：<input type="text" id="name" class="validate[required]" data-prompt-position="topLeft"><br>
-			    経度：<input type="text" id="lng" class="validate[required]" data-prompt-position="topLeft"><br>
-			    緯度：<input type="text" id="lat" class="validate[required]" data-prompt-position="topLeft"><br>
-		    </td>
-	    </table>
-        <input type="submit" value="- 確認する -">
-    </form>
+    <table class="ta">
+        <tr>
+            <th>
+                使用例
+            </th>
+            <td>
+                <!--                <ul class="slider">-->
+                <a href="{% static 'systemdesign/images/choice.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice2.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice2.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice3.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice3.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice4.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice4.png' %}" alt="" width="30%"></a>
+                <a href="{% static 'systemdesign/images/choice5.png' %}" data-lightbox="group"><img src="{% static 'systemdesign/images/choice5.png' %}" alt="" width="30%"></a>
+                <!--                    &lt;!&ndash;/slider&ndash;&gt;</ul>-->
+            </td>
+        </tr>
+    </table>
+
 
 	<br><br>
 {#	<div class="reset button-bg from-left">#}
-		<a href="{% url 'tanbo_add_confirm' %}" class="button-default">- 確認する -</a><br><br>
+{#		<a href="{% url 'tanbo_add_confirm' %}" class="button-default">- 確認する -</a><br><br>#}
 		<a href="{% url 'tanbo_master' %}" class="fas fa-chevron-circle-left"> 田んぼ一覧に戻る </a>
 {#	</div>#}
 </article>

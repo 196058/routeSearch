@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>システム終了</title>
+    <title>ログアウト</title>
 
     <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/responsive_menu.css' %}"><!--レスポンシブメニュー-->
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
@@ -21,27 +21,22 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
 <article class="backsayuu">
-    <div class="contents-miss">
-        <h1>終了します</h1>
+    <div class="contents-have">
+        <h1>ログアウト</h1>
     </div>
 
-    <h3>
-        こちらのシステムは気に入っていただけたでしょうか。<br>
-        気に入っていただけた方はこちらから新規登録もできます
-    </h3>
+    <h3>ログアウトしました</h3>
 
-    <br><br>
-{#    <div class="reset button-bg from-left">#}
-        <a href="{% url 'shinki_add' %}" class="button-default"> 登録する </a><br>
-
-        <a href="{% url 'index' %}" class="fas fa-home"> 終了する </a>
-{#    </div>#}
+    <br><br><br><br>
+    {#    <div class="reset button-bg from-left">#}
+    <a href="{% url 'index' %}" class="fas fa-sign-out-alt"> メニューに戻る </a>
+    {#    </div>#}
 </article>
 
 <a href="tel:000-0000-0000">

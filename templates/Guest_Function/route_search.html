@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
 
+    <link rel="stylesheet" href="{% static 'systemdesign/css/routetest.css' %}">
+
     <script>
         function print_out() {
             let area = document.getElementById('route');
@@ -45,13 +47,13 @@
             let image_height = 13;
             let image_width = 13;
 
-//テーブル定義
+            //テーブル定義
             let table = document.createElement('table');
             table.id = 'table';
             let thead = document.createElement('thead');
             let tbody = document.createElement('tbody');
 
-//テーブル作成
+            //テーブル作成
             for (let i = 0; i < row_length; i++) {
                 let row = document.createElement('tr');
                 for (let j = 0; j < column_length; j++) {
@@ -65,7 +67,7 @@
             table.appendChild(tbody);
 
 
-//出入口設定
+            //出入口設定
             const im = document.createElement("img");
             im.height = image_height;
             im.width = image_width;
@@ -80,7 +82,7 @@
             im.src = image2;
             table.rows[door_way_y_position].cells[door_way_x_position].appendChild(im);
 
-//ルート表示
+            //ルート表示
             for(const step_move_list of route_proposal.all_move_list) {
                 for (const move of step_move_list.step_move_list) {
                     const img = document.createElement("img");
@@ -113,7 +115,7 @@
                 }
             }
 
-//bodyに作成したtableを追加
+            //bodyに作成したtableを追加
             document.getElementById('route').appendChild(table);
         }</script>
 
@@ -123,7 +125,7 @@
 <!--<header>-->
 <h1 class="h1title">
     <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
-    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -141,16 +143,14 @@
     </form>
 
     <br><br><br>
-    {#    <div class="reset button-bg from-left">#}
-        <a href="{% url 'Guest_route_search' %}" class="button-default"> 再検索 </a><br><br>
-        <button onclick="print_out()" class="button-default"> ルートを印刷 </button><br><br>
+    <a href="{% url 'Guest_route_search' %}" class="button-default"> 再検索 </a><br><br>
+    <button onclick="print_out()" class="button-default"> ルートを印刷 </button><br><br>
 {#    <form action="{% url 'route_session' %}">#}
-        <a href="{% url 'Guest_tanbo_info' %}" class="button-default"> 別の田んぼに植える </a><br><br><br>
+    <a href="{% url 'Guest_tanbo_info' %}" class="button-default"> 別の田んぼに植える </a><br><br><br>
 {#        <input type="submit" value="別の田んぼに植える" class="button-default">#}
 {#    </form>#}
     <br><br>
         <a href="{% url 'proposal' %}" class="button-default"> 田植えを終了する </a>
-{#    </div>#}
 </article>
 
 <a href="tel:000-0000-0000">
