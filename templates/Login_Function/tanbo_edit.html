@@ -24,7 +24,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-have">
         <h1>入力<span>-田んぼ編集-</span></h1>
@@ -33,11 +34,10 @@
     <h3>↓ 必要な箇所を修正してください ↓</h3>
 
     <form action="{% url 'tanbo_edit_confirm' %}" method="post">
+        {% csrf_token %}
         <table class="write">
             <td>
-                田んぼ名:<input type="text" id="name"><br>
-                経度:<input type="text" id="lng"><br>
-                緯度:<input type="text" id="lat"><br>
+                田んぼ名:<input type="text" name="paddy_name" value="{{ paddy_info.paddy_name }}"><br>
             </td>
         </table>
         <br><br>
@@ -50,7 +50,8 @@
         <a href="{% url 'tanbo_master' %}" class="fas fa-chevron-circle-left">- 田んぼ一覧に戻る -</a>
 {#    </div>#}
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

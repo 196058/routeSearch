@@ -14,10 +14,7 @@ class Admin(models.Model):
 
 
 class Field(models.Model):
-    paddy = models.ForeignKey('Paddy', models.DO_NOTHING, blank=True, null=True)
-    position = models.IntegerField(blank=True, null=True)
-    lng = models.FloatField(blank=True, null=True)
-    lat = models.FloatField(blank=True, null=True)
+    paddy_id = models.ForeignKey('Paddy', models.DO_NOTHING, db_column='paddy_id', blank=True, null=True)
     location_json_data = models.JSONField(blank=True, null=True)
     location_start_end_point_data = models.JSONField(blank=True, null=True)
 
@@ -53,7 +50,7 @@ class Mecainfo(models.Model):
 class Paddy(models.Model):
     paddy_id = models.AutoField(primary_key=True)
     id = models.ForeignKey('User', models.DO_NOTHING, db_column='id', blank=True, null=True)
-    name = models.CharField(max_length=256, blank=True, null=True)
+    paddy_name = models.CharField(max_length=256, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -61,6 +58,7 @@ class Paddy(models.Model):
 
 
 class User(models.Model):
+    user_id = models.AutoField(primary_key=True)
     user_name = models.CharField(max_length=192, blank=True, null=True)
     pass_word = models.CharField(max_length=192, blank=True, null=True)
     mail = models.CharField(max_length=192, blank=True, null=True)
@@ -68,6 +66,3 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = 'user'
-
-
-

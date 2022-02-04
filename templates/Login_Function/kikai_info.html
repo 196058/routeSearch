@@ -19,6 +19,24 @@
 
     <script src="{% static 'systemdesign/js/radio_button.js' %}"></script>
     <script src="{% static 'systemdesign/js/button_control.js' %}"></script>
+    <script>
+        $('#next').on('click', function(){
+            var flag = false; // 選択されているか否かを判定するフラグ
+            for(var i=0; i<document.formID.meca.length-1;i++){
+                if(document.form1.meca[i].checked){
+                    flag = true;
+                }
+            }
+            if(flag && document.getElementById('name')){
+
+            }
+
+            // 何も選択されていない場合の処理
+            if(!flag){
+                alert("項目が選択されていません。");
+            }
+        }
+    </script>
 </head>
 <body>
 <!--<header>-->
@@ -27,14 +45,16 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-have">
         <h1>植え方選択<span>-ルート検索-</span></h1>
     </div>
 
 
-    <form action="{% url 'route_search' %}" method="get">
+    <form action="{% url 'tanbo_info' %}" method="post" name="formID">
+    {% csrf_token %}
         <h3>登録した機械で植える</h3>
 
         <div class="hidden_box">
@@ -43,7 +63,7 @@
                 <label for="label1">機械で植える</label>
                 <div class="hidden_show1">
                 {% for meca in meca_info %}
-                    <label> <input type="radio" name="meca" id="kikai" value="{{ meca.name }}">{{ meca.name }}</label><br>
+                    <label> <input type="radio" name="meca_name" id="kikai" value="{{ meca.name }}">{{ meca.name }}</label><br>
                 {% endfor %}
                 </div>
                 <!-- hidden_show1 -->
@@ -60,14 +80,14 @@
                 <label for="label2">新しい機械で植える</label>
                 <div class="hidden_show2">
 
-                    <table class="write">
-                        <td>
+{#                    <table class="write">#}
+{#                        <td>#}
                             機械名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"><br>
                             全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
                             全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
-                            条数 ： <input type="text" name="jousu" id="joukan" class="validate[required]" data-prompt-position="topLeft">(条)<br>
-                        </td>
-                    </table>
+                            条数 ： <input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(条)<br>
+{#                        </td>#}
+{#                    </table>#}
                 </div>
                 <!-- hidden_show2 -->
             </div>
@@ -75,28 +95,31 @@
         </div>
         <!-- hidden_box -->
 
-        <h3>手で植える</h3>
-
-        <div class="hidden_box">
-            <div class="hidden_box3">
-                <input type="checkbox" id="label3" name="group" onclick="clickBtn3()">
-                <label for="label3">手で植える</label>
-                <div class="hidden_show3">
-                    間隔:<input type="text" id="hand" onclick="clickBtn3()">
-                </div>
-                <!-- hidden_show3 -->
-            </div>
-            <!-- hidden_box3 -->
-        </div>
+{#        <h3>手で植える</h3>#}
+{##}
+{#        <div class="hidden_box">#}
+{#            <div class="hidden_box3">#}
+{#                <input type="checkbox" id="label3" name="group" onclick="clickBtn3()">#}
+{#                <label for="label3">手で植える</label>#}
+{#                <div class="hidden_show3">#}
+{#                    間隔:<input type="text" id="hand" onclick="clickBtn3()">#}
+{#                </div>#}
+{#                <!-- hidden_show3 -->#}
+{#            </div>#}
+{#            <!-- hidden_box3 -->#}
+{#        </div>#}
         <!-- hidden_box -->
+    <input type="submit" value="田んぼ選択" class="button-default">
     </form>
 
 {#    <div class="reset button-bg from-left">#}
-        <a href="{% url 'route_search' %}" class="button-default">- ルート検索　開始 -</a><br><br>
-        <a href="{% url 'tanbo_info' %}" class="fas fa-chevron-circle-left">- ひとつ前に戻る -</a>
+    <div id="message"></div>
+{#        <a href="{% url 'tanbo_info' %}" id="next" class="button-default"> 田んぼ選択 </a><br><br>#}
+        <a href="{% url 'member_login' %}" class="fas fa-home"> ホームに戻る -</a>
 {#    </div>#}
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

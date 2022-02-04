@@ -24,7 +24,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-miss">
         <h1>田んぼ一覧</h1>
@@ -36,30 +37,31 @@
         <table class="details">
             <tr><th>田んぼ名</th><th>編集</th><th>削除</th></tr>
             {% for paddy in paddy %}
-            <tr>
-                <td>{{ paddy.paddy_name }}</td>
-                <td><form action="{% url 'tanbo_edit' %}" method="post">
+                <tr>
+                    <td>{{ paddy.paddy_name }}</td>
+                    <td><form action="{% url 'tanbo_edit' %}" method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="paddy_name" value="{{ paddy.name }}">
-                        <input type="submit" value="編集">
+                        <input type="hidden" name="paddy_id" value="{{ paddy.paddy_id }}">
+                        <input type="submit" value="編集" class="button-default button-table">
                     </form>
-                </td>
-                <td><form action="{% url 'tanbo_del_confirm' %}" method="post">
+                    </td>
+                    <td><form action="{% url 'tanbo_del_confirm' %}" method="post">
                         {% csrf_token %}
-                        <input type="hidden" name="paddy_name" value="{{ paddy.name }}">
-                        <input type="submit" value="削除">
+                        <input type="hidden" name="paddy_id" value="{{ paddy.paddy_id }}">
+                        <input type="submit" value="削除" class="fas fa-chevron-circle-left button-table">
                     </form>
-                </td>
-            </tr>
+                    </td>
+                </tr>
             {% endfor %}
         </table>
 
-        <br><br>
-        <a href="{% url 'tanbo_add' %}" class="button-default"> 新規登録 </a><br><br>
+    <br><br>
+    <a href="{% url 'tanbo_add' %}" class="button-default"> 新規登録 </a><br><br>
         <a href="{% url 'member_login' %}" class="fas fa-home"> ホームに戻る </a>
 {#    </div>#}
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

@@ -24,14 +24,13 @@
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
-
     <link rel="stylesheet" href="{% static 'systemdesign/css/routetest.css' %}">
 
     <script>
         function print_out() {
             let area = document.getElementById('route');
             let temp = document.body.innerHTML; // bodyのhtmlを退避
-            document.body.innerHTML = area.innerHTML; // 該当idのhtmlをdobyにつっこむ
+            document.body.innerHTML = area.innerHTML; // 該当idのhtmlをbodyにつっこむ
             print(); // 印刷
             document.body.innerHTML = temp; // 退避したbodynohtmlを戻す
         }
@@ -117,7 +116,8 @@
 
             //bodyに作成したtableを追加
             document.getElementById('route').appendChild(table);
-        }</script>
+        }
+    </script>
 
 
 </head>
@@ -128,7 +128,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-miss">
         <h1>ルート表示中</h1>
@@ -152,7 +153,8 @@
     <br><br>
         <a href="{% url 'proposal' %}" class="button-default"> 田植えを終了する </a>
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

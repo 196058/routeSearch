@@ -1,9 +1,7 @@
 from idlelib.rpc import request_queue
 
-from django.contrib.auth.models import User
 from django.shortcuts import render, HttpResponse
 from django.contrib.auth import logout
-from django.template.context_processors import request
 from apps.exception import Exception
 from apps.paddy.Model.paddyModel import PaddyParameter, StartEndPosition
 from .paddy.paddyproperty import PaddyProperty
@@ -11,7 +9,7 @@ from apps.paddy.Model.machineModel import Machine
 
 from .form import UserAddForm, LoginForm, MecaAddForm, PaddyAddForm, FieldAddForm, AdminLoginForm, AdminAddForm, \
     InquiryAddForm
-from .models import User, Mecainfo, Paddy, Admin, Inquiry
+from .models import User, Mecainfo, Paddy, Admin, Inquiry, Field
 from django.views.generic import TemplateView
 import json
 from apps import version
@@ -51,7 +49,7 @@ def shinki_add_confirm(request):
         try:
             check = User.objects.get(user_name=input_name)
             if check is not None:
-                return HttpResponse('入力されたユーザIDはすでに登録されています。<br>ユーザIDを変えてください。')
+                return HttpResponse('入力されたユーザ名はすでに登録されています。<br>ユーザ名を変えてください。')
         except User.DoesNotExist:
             if user_info.is_valid():
                 context = {
@@ -100,11 +98,11 @@ def shinki_add_comp(request):
 
 # ログイン
 def login(request):
-    login_form = LoginForm()
-    context = {
-        'form': login_form
-    }
-    return render(request, 'Login_Function/login.html', context)
+    # login_form = LoginForm()
+    # context = {
+    #     'form': login_form
+    # }
+    return render(request, 'Login_Function/login.html')
 
 
 def member_login(request):
@@ -117,7 +115,7 @@ def member_login(request):
             user = User.objects.get(user_name=user_name)
             if user.pass_word == request.POST['pass_word']:
                 context = {
-                    'id': user.id,
+                    'user_id': user.user_id,
                     'user_name': user.user_name,
                     'pass_word': user.pass_word,
                     'mail': user.mail
@@ -141,7 +139,7 @@ def member_login(request):
 def member_logout(request):
     del request.session['user_info']
     logout(request)
-    return render(request, 'index.html')
+    return render(request, 'Login_Function/logout.html')
 
 
 # def doorway_choice(request):
@@ -175,22 +173,76 @@ def route_search(request):
 def tanbo_master(request):
     user_info = request.session.get('user_info')
     # paddyテーブルをユーザIDで検索しname順に整列
-    paddy = Paddy.objects.filter(id=user_info['id']).order_by('name')
+    paddy_info = Paddy.objects.filter(id=user_info['user_id'])
     context = {
-        'paddy': paddy
+        'paddy': paddy_info
     }
     return render(request, 'Login_Function/tanbo_master.html', context)
 
 
 def tanbo_info(request):
-    # # 登録した田んぼを一覧表示する処理
-    # user_info = request.session.get('user_info')
-    # paddy_info = Paddy.objects.filter(id=user_info['id']).order_by('name')
-    # context = {
-    #     'paddy': paddy_info
-    # }
-    # return render(request, 'Login_Function/tanbo_info.html', context)
-    return render(request, 'Login_Function/tanbo_info.html')
+    user_info = request.session.get('user_info')
+    user_id = user_info['user_id']
+    global route_meca_info
+    # if request.POST.get('meca_name') != '' and request.POST.get('name') != '':
+    #   return HttpResponse('登録された機械情報、新規機械のどちらにも情報が入力されています。\nどちらか一方を入力または選択してください。')
+    #     htmlに入力情報のリセットボタンがあればいいかも
+    if request.POST.get('name') != '':
+        print('request.POST.get', request.POST.get('name'))
+        meca_info = MecaAddForm(request.POST)
+        if meca_info.is_valid():
+            route_meca_info = {
+                'name': request.POST.get('name'),
+                'full_length': request.POST.get('full_length'),
+                'full_width': request.POST.get('full_width'),
+                'plant': request.POST.get('plant'),
+            }
+            # print(route_meca_info)
+        #                 ここで新規機械情報をＤＢに登録するか…もしtanbo_info.htmlにいって戻って情報変更された場合どうするか
+        #                 sessionの名前を変えるか…
+        else:
+            return HttpResponse('フォームの入力に誤りがあります')
+    elif request.POST.get('meca_name') != '':
+        meca_name = request.POST.get('meca_name')
+        print('meca_name', meca_name)
+        meca_info = Mecainfo.objects.get(id=user_id, name=meca_name)
+        route_meca_info = {
+            'name': meca_info.name,
+            'full_length': meca_info.full_length,
+            'full_width': meca_info.full_width,
+            'plant': meca_info.plant,
+        }
+    # 機械情報をsessionに保持
+    print('route_meca_info', route_meca_info)
+    request.session['route_meca_info'] = route_meca_info
+
+    # 登録した田んぼを一覧表示する処理
+    paddy_info = Paddy.objects.filter(id=user_info['user_id']).order_by('paddy_name')
+    context = {
+        'paddy_info': paddy_info
+    }
+    return render(request, 'Login_Function/tanbo_info.html', context)
+
+
+def tanbo_search(request):
+    if request.method == 'GET':
+        user_info = request.session.get('user_info')
+        user_id = user_info['user_id']
+        paddy_name = request.GET.get("paddy_name")
+        print(paddy_name, user_id)
+        paddy_info = Paddy.objects.get(id=user_id, paddy_name=paddy_name)
+        print('paddy_info', paddy_info.paddy_id)
+        print(Field.objects.filter(paddy_id=paddy_info.paddy_id))
+        field_info = Field.objects.filter(paddy_id=paddy_info.paddy_id)
+        print('field', field_info)
+        paddy = {
+            'location_json': field_info.location_json_data,
+            'start_end_point_json': field_info.location_start_end_point_data,
+        }
+        return HttpResponse(paddy)
+    else:
+        print(request.method)
+        return HttpResponse(request.method)
 
 
 def tanbo_add(request):
@@ -200,79 +252,55 @@ def tanbo_add(request):
 
 def tanbo_add_confirm(request):
     if request.method == 'GET':
+        user_info = request.session.get('user_info')
+        user_id = user_info['user_id']
+        paddy_name = request.GET.get('paddy_name')
+        print(paddy_name, user_id)
         # JSON情報を取得
         field = request.GET.get("location_json_data")
-        print('pram', field)
         start_end_point = request.GET.get("location_start_end_point_data")
-        paddy_name = request.GET.get('name')
-        print('field: ', field, ' , start_end_point: ', start_end_point, 'paddy_name: ', paddy_name)
         if field is None:
             return HttpResponse("田んぼの範囲を指定してください")
         if start_end_point is None:
             return HttpResponse("出入り口を指定してください")
 
-        paddy = PaddyAddForm(request.GET)
-        paddy_id = Paddy.objects.all().aggregate(max('paddy_id'))
-        field = FieldAddForm(request.GET)
-        field.paddy = paddy_id
-        print(paddy_id)
-        print(field)
-        # # if paddy.is_valid():
-        # #     paddy.save()
-        # user_info = request.session.get('user_info')
-        # user_id = user_info['id']
-        # paddy_name = request.GET.get('name')
-        # # paddy_info = PaddyAddForm(request.POST)
-        # # DBのpaddy_nameの重複チェック
+        try:
+            check = Paddy.objects.get(id=user_id, paddy_name=paddy_name)
+            print(check)
+            if check is not None:
+                return HttpResponse('found')
+                # return HttpResponse('入力された田んぼ名はすでに登録されています。<br>田んぼ名を変えてください。')
+        except Paddy.DoesNotExist:
+            user_models = User.objects.get(user_id=user_id)
+            # 受け取った値をJSONに整形
+            if isinstance(user_models, User):
+                Paddy.objects.create(id=user_models, paddy_name=paddy_name)
+                paddy_models = Paddy.objects.get(id=user_models.user_id, paddy_name=paddy_name)
+                if isinstance(paddy_models, Paddy):
+                    Field.objects.create(paddy_id=paddy_models, location_json_data=field,
+                                         location_start_end_point_data=start_end_point)
+            return HttpResponse('完了')
+        else:
+            return HttpResponse('フォームの送信に使用しているメソッドが違います')
+
+        # field.paddy = paddy_id
         # try:
-        #     check = Mecainfo.objects.get(id=user_id, name=paddy_name)
+        #     check = Paddy.objects.get(id=user_name, name=paddy_name)
         #     if check is not None:
         #         return HttpResponse('入力された田んぼ名はすでに登録されています。<br>田んぼ名を変えてください。')
         # except Paddy.DoesNotExist:
-        #
-        #     if paddy_info.is_valid():
-        #         context = {
-        #             'paddy_info': paddy_info,
-        #             'id': user_id,
-        #         }
-    #             return render(request, 'Login_Function/kikai_add_confirm.html', context)
-    #         else:
-    #             return HttpResponse('フォームの入力に誤りがあります')
-        return HttpResponse('完了')
-    else:
-        return HttpResponse('フォームの送信に使用しているメソッドが違います')
+        #     if field.is_valid():
+        #         if paddy.is_valid():
+        #             paddy.save()
+        #             paddy = Paddy.objects.get(id=user_name, name=paddy_name)
+        #             field.paddy_id = paddy.paddy_id
+        #             field.save()
+        #             return HttpResponse('完了')
+        #         else:
+        #             return HttpResponse('フォームの入力に誤りがあります')
+        #     else:
+        #         return HttpResponse('フォームの入力に誤りがあります')
 
-
-# def tanbo_position(request):
-#     if request.method == 'GET':
-#         # JSON情報を取得
-#         filed = request.GET.get("location_json_data")
-#         start_end_point = request.GET.get("location_start_end_point_data")
-#
-#         if filed is None:
-#             return HttpResponse("田んぼの範囲を指定してください")
-#         if start_end_point is None:
-#             return HttpResponse("出入り口を指定してください")
-#
-#         # # 受け取った値をJSONに整形
-#         # paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
-#         # startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
-#         # machineInfo = Machine(plant=int(machine_plant), length=int(machine_length), width=int(machine_width))
-#         # print('machineInfo  ', machineInfo)
-#
-#         try:
-#             # FieldAddForm.position = filed['paddyFields'][]
-#             # p = PaddyProperty(paddyFields.paddyFields, startEndPointInfo.startEndPosition, machineInfo)
-#         except Exception.PointException as e:
-#             return HttpResponse(e)
-#         # JSONデータのsession作成
-#         # request.session['moveList'] = p.moveList.to_json(ensure_ascii=False)
-#         print('session作成しました。')
-#         # print(p.moveList.to_json(indent=4, ensure_ascii=False))
-#         # return HttpResponse(p.moveList.to_json(indent=4, ensure_ascii=False))
-#         return HttpResponse(p.paddyDistance)
-#     else:
-#         return HttpResponse("違うメソッドを使用しています。")
 
 
 def tanbo_add_comp(request):
@@ -304,100 +332,104 @@ def tanbo_add_comp(request):
 
 
 def tanbo_del_confirm(request):
-    # if request.method == 'POST':
-    #     paddy_id = request.POST.get('paddy_id')
-    #     paddy_info = Paddy.objects.get(paddy_id=paddy_id)
-    #     context = {
-    #         'paddy_info': paddy_info
-    #     }
-    #     return render(request, 'Login_Function/tanbo_del_confirm.html', context)
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
-    return render(request, 'Login_Function/tanbo_del_confirm.html')
+    if request.method == 'POST':
+        paddy_id = request.POST.get('paddy_id')
+        request.session['paddy_id'] = paddy_id
+        paddy_info = Paddy.objects.get(paddy_id=paddy_id)
+        context = {
+            'paddy_info': paddy_info
+        }
+        return render(request, 'Login_Function/tanbo_del_confirm.html', context)
+    else:
+        return HttpResponse('フォームの送信に使用しているメソッドが違います')
 
 
 def tanbo_del_comp(request):
-    # if request.method == 'POST':
-    #     user_info = request.session.get('user_info')
-    #     user_id = user_info['id']
-    #     paddy_name = request.POST.get('paddy_name')
-    #     print(user_info['id'], request.POST.get('name'))
-    #     record = Paddy.objects.get(id=user_id, name=paddy_name)
-    #     print('record', record)
-    #     record.delete()
-    #     return render(request, 'Login_Function/tanbo_del_comp.html')
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
-    return render(request, 'Login_Function/tanbo_del_comp.html')
+    if request.method == 'POST':
+        user_info = request.session.get('user_info')
+        user_id = user_info['user_id']
+        get_paddy_id = request.POST.get('paddy_id')
+        field_info = Field.objects.filter(paddy_id=get_paddy_id)
+        field_info.delete()
+        record = Paddy.objects.get(id=user_id, paddy_id=get_paddy_id)
+        record.delete()
+        return render(request, 'Login_Function/tanbo_del_comp.html')
+    else:
+        return HttpResponse('フォームの送信に使用しているメソッドが違います')
+    # return render(request, 'Login_Function/tanbo_del_comp.html')
 
 
 def tanbo_edit(request):
     # # コード：田んぼの変更範囲次第でFieldの処理も追加する
-    # if request.method == 'POST':
-    #     paddy_id = request.POST.get('paddy_id')
-    #     paddy_info = Paddy.objects.get(paddy_id=paddy_id)
-    #     print("[tanbo_edit]paddy_info:", paddy_info)
-    #     context = {
-    #         'paddy_info': paddy_info
-    #     }
-    #     # tanbo_edit_confirmでpaddy_nameの重複チェックに使用
-    #     request.session['paddy_name'] = paddy_info.name
-    #     # tanbo_edit_compで変更するデータを特定するために使用
-    #     request.session['paddy_id'] = paddy_id
-    #     return render(request, 'Login_Function/tanbo_edit.html', context)
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
-    return render(request, 'Login_Function/tanbo_edit.html')
+    if request.method == 'POST':
+        paddy_id = request.POST.get('paddy_id')
+        print("paddy_id", paddy_id)
+        paddy_info = Paddy.objects.get(paddy_id=paddy_id)
+        print("[tanbo_edit]paddy_info:", paddy_info)
+        context = {
+            'paddy_info': paddy_info
+        }
+        # tanbo_edit_confirmでpaddy_nameの重複チェックに使用
+        request.session['paddy_name'] = paddy_info.paddy_name
+        # tanbo_edit_compで変更するデータを特定するために使用
+        request.session['paddy_id'] = paddy_id
+        return render(request, 'Login_Function/tanbo_edit.html', context)
+    else:
+        return HttpResponse('フォームの送信に使用しているメソッドが違います')
+    # return render(request, 'Login_Function/tanbo_edit.html')
 
 
 def tanbo_edit_confirm(request):
-    # if request.method == 'POST':
-    #     paddy_info = PaddyAddForm(request.POST)
-    #     user_info = request.session.get('user_info')
-    #     user_id = user_info['id']
-    #     paddy_name = request.POST.get('name')
-    #     # 田んぼ名の変更があった場合paddy_nameの重複チェック
-    #     if paddy_name != request.session.get('paddy_name'):
-    #         try:
-    #             check = Paddy.objects.get(id=user_id, name=paddy_name)
-    #             if check is not None:
-    #                 return HttpResponse('入力された田んぼ名はすでに登録されています。<br>田んぼ名を変えてください。')
-    #         except Paddy.DoesNotExist:
-    #             pass
-    #
-    #     if paddy_info.is_valid():
-    #         context = {
-    #             'paddy_info': paddy_info,
-    #             'id': user_id,
-    #         }
-    #         return render(request, 'Login_Function/tanbo_edit_confirm.html', context)
-    #     else:
-    #         return HttpResponse('フォームの入力に誤りがあります')
-    # else:
-    #     return HttpResponse('フォームの送信に使用しているメソッドが違います')
-    return render(request, 'Login_Function/tanbo_edit_confirm.html')
+    if request.method == 'POST':
+        user_info = request.session.get('user_info')
+        paddy_info = PaddyAddForm(request.POST)
+        print(paddy_info)
+        user_id = user_info['user_id']
+        paddy_name = request.POST.get('paddy_name')
+        # 田んぼ名の変更があった場合paddy_nameの重複チェック
+        if paddy_name != request.session.get('paddy_name'):
+            try:
+                check = Paddy.objects.get(id=user_id, paddy_name=paddy_name)
+                if check is not None:
+                    return HttpResponse('入力された田んぼ名はすでに登録されています。<br>田んぼ名を変えてください。')
+            except Paddy.DoesNotExist:
+                pass
+
+        if paddy_info.is_valid():
+            context = {
+                'paddy_name': paddy_name,
+                'paddy_info': paddy_info,
+                'id': user_id,
+            }
+            return render(request, 'Login_Function/tanbo_edit_confirm.html', context)
+        else:
+            return HttpResponse('フォームの入力に誤りがあります')
+    else:
+        return HttpResponse('フォームの送信に使用しているメソッドが違います')
+    # return render(request, 'Login_Function/tanbo_edit_confirm.html')
 
 
 def tanbo_edit_comp(request):
-    # if request.method == 'POST':
-    #     paddy_id = request.session.get('paddy_id')
-    #     paddy_info = Paddy.objects.get(paddy_id=paddy_id)
-    #     paddy_form = PaddyAddForm(request.POST, instance=paddy_info)
-    #     if paddy_form.is_valid():
-    #         paddy_form.save()
-    #         # 変更のために使用したsessionを削除
-    #         del request.session['paddy_name']
-    #         del request.session['paddy_id']
-    #         return render(request, 'Login_Function/tanbo_edit_comp.html')
-    # else:
-    #     return HttpResponse('フォームの入力に誤りがあります')
+    if request.method == 'POST':
+        paddy_id = request.session.get('paddy_id')
+        paddy_info = Paddy.objects.get(paddy_id=paddy_id)
+        paddy_form = PaddyAddForm(request.POST, instance=paddy_info)
+        if paddy_form.is_valid():
+            paddy_form.save()
+            # 変更のために使用したsessionを削除
+            del request.session['paddy_name']
+            del request.session['paddy_id']
+            return render(request, 'Login_Function/tanbo_edit_comp.html')
+    else:
+        return HttpResponse('フォームの入力に誤りがあります')
     return render(request, 'Login_Function/tanbo_edit_comp.html')
 
 
 def kikai_master(request):
     user_info = request.session.get('user_info')
     # DB内をuser_idで検索し、機械名順に整列
-    meca_info = Mecainfo.objects.filter(id=user_info['id']).order_by('name')
+    print(Mecainfo.objects.filter(id=user_info['user_id']).order_by('name'))
+    meca_info = Mecainfo.objects.filter(id=user_info['user_id']).order_by('name')
     context = {
         'meca_info': meca_info
     }
@@ -405,21 +437,27 @@ def kikai_master(request):
 
 
 def kikai_info(request):
-    # 田んぼ情報の取得
-    if request.method == 'POST':
-        # if request.POST['paddy'] != None:
-        #     paddy_number = request.POST['paddy']
-        #     paddy_info = Paddy.objects.filter(id=paddy_number)
-        #     request.session['paddy_info'] = paddy_info
-        paddy_info = PaddyAddForm(request.POST)
+    # if request.method == 'POST':
+    #     # if request.POST['paddy'] != None:
+    #     #     paddy_number = request.POST['paddy']
+    #     #     paddy_info = Paddy.objects.filter(id=paddy_number)
+    #     #     request.session['paddy_info'] = paddy_info
+    #     paddy_info = PaddyAddForm(request.POST)
+    if request.session.get('route_paddy_info', None) is None or request.session.get('route_meca_info', None) is None:
+        print('paddy,mecaのsessionはありません。')
+    else:
+        print('paddy,mecaのsessionを削除します', request.session.get('guest_paddy'))
+        del request.session['route_paddy_info']
+        del request.session['route_meca_info']
+
     # 機械一覧処理
     user_info = request.session.get('user_info')
-    meca_info = Mecainfo.objects.filter(id=user_info['id']).order_by('name')
+    meca_info = Mecainfo.objects.filter(id=user_info['user_id']).order_by('name')
+    # print(meca_info)
     context = {
         'meca_info': meca_info
     }
     return render(request, 'Login_Function/kikai_info.html', context)
-    # return render(request, 'Login_Function/kikai_info.html')
 
 
 def kikai_add(request):
@@ -430,9 +468,10 @@ def kikai_add(request):
 def kikai_add_confirm(request):
     if request.method == 'POST':
         user_info = request.session.get('user_info')
-        user_id = user_info['id']
+        user_id = user_info['user_id']
         meca_name = request.POST.get('name')
         meca_info = MecaAddForm(request.POST)
+        print('meca_info', meca_info)
         # DBのmeca_nameの重複チェック
         try:
             check = Mecainfo.objects.get(id=user_id, name=meca_name)
@@ -482,13 +521,18 @@ def kikai_del_confirm(request):
 def kikai_del_comp(request):
     if request.method == 'POST':
         user_info = request.session.get('user_info')
-        user_id = user_info['id']
+        user_id = user_info['user_id']
         meca_name = request.POST.get('name')
         record = Mecainfo.objects.get(id=user_id, name=meca_name)
         record.delete()
         return render(request, 'Login_Function/kikai_del_comp.html')
     else:
-        return HttpResponse('フォームの送信に使用しているメソッドが違います')
+        user_info = request.session.get('user_info')
+        user_id = user_info['user_id']
+        meca_name = request.POST.get('name')
+        record = Mecainfo.objects.get(id=user_id, name=meca_name)
+        record.delete()
+        return render(request, 'Login_Function/kikai_del_comp.html')
     # return render(request, 'Login_Function/kikai_del_comp.html')
 
 
@@ -554,11 +598,12 @@ def kikai_edit_comp(request):
 # ゲスト
 def guest_kikai_info(request):
     # tanbo_info.htmlから田んぼ情報を取得
-    if request.session.get('guest_paddy') is None:
+    if request.session.get('guest_paddy', None) is None or request.session.get('guest_meca', None) is None:
         print('sessionはありません。')
     else:
-        print('sessionを削除します', request.session.get('guest_paddy'))
+        print('sessionを削除します', request.session.get('guest_paddy'), request.session.get('guest_meca'))
         del request.session['guest_paddy']
+        del request.session['guest_meca']
     # マップ表示プログラム
     # if request.method == 'POST':
     #     paddy = PaddyAddForm(request.POST)
@@ -585,25 +630,25 @@ def guest_tanbo_info(request):
         del request.session['moveList']
     # paddy_info = request.session.get('guest_paddy')
     if request.method == 'POST':
-        print('name', request.POST.get('name'))
-        if request.POST.get('name') != '':
-            print("機械で植えるを選択")
-            meca_info = MecaAddForm(request.POST)
-            if meca_info.is_valid():
-                context = {
-                    'name': request.POST.get('name'),
-                    'full_length': request.POST.get('full_length'),
-                    'full_width': request.POST.get('full_width'),
-                    'plant': request.POST.get('plant'),
-                }
-                # 機械情報をsessionに保持
-                request.session['guest_meca'] = context
-                print('meca   ', request.session.session_key)
-            else:
-                return HttpResponse('フォームの入力に誤りがあります')
-        elif request.POST.get('hand') != '':
-            print("手で植えるを選択")
-            hand = request.POST.get('hand')
+        print('name', request.POST.get('full_length'))
+        # if request.POST.get('full_length') != '':
+        #     print("機械で植えるを選択")
+        meca_info = MecaAddForm(request.POST)
+        if meca_info.is_valid():
+            context = {
+                'name': request.POST.get('name'),
+                'full_length': request.POST.get('full_length'),
+                'full_width': request.POST.get('full_width'),
+                'plant': request.POST.get('plant'),
+            }
+            # 機械情報をsessionに保持
+            request.session['guest_meca'] = context
+            print('meca   ', request.session.session_key)
+        else:
+            return HttpResponse('フォームの入力に誤りがあります')
+        # elif request.POST.get('hand') != '':
+        #     print("手で植えるを選択")
+        #     hand = request.POST.get('hand')
     # if request.session.get('guest_meca') is None:
     #     print('sessionはありません。')
     # else:
@@ -616,25 +661,30 @@ def guest_tanbo_info(request):
 def position(request):
     if request.method == 'GET':
         # JSON情報を取得
+        global machine
         pram = request.GET.get("location_json_data")
-        print('pram', pram)
+        # print('pram', pram)
         start_end_point = request.GET.get("location_start_end_point_data")
-        machine = request.session.get('guest_meca')
+        if request.session.get('guest_meca', None) is not None:
+            machine = request.session.get('guest_meca')
+
+        if request.session.get('route_meca_info', None) is not None:
+            machine = request.session.get('route_meca_info')
+        print(machine)
         machine_plant = machine['plant']
         machine_length = machine['full_length']
         machine_width = machine['full_width']
 
         if pram is None:
-            print("田んぼの範囲を指定してください")
             return HttpResponse("田んぼの範囲を指定してください")
         if start_end_point is None:
-            print("出入り口を指定してください")
             return HttpResponse("出入り口を指定してください")
 
         # 受け取った値をJSONに整形
         paddyFields: PaddyParameter = PaddyParameter.from_json(pram)
         startEndPointInfo: StartEndPosition = StartEndPosition.from_json(start_end_point)
-        machineInfo = Machine(plant=int(machine_plant), length=int(machine_length), width=int(machine_width))
+        machineInfo = Machine(plant=abs(int(machine_plant)), length=abs(int(machine_length)),
+                              width=abs(int(machine_width)))
         print('machineInfo  ', machineInfo)
 
         try:
@@ -644,11 +694,7 @@ def position(request):
         # JSONデータのsession作成
         request.session['moveList'] = p.moveList.to_json(ensure_ascii=False)
         print('session作成しました。')
-        # print(p.paddyFields)
-        # print(p.startEndPosition)
-        # print(p.paddyDistance)
-        # return HttpResponse(p.moveList.to_json(indent=4, ensure_ascii=False))
-        print(p.moveList.to_json(ensure_ascii=False))
+        # print(p.moveList.to_json(ensure_ascii=False))
         return HttpResponse("成功")
     else:
         print(request.method)
@@ -656,9 +702,6 @@ def position(request):
 
 
 def guest_route_search(request):
-
-    # ルート検索プログラム
-    #
     return render(request, 'Guest_Function/route_search.html')
 
 
@@ -667,9 +710,12 @@ def guest_route_search(request):
 
 
 def proposal(request):
-    # 処理なし
-    del request.session['moveList']
-    del request.session['guest_meca']
+    # ルート検索に使用した田んぼと機械のsessionを削除
+    try:
+        del request.session['moveList']
+        del request.session['guest_meca']
+    except KeyError:
+        pass
     return render(request, 'Guest_Function/proposal.html')
 
 

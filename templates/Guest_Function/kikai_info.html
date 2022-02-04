@@ -12,13 +12,24 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
-    <link rel="stylesheet" href="{% static 'systemdesign/css/responsive_menu.css' %}"><!--レスポンシブメニュー-->
+
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/validationEngine.jquery.css' %}">
+
+    <script src="{% static 'systemdesign/js/jquery.validationEngine-ja.js' %}"></script>
+    <script src="{% static 'systemdesign/js/jquery.validationEngine.js' %}"></script>
+	<script src="{% static 'systemdesign/js/jquery-1.8.2.min.js' %}"></script>
 
     <script src="{% static 'systemdesign/js/button_control.js' %}"></script>
     <script src="{% static 'systemdesign/js/radio_button.js' %}"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("#formID").validationEngine();
+        });
+    </script>
 </head>
 <body>
 <!--<header>-->
@@ -27,65 +38,41 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-miss">
         <h1>植え方選択</h1>
     </div>
 
-    <form action="{% url 'Guest_tanbo_info' %}" method="post">
-        {% csrf_token %}
-        <h3>? 機械で植えますか ?</h3>
-        <div class="hidden_box">
-            <div class="hidden_box1">
-                <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
-                <label for="label1">機械で植える</label>
-                <div class="hidden_show1">
-                    全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
-                    全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
-                    条数 ： <input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(条)<br>
-                </div>
-                <!-- hidden_show1 -->
-            </div>
-            <!-- hidden_box1 -->
-        </div>
-        <!-- hidden_box -->
-{#        <h3>機械で植える</h3>#}
-{##}
+    <form action="{% url 'Guest_tanbo_info' %}" id="formID" method="post">
+{#        {% csrf_token %}#}
+{#        <h3>? 機械で植えますか ?</h3>#}
 {#        <div class="hidden_box">#}
 {#            <div class="hidden_box1">#}
 {#                <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">#}
 {#                <label for="label1">機械で植える</label>#}
 {#                <div class="hidden_show1">#}
-{##}
-{#                    <table class="write">#}
-{#                        <td>#}
-{#                            機械名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"><br>#}
-{#                            全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>#}
-{#                            全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>#}
-{#                            条数 ： <input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(cm)<br>#}
-{#                        </td>#}
-{#                    </table>#}
+{#                    全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>#}
+{#                    全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>#}
+{#                    条数 ： <input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(条)<br>#}
 {#                </div>#}
 {#                <!-- hidden_show1 -->#}
 {#            </div>#}
 {#            <!-- hidden_box1 -->#}
 {#        </div>#}
-{#        <!-- hidden_box -->#}
+        {% csrf_token %}
+        <h3> 機械の情報を入力してください </h3>
+        <table class="write">
+		        <td>
+			        全長：<input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft" required>(mm)<br>
+			        全幅：<input type="text" name="full_width" id="full_width" class="validate[required]" data-prompt-position="topLeft" required>(mm)<br>
+			        条数：<input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft" required>(条)<br>
+		        </td>
+	        </table>
+        <!-- hidden_box -->
 
         <br>
-        <h3>? 手で植えますか ?</h3>
-        <div class="hidden_box">
-            <div class="hidden_box2">
-                <input type="checkbox" id="label2" name="group" onclick="clickBtn2()">
-                <label for="label2">手で植える</label>
-                <div class="hidden_show2">
-                    間隔:<input type="text" id="e" name="hand" onclick="clickBtn2()">
-                </div>
-                <!-- hidden_show2 -->
-            </div>
-            <!-- hidden_box2 -->
-        </div>
         <!-- hidden_box -->
 
 
@@ -114,8 +101,9 @@
 {#        <a href="{% url 'Guest_kikai_info' %}">- ひとつ前に戻る -</a>#}
 {#    </div>#}
 </article>
-
-<a href="tel:000-0000-0000">
+    <div class="side"></div>
+</div>
+    <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 
 </body>

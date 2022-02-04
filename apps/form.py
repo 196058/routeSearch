@@ -55,21 +55,16 @@ class MecaAddForm(forms.ModelForm):
     class Meta:
         model = Mecainfo
         fields = (
-            'id', 'meca_id', 'name', 'full_length', 'full_width', 'plant'
-            # , 'joukan', 'kabuma', 'adjusting', 'workingspeed'
+            'id', 'name', 'full_length', 'full_width', 'plant'
         )
         labels = {
             'name': '機械名',
             'full_length': '全長[mm]',
             'full_width': '全長(幅)[mm]',
             'plant': '条数[条]',
-            # 'joukan': '条間[cm]',
-            # 'kabuma': '株間[cm]',
-            # 'adjusting': '一株本数調節量[本]',
-            # 'workingspeed': '作業速度[cm/s]'
         }
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': '好きな名前をつけてください。'}),
+            'name': forms.TextInput(attrs={'placeholder': '機械に名前をつけてください。'}),
             'id': forms.HiddenInput
         }
 
@@ -78,13 +73,13 @@ class PaddyAddForm(forms.ModelForm):
     class Meta:
         model = Paddy
         fields = (
-            'id', 'name'
+            'paddy_id', 'paddy_name'
         )
         labels = {
-            'name': '田んぼ名'
+            'paddy_name': '田んぼ名'
         }
         widgets = {
-            'name': forms.TextInput(attrs={'placeholder': '好きな名前をつけてください。'}),
+            'paddy_name': forms.TextInput(attrs={'placeholder': '田んぼに名前をつけてください。'}),
             'id': forms.HiddenInput
         }
 
@@ -93,7 +88,7 @@ class FieldAddForm(forms.ModelForm):
     class Meta:
         model = Field
         fields = (
-            'id', 'paddy', 'position', 'lng', 'lat'
+            'id', 'location_json_data', 'location_start_end_point_data'
         )
         widgets = {
             'id': forms.HiddenInput

@@ -6,7 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>ルート検索 -ルート表示中-</title>
-
+    <script>
+        const image ="{% static 'systemdesign/images/arrow1.png' %}";
+        const image1 ="{% static 'systemdesign/images/arrow2.png' %}";
+        const image2 ="{% static 'systemdesign/images/doorway1.png' %}";
+        const route = {{ request.session.moveList|safe }};
+    </script>
     <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
     <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
@@ -16,22 +21,118 @@
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/routetest.css' %}">
+
+    <script>
+        function print_out() {
+            let area = document.getElementById('route');
+            let temp = document.body.innerHTML; // bodyのhtmlを退避
+            document.body.innerHTML = area.innerHTML; // 該当idのhtmlをbodyにつっこむ
+            print(); // 印刷
+            document.body.innerHTML = temp; // 退避したbodynohtmlを戻す
+        }
+    </script>
+    <script>
+        function route_search_init() {
+            const route_proposal = JSON.parse(JSON.stringify(route));
+            let row_length = route_proposal.max_row           //内周最大(door_way_x_position)   8
+            let column_length = route_proposal.max_column         //内周最大(door_way_y_position)   9
+            let door_way_x_position = route_proposal.door_way_list[0]       //出入口(door_way_x_position)        23
+            let door_way_y_position = route_proposal.door_way_list[1]       //出入口(door_way_y_position)        0
+            console.log('door_way_list' + route["door_way_list"])     //出入口
+            let image_height = 13;
+            let image_width = 13;
+
+            //テーブル定義
+            let table = document.createElement('table');
+            table.id = 'table';
+            let thead = document.createElement('thead');
+            let tbody = document.createElement('tbody');
+
+            //テーブル作成
+            for (let i = 0; i < row_length; i++) {
+                let row = document.createElement('tr');
+                for (let j = 0; j < column_length; j++) {
+                    let heading = document.createElement('td');
+                    row.appendChild(heading);
+                }
+                thead.appendChild(row);
+            }
+
+            table.appendChild(thead);
+            table.appendChild(tbody);
+
+
+            //出入口設定
+            const im = document.createElement("img");
+            im.height = image_height;
+            im.width = image_width;
+            if (route_proposal.all_move_list[0].step_move_list[0].string === "上") {
+                im.style.transform = "rotate(-90deg)";
+            } else if (route_proposal.all_move_list[1].step_move_list[0].string === "下") {
+                im.style.transform = "rotate(90deg)";
+            } else if (route_proposal.all_move_list[1].step_move_list[0].string === "右") {
+            } else if (route_proposal.all_move_list[1].step_move_list[0].string === "左") {
+                im.style.transform = "rotate(180deg)";
+            }
+            im.src = image2;
+            table.rows[door_way_y_position].cells[door_way_x_position].appendChild(im);
+
+            //ルート表示
+            for(const step_move_list of route_proposal.all_move_list) {
+                for (const move of step_move_list.step_move_list) {
+                    const img = document.createElement("img");
+                    img.height = image_height;
+                    img.width = image_width;
+                    const y = move.row_position;
+                    const x = move.column_position;
+                    if (move.plant) {
+                        if (move.string === "上") {
+                            img.style.transform = "rotate(180deg)";
+                        } else if (move.string === "右") {
+                            img.style.transform = "rotate(-90deg)";
+                        } else if (move.string === "左") {
+                            img.style.transform = "rotate(90deg)";
+                        }
+                        img.src = image;
+                        //plantがfalseの時(植えない時)
+                    } else {
+                        if (move.string === "上") {
+                        } else if (move.string === "下") {
+                            img.style.transform = "rotate(180deg)";
+                        } else if (move.string === "右") {
+                            img.style.transform = "rotate(90deg)";
+                        } else if (move.string === "左") {
+                            img.style.transform = "rotate(-90deg)";
+                        }
+                        img.src = image1;
+                    }
+                    table.rows[y].cells[x].appendChild(img);
+                }
+            }
+
+            //bodyに作成したtableを追加
+            document.getElementById('route').appendChild(table);
+        }
+    </script>
 
 </head>
-<body>
+<body  onload="route_search_init()">
 <!--<header>-->
 <h1 class="h1title">
     <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-have">
         <h1>ルート表示中<span>-ルート検索-</span></h1>
     </div>
 
     <h3>入力された情報をもとにルートを検索しました</h3>
+    <div id="route" class="print_area"></div>
     <form action="{% url 'route_search' %}" method="get">
 
         <!-- いい感じに間隔をつける -->
@@ -41,13 +142,14 @@
     <br><br><br>
 {#    <div class="reset button-bg from-left">#}
         <a href="{% url 'route_search' %}" class="button-default"> 再検索 </a><br>
-        <a href="" class="button-default"> ルートを印刷 </a><br><br>
+        <button onclick="print_out()" class="button-default"> ルートを印刷 </button><br><br>
         <a href="{% url 'tanbo_info' %}" class="button-default"> 別の田んぼに植える </a><br><br>
 
         <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" class="fas fa-home"> 田植えを終了する </a>
 {#    </div>#}
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

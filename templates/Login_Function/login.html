@@ -27,6 +27,20 @@
     <script src="{% static 'systemdesign/js/jquery.infinitescroll.min.js' %}"></script>
     <script src="{% static 'systemdesign/js/jquery.masonry.min.js' %}"></script>
     <script src="{% static 'systemdesign/js/twilight.js' %}"></script>
+
+
+    <link rel="stylesheet" href="{% static 'systemdesign/css/validationEngine.jquery.css' %}">
+
+	<script src="{% static 'systemdesign/js/jquery-1.8.2.min.js' %}"></script>
+	<script src="{% static 'systemdesign/js/jquery.validationEngine-ja.js' %}"></script>
+	<script src="{% static 'systemdesign/js/jquery.validationEngine.js' %}"></script>
+
+    <script type="text/javascript">
+        jQuery(document).ready(function(){
+            jQuery("#formID").validationEngine();
+        });
+
+    </script>
 </head>
 <body>
 <!--<header>-->
@@ -35,7 +49,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
 	<div class="contents-miss">
 		<h1>ログイン</h1>
@@ -43,12 +58,22 @@
 
 	<h3>ＩＤとパスワードを入力してください</h3>
     <br><br>
-    <form action="{% url 'member_login' %}" method="post">
+{#    <form action="{% url 'member_login' %}" method="post">#}
+{#        {% csrf_token %}#}
+{#        <label class="centering">ユーザＩＤ</label>#}
+{#            <input type="text" name="user_name" id="user_name"><br>#}
+{#        <label class="centering">パスワード</label>#}
+{#            <input type="password" name="pass_word" id="pass_word"><br>#}
+{#        <br><br>#}
+{##}
+{#        <input type="submit" class="button-default" value=" ログイン ">#}
+{#    </form>#}
+    <form action="{% url 'member_login' %}" id="formID" method="post">
         {% csrf_token %}
         <label class="centering">ユーザＩＤ</label>
-            <input type="text" name="user_name" id="user_name"><br>
+            <input type="text" name="user_name" id="user_name" class="validate[required]" data-prompt-position="topLeft"><br>
         <label class="centering">パスワード</label>
-            <input type="password" name="pass_word" id="pass_word"><br>
+            <input type="password" name="pass_word" id="pass_word" class="validate[required]" data-prompt-position="topLeft"><br>
         <br><br>
 
         <input type="submit" class="button-default" value=" ログイン ">
@@ -69,6 +94,9 @@
     <!--    </footer>-->
     <br>
 </article>
+    <div class="side"></div>
+</div>
+
 
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>

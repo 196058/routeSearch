@@ -21,7 +21,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-have">
         <h1>確認<span>-新規登録-</span></h1>
@@ -52,13 +53,14 @@
         <h3>よろしいですか？</h3>
 
         <br>
-        <a href="{% url 'shinki_add_comp' %}">- 登録する -</a><br>
+{#        <a href="{% url 'shinki_add_comp' %}">- 登録する -</a><br>#}
 
 {#        <a href="{% url 'shinki_add' %}">- 内容 修正 -</a><br>#}
         <a href="{% url 'index' %}" class="fas fa-home">- メニューに戻る -</a>
 {#    </div>#}
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

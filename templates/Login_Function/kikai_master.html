@@ -23,7 +23,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
     <div class="contents-miss">
         <h1>機械一覧</h1>
@@ -33,22 +34,24 @@
 
 {#    <div class="reset button-bg from-left">#}
             <table class="details">
-                <tr><th>機械名</th><th>内容</th><th>編集</th><th>削除</th></tr>
+                <tr><th>機械名</th><th>全長(mm)</th><th>全幅(mm)</th><th>条数(条)</th><th>編集</th><th>削除</th></tr>
                 {% for meca in meca_info %}
                 <tr>
                     <td>{{meca.name}}</td>
                     <td>{{meca.full_length}}</td>
+                    <td>{{meca.full_width}}</td>
+                    <td>{{meca.plant}}</td>
                     <td>
                         <form action="{% url "kikai_edit" %}" method="post">
                         {%  csrf_token %}
                             <input type="hidden" name="meca_id" value="{{ meca.meca_id }}">
-                            <input type="submit" value="編集">
+                            <input type="submit" value="編集" class="button-default button-table">
                         </form>
                     </td>
                     <td><form action="{% url "kikai_del_confirm" %}" method="post">
                         {%  csrf_token %}
                         <input type="hidden" name="meca_id" value="{{ meca.meca_id }}">
-                        <input type="submit" value="削除">
+                        <input type="submit" value="削除" class="fas fa-chevron-circle-left button-table">
                         </form>
                     </td>
                 </tr>
@@ -60,7 +63,8 @@
         <a href="{% url 'member_login' %}" class="fas fa-home">- ホームに戻る -</a>
 {#    </div>#}
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 

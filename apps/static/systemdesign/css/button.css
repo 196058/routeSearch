@@ -163,6 +163,12 @@ header h1 a:hover {
     -webkit-transition: .100s;
     transition: .100s;
 }
+/*テーブルのボタン追加*/
+.button-table {
+    display: block;
+    width: 5em;
+}
+
 
 .back-button{
     display: block;

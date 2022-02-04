@@ -54,7 +54,8 @@
     <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
-
+<div class="background">
+    <div class="side"></div>
 <article class="backsayuu">
 	<div class="contents-miss">
 		<h1>田んぼ情報取得</h1>
@@ -64,9 +65,10 @@
 
     <div id="mapid"></div>
     <div id="message"></div>
+    <br><br>
     <input type="button" id="route_search" value=" ルート検索　開始 " class="button-default">
 
-    <script>
+        <script>
 
         let map;
         let position = [];
@@ -166,7 +168,8 @@
 
                 addLayerSetPosition: function(newLayer) {
                     if(newLayer instanceof  MyCustomMarker) {
-                        if (this.startPosition && this.endPosition) {
+                        if (this.startPosition) {
+                            return false;
                         } else {
                             this.setPosition(newLayer);
                             this.addLayer(newLayer);
@@ -185,7 +188,8 @@
 
             // 図形をまとめるためのオブジェクト
             const drawnItems = new L.FeatureGroup().addTo(map);
-            const markerItems = new MyCustomMarkerFeatureGroup().addTo(map);
+            const markerGroup = new L.FeatureGroup().addTo(map);
+            {#const markerItems = new MyCustomMarkerFeatureGroup().addTo(map);#}
 
             const options = {
                 position: 'topright',
@@ -310,8 +314,9 @@
             const drawControl = new L.Control.Draw(options).addTo(map);
             map.addControl(drawControl);
 
+            //Drawレイヤーを追加したときにトリガーされる
             map.on(L.Draw.Event.CREATED, function (e) {
-                //Drawレイヤーを追加したときにトリガーされる
+                const markerItems = new MyCustomMarkerFeatureGroup().addTo(map);
                 const type = e.layerType, layer = e.layer;
                 //typeがポリゴンなら
                 if (type === 'polygon') {
@@ -337,7 +342,6 @@
                                 $.each(_coords, function (ind, val) {
                                     polygonInnerLatLngList.push([val.lat, val.lng]);
                                 });
-
                                 //描画可能範囲を指定
                                 if (!isInsideByCrossingNumberAlgorithm([this.getLatLng().lat, this.getLatLng().lng], polygonInnerLatLngList)) {
                                     markerItems.removeLayerReleasePosition(this);
@@ -347,6 +351,7 @@
                     });
                     map.fitBounds(layer.getBounds());
                     drawnItems.addLayer(e.layer);
+                    markerGroup.addLayer(markerItems)
                 }
             });
 
@@ -358,9 +363,6 @@
                         start_end_point = [];
                         location_json = JSON.stringify(position);
                         start_end_point_json = JSON.stringify(start_end_point);
-                        markerItems.eachLayer(function(layer){
-                            markerItems.removeLayerReleasePosition(layer);
-                        });
                     }
                 });
             });
@@ -401,6 +403,8 @@
                 start_end_point_json = [];
                 position = [];
                 start_end_point = [];
+                let location_info = 0;
+                let start_end_position_info = false;
                 drawnItems.eachLayer(function (layer) {
                     if (layer instanceof L.Polygon) {
                         const _coords = layer.getLatLngs()[0];
@@ -412,38 +416,55 @@
                             position.push(location);
                         });
                         const paddyFields = {};
-                        paddyFields.paddyFields = position
+                        paddyFields.paddyFields = position;
                         location_json = JSON.stringify(paddyFields);
+                        location_info++;
                     }
                 });
-                markerItems.eachLayer(function(layer){
-                    if (layer instanceof MyCustomMarker) {
-                        if(layer.paddyStartPosition) {
-                            const point = {};
-                            const Position = {};
-                            point.position = "start";
-                            point.y = layer.getLatLng().lat;
-                            point.x = layer.getLatLng().lng;
-                            start_end_point.push(point);
-                            Position.startEndPosition = start_end_point
-                            start_end_point_json = JSON.stringify(Position);
-                        }else if(layer.paddyEndPosition){
-                            const point = {};
-                            const Position = {};
-                            point.position = "end";
-                            point.y = layer.getLatLng().lat;
-                            point.x = layer.getLatLng().lng;
-                            start_end_point.push(point);
-                            Position.startEndPosition = start_end_point
-                            start_end_point_json = JSON.stringify(Position);
-                        }
+
+                markerGroup.eachLayer(function (layer){
+                    if (layer instanceof MyCustomMarkerFeatureGroup) {
+                        layer.eachLayer(function (layer) {
+                            start_end_position_info = true;
+                            if (layer.paddyStartPosition) {
+                                const point = {};
+                                const Position = {};
+                                point.position = "start";
+                                point.y = layer.getLatLng().lat;
+                                point.x = layer.getLatLng().lng;
+                                start_end_point.push(point);
+                                Position.startEndPosition = start_end_point;
+                                start_end_point_json = JSON.stringify(Position);
+                            } else if (layer.paddyEndPosition) {
+                                const point = {};
+                                const Position = {};
+                                point.position = "end";
+                                point.y = layer.getLatLng().lat;
+                                point.x = layer.getLatLng().lng;
+                                start_end_point.push(point);
+                                Position.startEndPosition = start_end_point;
+                                start_end_point_json = JSON.stringify(Position);
+                            }
+                        });
                     }
                 });
-                $('#message').text('通信中...');
+                if(location_info === 0){
+                    alert("田んぼの情報を登録してください。")
+                    return
+                }else if(location_info > 1){
+                    alert("田んぼを複数登録することはできません。\n一つのみ登録可能です")
+                    return;
+                }
+                if (!start_end_position_info){
+                    alert("出入り口の情報が登録されていません。")
+                    return
+                }
+                $('#resultGET').text('通信中...');
                 // Ajax通信を開始
                 $.ajax({
                     url: "{% url 'position' %}",
                     method: "GET",
+                    async: false,
                     // プレーンテキストを受信（他にはhtml、xml、script、json、jsonp等）
                     dataType: 'text',
                     // リクエストパラメータ「?param1=いろはに&param2=ほへと&param3=ちりぬるを」
@@ -451,20 +472,13 @@
                         location_json_data: location_json,
                         location_start_end_point_data: start_end_point_json
                     },
-                }).done(function(response) {
+                }).done(function(data) {
                     // 通信成功時の処理を記述
-                    if(response === "田んぼの範囲を指定してください"){
-                        $('#message').text(response);
-                    }else if(response === "出入り口を指定してください") {
-                        $('#message').text(response);
-                    }else{
-                        document.location.href = "{% url 'Guest_route_search' %}"
-                    }
-                    {#document.location.href = "{% url 'Guest_route_search' %}"#}
+                    document.location.href = "{% url 'Guest_route_search' %}"
+                    $('#resultGET').text('GET処理成功：' + data + '.');
                 }).fail(function() {
                     // 通信失敗時の処理を記述
-                    {#$('#message').text('GET処理失敗.');#}
-                    alert("失敗")
+                    $('#resultGET').text('GET処理失敗.');
                 });
             });
         }
@@ -487,9 +501,11 @@
     </table>
     {#    <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>#}
     <a href="{% url 'Guest_kikai_info' %}" class="fas fa-chevron-circle-left"> ひとつ前に戻る </a>
+    <br>
     <a href="{% url 'index' %}" class="fas fa-home"> メニューに戻る </a>
 </article>
-
+    <div class="side"></div>
+</div>
 <a href="tel:000-0000-0000">
     <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
 
