@@ -17,9 +17,10 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
+
 <!--</header>-->
 
 <article class="backsayuu2">
@@ -29,14 +30,20 @@
 
     <h4>この内容を削除します</h4>
 
-    <table class="details">
-        <tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th></tr>
-        <tr>
-            <td>●</td>
-            <td>●</td>
-            <td>●</td>
-        </tr>
-    </table>
+    <form action="{% url 'users_del_comp' %}" method="post">
+            {%  csrf_token %}
+            <label class="centering">利用者名</label>
+                <input type="text" name="user_name" id="user_name" value="{{ user_info.user_name }}" readonly ><br>
+
+            <label class="centering">メールアドレス</label>
+                <input type="email" name="mail" id="mail" value="{{ user_info.mail }}"  readonly><br>
+
+            <label class="centering">パスワード</label>
+                <input type="password" name="pass_word" id="pass_word" value="{{ user_info.pass_word }}"  readonly><br>
+
+            <input type="hidden" name="id" value="{{ user_info.id }}">
+            <input type="submit" value="- 削除する -">
+        </form>
 
     <br><br>
     <div class="reset button-bg from-left">
@@ -44,5 +51,6 @@
         <a href="{% url 'users_master' %}"> 一覧に戻る</a>
     </div>
 </article>
+
 </body>
 </html>

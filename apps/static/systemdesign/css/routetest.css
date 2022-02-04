@@ -1,0 +1,36 @@
+/*body {*/
+/*    margin-left: 50px;*/
+/*    margin-top: 50px;*/
+/*    background: rgb(88, 132, 31);*/
+/*}*/
+
+
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/*#table img {*/
+/*    display: block;*/
+/*    margin: auto;*/
+/*}*/
+
+td{
+    padding: 0 5px;
+    border: 1px solid rgba(0, 0, 0, .7);
+    /*vertical-align: middle;*/
+}
+
+#route {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/*#body {*/
+/*    width: 480px;*/
+/*    height: 300px;*/
+/*    background-image: url("../images/ine.jpg");*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*}*/

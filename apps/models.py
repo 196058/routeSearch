@@ -3,15 +3,38 @@ from msvcrt import CRT_ASSEMBLY_VERSION
 from django.db import models
 
 
+class Admin(models.Model):
+    user_name = models.CharField(max_length=192, blank=True, null=True)
+    pass_word = models.CharField(max_length=192, blank=True, null=True)
+    mail = models.CharField(max_length=192, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'admin'
+
+
 class Field(models.Model):
     paddy = models.ForeignKey('Paddy', models.DO_NOTHING, blank=True, null=True)
     position = models.IntegerField(blank=True, null=True)
-    lon = models.FloatField(blank=True, null=True)
+    lng = models.FloatField(blank=True, null=True)
     lat = models.FloatField(blank=True, null=True)
+    location_json_data = models.JSONField(blank=True, null=True)
+    location_start_end_point_data = models.JSONField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'field'
+
+
+class Inquiry(models.Model):
+    inquiry_no = models.AutoField(primary_key=True)
+    inquiry_id = models.CharField(max_length=192, blank=True, null=True)
+    title = models.CharField(max_length=192, blank=True, null=True)
+    contents = models.CharField(max_length=192, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'inquiry'
 
 
 class Mecainfo(models.Model):
@@ -20,11 +43,7 @@ class Mecainfo(models.Model):
     name = models.CharField(max_length=128, blank=True, null=True)
     full_length = models.IntegerField(blank=True, null=True)
     full_width = models.IntegerField(blank=True, null=True)
-    jousu = models.IntegerField(blank=True, null=True)
-    joukan = models.IntegerField(blank=True, null=True)
-    kabuma = models.IntegerField(blank=True, null=True)
-    adjusting = models.IntegerField(blank=True, null=True)
-    workingspeed = models.IntegerField(blank=True, null=True)
+    plant = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -42,7 +61,6 @@ class Paddy(models.Model):
 
 
 class User(models.Model):
-    id = models.CharField(primary_key=True, max_length=192)
     user_name = models.CharField(max_length=192, blank=True, null=True)
     pass_word = models.CharField(max_length=192, blank=True, null=True)
     mail = models.CharField(max_length=192, blank=True, null=True)
@@ -50,5 +68,6 @@ class User(models.Model):
     class Meta:
         managed = False
         db_table = 'user'
+
 
 

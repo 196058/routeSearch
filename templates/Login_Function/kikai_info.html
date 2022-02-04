@@ -7,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>ルート検索 -植え方選択-</title>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
@@ -20,10 +22,12 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
+<div class="background">
+    <div class="side"></div>
 
 <article class="backsayuu">
     <div class="contents-have">
@@ -38,12 +42,10 @@
             <div class="hidden_box1">
                 <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
                 <label for="label1">機械で植える</label>
-
                 <div class="hidden_show1">
-                    1:<input type="radio" id="kikai" name="kikai1" onclick="clickBtn1()"><br>
-                    2:<input type="radio" id="kikai" name="kikai2" onclick="clickBtn1()"><br>
-                    3:<input type="radio" id="kikai" name="kikai3" onclick="clickBtn1()"><br>
-                    4:<input type="radio" id="kikai" name="kikai4" onclick="clickBtn1()"><br>
+                {% for meca in meca_info %}
+                    <label> <input type="radio" name="meca" id="kikai" value="{{ meca.name }}">{{ meca.name }}</label><br>
+                {% endfor %}
                 </div>
                 <!-- hidden_show1 -->
             </div>
@@ -59,12 +61,21 @@
                 <label for="label2">新しい機械で植える</label>
                 <div class="hidden_show2">
 
-                    <table class="write">
-                        <td>
-                            1:<input type="text" id="new1" onclick="clickBtn2()"><br>
-                            2:<input type="text" id="new2" onclick="clickBtn2()"><br>
-                            3:<input type="text" id="new3" onclick="clickBtn2()"><br>
-                            4:<input type="text" id="new4" onclick="clickBtn2()"><br>
+                    <table class="write" width="100%">
+                        <tr>
+                            <th width="30%">機械名</th>
+                            <td width="70%"><input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"></td>
+
+                        </tr>
+                        <tr>
+                            <th width="30%">全長</th>
+                            <td width="70%"><input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)</td>
+
+                        </tr>
+                            機械名：<input type="text" name="name" id="name" class="validate[required]" data-prompt-position="topLeft"><br>
+                            全長 ： <input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
+                            全幅 ： <input type="text" name="full_width" id="full_widt" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
+                            条数 ： <input type="text" name="jousu" id="joukan" class="validate[required]" data-prompt-position="topLeft">(条)<br>
                         </td>
                     </table>
                 </div>
@@ -74,26 +85,33 @@
         </div>
         <!-- hidden_box -->
 
-        <h3>手で植える</h3>
-
-        <div class="hidden_box">
-            <div class="hidden_box3">
-                <input type="checkbox" id="label3" name="group" onclick="clickBtn3()">
-                <label for="label3">手で植える</label>
-                <div class="hidden_show3">
-                    間隔:<input type="text" id="hand" onclick="clickBtn3()">
-                </div>
-                <!-- hidden_show3 -->
-            </div>
-            <!-- hidden_box3 -->
-        </div>
+{#        <h3>手で植える</h3>#}
+{##}
+{#        <div class="hidden_box">#}
+{#            <div class="hidden_box3">#}
+{#                <input type="checkbox" id="label3" name="group" onclick="clickBtn3()">#}
+{#                <label for="label3">手で植える</label>#}
+{#                <div class="hidden_show3">#}
+{#                    間隔:<input type="text" id="hand" onclick="clickBtn3()">#}
+{#                </div>#}
+{#                <!-- hidden_show3 -->#}
+{#            </div>#}
+{#            <!-- hidden_box3 -->#}
+{#        </div>#}
         <!-- hidden_box -->
     </form>
 
-    <div class="reset button-bg from-left">
-        <a href="{% url 'route_search' %}">- ルート検索　開始 -</a><br><br>
-        <a href="{% url 'tanbo_info' %}">- ひとつ前に戻る -</a>
-    </div>
+{#    <div class="reset button-bg from-left">#}
+<br><br>
+        <a href="{% url 'route_search' %}" class="button-default"> ルート検索　開始 </a><br><br>
+        <a href="{% url 'tanbo_info' %}" class="fas fa-chevron-circle-left"> ひとつ前に戻る </a>
+{#    </div>#}
 </article>
+<div class="side"></div>
+</div>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

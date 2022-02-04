@@ -17,8 +17,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -27,21 +27,41 @@
 		<h1>利用者一覧</h1>
 	</div>
 
-	<form action="{% url 'users_master' %}" method="post">
-		名前検索<input type="text" placeholder="名前入力">
+	<form action="{% url 'users_search' %}" method="post">
+        {% csrf_token %}
+		名前検索<input type="text" name="name_key" placeholder="名前入力">
 		<input type="submit" value="検索">
 	</form>
+    <form action="{% url 'users_master' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="全件表示">
+    </form>
 
 	<div class="reset button-bg from-left">
-		<table class="details">
+
+        <table class="details">
 			<tr><th>氏名</th><th>ＩＤ</th><th>パスワード</th><th>編集</th><th>削除</th></tr>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td><a href="{% url 'users_edit' %}"> 編集 </a></td>
-				<td><a href="{% url 'users_del_confirm' %}"> 削除 </a></td>
-			</tr>
+
+                {% for user_info in user_info %}
+                    <tr>
+				    <td>{{ user_info.user_name }}</td>
+			    	<td>{{ user_info.id }}</td>
+				    <td>{{ user_info.pass_word }}</td>
+                    <td><form action="{% url 'users_edit' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ user_info.id }}">
+                            <input type="submit" value="編集">
+                        </form>
+                    </td>
+                    <td><form action="{% url 'users_del_confirm' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{ user_info.id }}">
+                            <input type="submit" value="削除">
+                        </form>
+                    </td>
+                    </tr>
+                {% endfor %}
+
 		</table>
 
 		<br><br>
@@ -50,5 +70,6 @@
 		<a href="{% url 'admin_home' %}"> ホームに戻る </a>
 	</div>
 </article>
+
 </body>
 </html>

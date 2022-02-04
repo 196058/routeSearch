@@ -17,8 +17,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -29,16 +29,20 @@
 
     <h4>この内容で登録します</h4>
 
-    <form action="{% url 'inquiry_add_comp' %}" method="">
-        <table class="details">
-            <tr><th>タイトル</th><th>内容</th></tr>
-            <tr>
-                <td>●</td>
-                <td>●</td>
-            </tr>
-        </table>
-    </form>
+    <form action="{% url 'inquiry_add_comp' %}" method="post">
+        {%  csrf_token %}
+        <label class="centering">ID</label>
+            <input type="text" name="inquiry_id" id="inquiry_id" value="{{ inquiry_info.inquiry_id.value }}" readonly ><br>
 
+        <label class="centering">タイトル</label>
+            <input type="text" name="title" id="title" value="{{ inquiry_info.title.value }}"  readonly><br>
+
+        <label class="centering">内容</label>
+            <input type="text" name="contents" id="contents" value="{{ inquiry_info.contents.value }}"  readonly><br>
+
+        <input type="submit" value="- 登録する -">
+    </form>
+    <input type="button" value="戻る" onClick="javascript:history.go(-1);">
     <br><br>
     <div class="reset button-bg from-left">
         <a href="{% url 'inquiry_add_comp' %}"> 登録 </a><br>
@@ -46,5 +50,6 @@
         <a href="{% url 'inquiry_master' %}"> 一覧に戻る </a>
     </div>
 </article>
+
 </body>
 </html>

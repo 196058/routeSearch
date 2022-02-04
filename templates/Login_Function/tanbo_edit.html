@@ -7,21 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>田んぼ -編集 入力-</title>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
+<div class="background">
+    <div class="side"></div>
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-have">
         <h1>入力<span>-田んぼ編集-</span></h1>
     </div>
@@ -36,13 +41,22 @@
                 緯度:<input type="text" id="lat"><br>
             </td>
         </table>
+        <br><br>
+        <input type="submit" value=" 確認する " class="button-default">
     </form>
 
     <br><br>
-    <div class="reset button-bg from-left">
-        <a href="{% url 'tanbo_edit_confirm' %}">- 確認する -</a><br>
-        <a href="{% url 'tanbo_master' %}">- 田んぼ一覧に戻る -</a>
-    </div>
+{#    <div class="reset button-bg from-left">#}
+{#        <a href="{% url 'tanbo_edit_confirm' %}">- 確認する -</a><br>#}
+        <a href="{% url 'tanbo_master' %}" class="fas fa-chevron-circle-left"> 田んぼ一覧に戻る </a>
+{#    </div>#}
 </article>
+
+<div class="side"></div>
+</div>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

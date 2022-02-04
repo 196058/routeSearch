@@ -7,19 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>機械 -編集 入力-</title>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
+
+<div class="background">
+    <div class="side"></div>
 
 <article class="backsayuu2">
     <div class="contents-have">
@@ -27,41 +33,30 @@
     </div>
 
     <h3>↓ 必要な箇所を修正してください ↓</h3>
-
-    <form action="{% url 'kikai_edit_confirm' %}" method="post">
-        <table class="write">
-            <td>
-                :<input type="text" id="kikai1"><br>
-                :<input type="text" id="kikai2"><br>
-                :<input type="text" id="kikai3"><br>
-                :<input type="text" id="kikai4"><br>
-            </td>
-        </table>
-    </form>
     <form action="{% url 'kikai_edit_confirm'%}" method="post">
         {%  csrf_token %}
 	    <table class="write">
 		    <td>
-{#                機械名：<input type="text" name="meca_id" id="meca_id" value="{{ meca_info.meca_id }}" class="validate[required]" data-prompt-position="topLeft"><br>#}
 			    機械名：<input type="text" name="name" id="name" value="{{ meca_info.name }}" class="validate[required]" data-prompt-position="topLeft"><br>
 			    全長：<input type="text" name="full_length" id="full_length" value="{{ meca_info.full_length }}" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
 			    全幅：<input type="text" name="full_width" id="full_widt" value="{{ meca_info.full_width }}" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
-			    条数：<input type="text" name="jousu" id="joukan" value="{{ meca_info.jousu }}" class="validate[required]" data-prompt-position="topLeft">(条)<br>
-			    条間：<input type="text" name="joukan" id="joukan" value="{{ meca_info.joukan }}" class="validate[required]" data-prompt-position="topLeft">(cm)<br>
-			    株間：<input type="text" name="kabuma" id="kabuma" value="{{ meca_info.kabuma }}" class="validate[required]" data-prompt-position="topLeft">(cm)<br>
-			    一株本数調節量：<input type="text" name="adjusting" id="kabuma" value="{{ meca_info.adjusting }}" class="validate[required]" data-prompt-position="topLeft">(本)<br>
-			    作業速度：<input type="text" name="workingspeed" id="kabuma" value="{{ meca_info.workingspeed }}" class="validate[required]" data-prompt-position="topLeft">(cm/m)<br>
+			    条数：<input type="text" name="plant" id="plant" value="{{ meca_info.plant }}" class="validate[required]" data-prompt-position="topLeft">(条)<br>
 		    </td>
 	    </table>
-{#        {{ meca_info.id.as_hidden }}#}
-        {{ meca_info.meca_id.as_hidden }}
-        <input type="submit" value="確認する">
+        <br>
+        <input type="submit" class="button-default" value=" 確認する ">
     </form>
     <br><br>
-    <div class="reset button-bg from-left">
-        <a href="{% url 'kikai_edit_confirm' %}">- 確認する -</a><br>
-        <a href="{% url 'kikai_master' %}">- 機械一覧に戻る -</a>
-    </div>
+{#    <div class="reset button-bg from-left">#}
+{#        <a href="{% url 'kikai_edit_confirm' %}">- 確認する -</a><br>#}
+        <a href="{% url 'kikai_master' %}" class="fas fa-chevron-circle-left"> 機械一覧に戻る </a>
+{#    </div>#}
 </article>
+    <div class="side"></div>
+</div>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

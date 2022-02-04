@@ -1,0 +1,417 @@
+/*田んぼルート検索 ボタン
+---------------------------------------------------------------------------*/
+header h1 a {
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;;
+    font-size: 100%;                        /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
+    line-height: 80px;                      /*行の高さ指定(数値のみの場合はfont-sizeの倍数)*/
+    height: 100px;                          /*領域の高さ指定*/
+    padding: 1% 10%;
+
+    text-transform: uppercase;
+    display: block;
+    color: #2a6408;
+    /*text-shadow: 0 8px 9px #3A7203, 0 -2px 1px #000;*/
+    font-weight: bold;
+    letter-spacing: -4px;
+    position: absolute;
+    border-radius: 20px;
+    margin-left: auto;
+    text-decoration: none;
+}
+
+header h1 a:hover {
+    /*時間的変化指定*/
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+
+    /*透明度設定*/
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
+}
+
+.tel-fixed{
+    margin: 0.3em 0.5em 0.5em 1em;
+    width: 2.2em;
+    display: block;
+}
+
+.tel-fixed-phone{
+    position: fixed;
+    right: 1em;
+    top: 5em;
+    width: 4.5em;
+    display: none;
+}
+
+/*index.html 上部ボタン設定 (新規登録)
+---------------------------------------------------------------------------*/
+.riyou{
+    display: table;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#item a {
+    /*position: absolute;*/
+    font-size: 100%;
+    color: #3A7203;
+    margin-right: auto;
+    margin-left: auto;/*文字色指定*/
+}
+#item a:hover {
+    /*時間的変化指定*/
+    -webkit-transition: 0.5s;
+    -moz-transition: 0.5s;
+    -ms-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+
+    /*透明度設定*/
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    -moz-opacity: 0.6;
+}
+
+
+/*ゲストログイン　ボタン位置
+---------------------------------------------------------------------------*/
+.guestlogin{
+    text-align: center;
+}
+
+.loginshinki{
+    text-align: center;
+}
+
+
+/*ボタン（長方形）
+---------------------------------------------------------------------------*/
+.button-bg a{
+    display: inline-block;
+    padding: 0.5em 1.5em;
+    background: #407e02;
+    border-bottom: solid 0.3em #205406;
+    border-right: solid 0.2em #245d07;
+    border-radius: 0.5em;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 1.3em;
+    /*font-weight: inherit;*/
+    line-height: 1.2em;
+    -webkit-transition: .100s;
+    transition: .100s;
+}
+.button-bg a:active {
+    border-bottom: none;
+    -webkit-transform: translateY(4px);
+    -moz-transform: translate(0,2px);
+    transform: translateY(4px);
+}
+.button-bg a::after {
+    /*content: '';*/
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #ffffff;  /*動く背景　画像でも可　background-image: url(images/ );  */
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: transform 0.5s;
+}
+.button-bg a .from-top::after {
+    transform: translate(-100%);
+}
+
+.button-bg.from-bottom::after {
+    transform: translate(0, 200%);
+}
+.button-bg a:hover {
+    color: #ffffff;
+}
+.button-bg a:hover::after {
+    transform: translate(0);
+}
+.button-bg a:active, .button-bg:focus {
+    top: 2px;
+}
+
+
+/*植え方選択・田んぼ選択
+---------------------------------------------------------------------------*/
+.hidden_box1 {
+    background: #FAFFFA;
+    font-size: 150%;
+    display: inline-block;
+    color: black;
+    width: 300px;
+    height: 40px;
+    line-height: 38px;
+    border-radius: 10%;
+    border: double 4px black;
+    text-align: center;
+}
+
+/*植え方選択・田んぼ選択
+---------------------------------------------------------------------------*/
+.hidden_box2 {
+    background: #FAFFFA;
+    font-size: 150%;
+    display: inline-block;
+    color: black;
+    width: 300px;
+    height: 40px;
+    line-height: 38px;
+    border-radius: 10%;
+    border: double 4px black;
+    text-align: center;
+}
+
+/*植え方選択・田んぼ選択
+---------------------------------------------------------------------------*/
+.hidden_box3 {
+    background: #FAFFFA;
+    font-size: 150%;
+    display: inline-block;
+    color: black;
+    width: 300px;
+    height: 40px;
+    line-height: 38px;
+    border-radius: 10%;
+    border: double 4px black;
+    text-align: center;
+}
+
+
+/*レスポンシブ設定
+---------------------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+    /*田んぼルート検索 ボタン
+---------------------------------------------------------------------------*/
+    header h1 a {
+        font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;;
+        font-size: 100%;                        /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
+        line-height: 40px;                      /*行の高さ指定(数値のみの場合はfont-sizeの倍数)*/
+        height: 50px;                          /*領域の高さ指定*/
+        padding: 1% 10%;
+
+        text-transform: uppercase;
+        display: block;
+        color: #3A7203;
+        /*text-shadow: 0 8px 9px #3A7203, 0 -2px 1px #000;*/
+        font-weight: bold;
+        letter-spacing: -4px;
+        position: absolute;
+        border-radius: 20px;
+        text-decoration: none;
+        margin-left: auto;
+    }
+    header h1 a:hover {
+        /*時間的変化指定*/
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.5s;
+
+        /*透明度設定*/
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+        -moz-opacity: 0.6;
+    }
+
+    .tel-fixed{
+        position: fixed;
+        right: 1em;
+        top: 5em;
+        width: 4.5em;
+        display: none;
+    }
+
+    .tel-fixed-phone{
+        position: fixed;
+        right: 1em;
+        top: 5em;
+        width: 4.5em;
+        display: block;
+    }
+
+    /*ゲストログインボタン位置
+    ---------------------------------------------------------------------------*/
+    .guestlogin{
+        text-align: center;
+    }
+
+    .loginshinki{
+        text-align: center;
+    }
+
+
+    /*今全部これ
+    ---------------------------------------------------------------------------*/
+    .button-bg a {
+        display: inline-block;
+        padding: 0.5em 1.5em;
+        background: #407e02;
+        border-bottom: solid 0.3em #205406;
+        border-right: solid 0.2em #245d07;
+        border-radius: 0.5em;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 1.1em;
+        /* font-weight: 900; */
+        line-height: 1.2em;
+        -webkit-transition: .100s;
+        transition: .100s;
+    }
+    .button-bg a:active {
+        border-bottom: none;
+        -webkit-transform: translateY(4px);
+        -moz-transform: translate(0,2px);
+        transform: translateY(4px);
+    }
+    .button-bg a:after {
+        /*content: '';*/
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: #ffffff;  /*動く背景　画像でも可　background-image: url(images/ );  */
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        transition: transform 0.5s;
+    }
+    .button-bg a.from-top::after {
+        transform: translate(-100%);
+    }
+
+    .button-bg a.from-bottom::after {
+        transform: translate(0, 200%);
+    }
+    .button-bg a:hover {
+        color: #ffffff;
+    }
+    .button-bg a:hover::after {
+        transform: translate(0);
+    }
+    .button-bg a:active, .button-bg:focus {
+        top: 2px;
+    }
+
+
+    /*植え方選択・田んぼ選択
+    ---------------------------------------------------------------------------*/
+    .hidden_box1 {
+        background: #FAFFFA;
+        font-size: 150%;
+        display: inline-block;
+        color: black;
+        width: 10em;
+        height: 40px;
+        line-height: 38px;
+        border-radius: 10%;
+        border: double 4px black;
+        text-align: center;
+    }
+
+    /*植え方選択・田んぼ選択
+    ---------------------------------------------------------------------------*/
+    .hidden_box2 {
+        background: #FAFFFA;
+        font-size: 150%;
+        display: inline-block;
+        color: black;
+        width: 10em;
+        height: 40px;
+        line-height: 38px;
+        border-radius: 10%;
+        border: double 4px black;
+        text-align: center;
+    }
+
+    /*植え方選択・田んぼ選択
+    ---------------------------------------------------------------------------*/
+    .hidden_box3 {
+        background: #FAFFFA;
+        font-size: 150%;
+        display: inline-block;
+        color: black;
+        width: 300px;
+        height: 40px;
+        line-height: 38px;
+        border-radius: 10%;
+        border: double 4px black;
+        text-align: center;
+    }
+
+    /*
+    ---------------------------------------------------------------------------*/
+    .btn_submit {
+        width: 150px;                           /*幅指定(100%は画面横幅いっぱいに表示)*/
+        padding: 15px 0 13px 0;                 /*ボックス内側の余白*/
+        border: solid 1px #3A7203;              /*境界線指定*/
+
+        /*角丸指定*/
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+
+        /*背景グラデーション指定*/
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0.00, #7da748), color-stop(1.00, #3a7203));
+        background: -webkit-linear-gradient(#7DA748, #3A7203);
+        background: -moz-linear-gradient(#7DA748, #3A7203);
+        background: -o-linear-gradient(#7DA748, #3A7203);
+        background: -ms-linear-gradient(#7DA748, #3A7203);
+        background: linear-gradient(#7DA748, #3A7203);
+
+        color: #fff;                                /*文字色指定*/
+        text-align: center;                         /*行の水平方向の揃え方(centerは中央揃え)*/
+        font-size: 100%;                            /* フォントサイズ指定(%はブラウザに設定した標準文字サイズ(通常16px)に対する値)*/
+        font-weight: bold;                          /*フォントの太さ指定(normalは標準)*/
+    }
+    .btn_submit:hover {
+        /*透明度設定*/
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+
+        /*時間的変化指定*/
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.5s;
+
+        cursor: pointer;                            /*マウスカーソルの形状指定(pointerはリンクカーソル)*/
+    }
+
+
+    /*index.html 上部ボタン設定 (新規登録)
+    ---------------------------------------------------------------------------*/
+    #item a {
+        /*position: absolute;*/
+        font-size: 90%;
+        color: #3A7203;                         /*文字色指定*/
+    }
+    #item a:hover {
+        /*時間的変化指定*/
+        -webkit-transition: 0.5s;
+        -moz-transition: 0.5s;
+        -ms-transition: 0.5s;
+        -o-transition: 0.5s;
+        transition: 0.5s;
+
+        /*透明度設定*/
+        opacity: 0.6;
+        filter: alpha(opacity=60);
+        -moz-opacity: 0.6;
+    }
+
+
+}

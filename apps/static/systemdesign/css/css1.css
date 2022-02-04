@@ -1,0 +1,637 @@
+@charset "utf-8"; /*文字コード指定*/
+
+
+/*メニューで使うGoogle Fontsの読み込み
+---------------------------------------------------------------------------*/
+@import url('https://fonts.googleapis.com/css?family=Julius+Sans+One');
+
+
+/*全体の設定
+---------------------------------------------------------------------------*/
+html,body {
+    height: 100%;
+}
+
+/*背景
+---------------------------------------------------------------------------*/
+body {
+    color: #333;                            /*文字色指定*/
+    font-family: 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', Osaka, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', serif; /*フォントの種類指定(左から優先順位)*/
+    line-height: 2;                         /*行の高さ指定(数値のみの場合はfont-sizeの倍数)*/
+    background-position:50% 0;
+    background-size: cover;
+    text-align:center;                      /* 水平方向の揃え方指定 */
+    -webkit-text-size-adjust: none;
+    background-color: #3A7203;
+}
+
+.backsayuu{
+    background-color: #ffffff;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+    height: inherit;
+}
+
+.backsayuu2{
+    background-color: #ffffff;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, input, textarea, p, th, td, img {
+    margin: 0;                              /*ボックス外側の余白(値1つは上下左右をまとめて指定)*/
+    padding: 0;                             /*ボックス内側の余白(値1つは上下左右をまとめて指定)*/
+    border: 0;                              /*境界線指定*/
+}
+
+ol, ul {
+    list-style: none;                       /*リストマーカーの種類指定(noneはなし)*/
+}
+
+.color1 {
+    color: #990000;                         /*文字色指定*/
+}
+
+
+/*Webサイトの中でさらに別のWebサイトを読み込むことができるようになる設定
+---------------------------------------------------------------------------*/
+iframe {
+    width: 100%;
+}
+
+/*ページ上の内容
+---------------------------------------------------------------------------*/
+header {
+    position: fixed;                        /*ボックスの配置方法(fixedは固定)*/
+    top: 0;                                 /*上からの距離(positionで指定している場合に適用)*/
+    left: 0;                                /*左からの距離(positionで指定している場合に適用)*/
+    width: 100%;                            /*幅指定(100%は画面横幅いっぱいに表示)*/
+    height: 100px;                          /*領域の高さ指定*/
+    background: #ffffff;                    /* 古いブラウザ用 */
+    background: -moz-linear-gradient(top, #509B1C 0%, #509B1C 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom,
+    color-stop(0%, #509b1c), color-stop(100%, #509B1C)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #509B1C 0%, #509B1C 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #509B1C 0%, #509B1C 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #509B1C 0%, #509B1C 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #d09292 0%, #cf8888 100%); /* W3C */
+    border-bottom: #333333;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#509B1C', endColorstr='#509B1C', GradientType=0 ); /* IE6-9 */
+    z-index: 1000;                          /*ボックス重なり順序指定*/
+}
+
+/*ページ下の内容
+---------------------------------------------------------------------------*/
+.footer {
+     background-color: #FFFFFF;
+     /*padding-top: 5em;*/
+     margin: 8em 5em 0 5em;
+     position: relative;
+     padding: 1em 1.5em;
+     border-top: solid 2px black;
+     border-bottom: solid 2px black;
+ }
+.footer:before, .footer:after{
+    content: '';
+    position: absolute;
+    top: -10px;
+    width: 2px;
+    height: -webkit-calc(100% + 20px);
+    height: calc(100% + 20px);
+    background-color: black;
+}
+.footer:before {left: 10px;}
+.footer:after {right: 10px;}
+.footer p {
+    margin: 0;
+    padding: 0;
+}
+
+/*メインの内容
+---------------------------------------------------------------------------*/
+article {
+    width: 100%;                            /*幅指定(100%は画面横幅いっぱいに表示)*/
+    padding-top: 10px;
+}
+
+
+/*index.html ボタン位置設定
+---------------------------------------------------------------------------*/
+#item {
+    width: 100%;
+    position: relative;
+    text-align: center;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.unification {
+    width: 11em;
+    border: outset;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 1em 0 0 0;
+    margin-bottom: 1.5em;
+}
+.unification a {
+    width: 10%;
+}
+
+
+/*index.html 説明書き
+---------------------------------------------------------------------------*/
+.ta {
+    margin: 1.5em auto 1.5em auto;
+    width: 80%; /*幅指定(100%は画面横幅いっぱいに表示)*/
+    /*ボックス外側の余白(値2つは左から上下,左右の値(左右autoで中央配置))*/
+}
+
+.ta td {
+    /*border: 2px solid #3A7203;*/
+    /*padding: 0 0 10px 10px;                 !*ボックス内側の余白*!*/
+    color: #333;                            /*文字色指定*/
+    font-size: 90%;                       /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
+    font-weight: 600;                     /*フォントの太さ指定(normalは標準)*/
+    text-align: left;                       /*行の水平方向の揃え方(leftは左寄せ)*/
+    padding: 0 0 0 1.2em;
+}
+
+.ta th {
+    width: 10em;
+    border: 2px solid #3A7203;              /*境界線の一括指定(noneはなし)*/
+    /*padding: 0 0 10px 10px;                 !*ボックス内側の余白*!*/
+    color: #333;                            /*文字色指定*/
+    font-size: 100%;                       /*フォントサイズ指定(emはフォントの高さを１とした相対指定)*/
+    font-weight: bold;                     /*フォントの太さ指定(normalは標準)*/
+    text-align: center;                     /*行の水平方向の揃え方(leftは左寄せ)*/
+    vertical-align: middle;
+    padding: 0.7em 0 0 0;
+}
+
+
+/*テーブル details 確認・表示用
+---------------------------------------------------------------------------*/
+.details {
+    width: 60%;
+    font-weight: bold;
+    margin-right: auto;
+    margin-left: auto;
+}
+.details, .details td, .details th {
+    border: 2px solid #000000;              /*テーブルの枠線の幅、線種、色*/
+    padding: 5px 5px;	                    /*ボックス内の余白*/
+    table-layout: fixed;
+    word-break: break-all;
+    text-align: center;
+}
+.details th {
+    width: 140px;	                        /*幅*/
+    text-align: center;	                    /*センタリング*/
+    font-weight: bold;
+    font-size: 25px;
+}
+.details td {
+    text-align: left;
+    font-weight: bold;
+    font-size: 20px;
+
+}
+.details td img {
+    width: 100%;
+}
+
+
+/*テーブル write　入力欄用
+---------------------------------------------------------------------------*/
+.write{
+    width: 60%;
+    border: none;                           /*テーブルの枠線の幅、線種、色*/
+    table-layout: auto;
+    background-color:#CCFFCC;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.write tr {
+    text-align: center;
+}
+
+.write td {
+    text-align: center;
+    font-size: 150%;
+
+}
+
+
+/*ログイン画面（左右分割）
+---------------------------------------------------------------------------*/
+div#box1 {
+    width: 50%;
+    height: 50%;
+    float: left;
+}
+
+div#box2 {
+    width: 50%;
+    height: 50%;
+    float: right;
+
+}
+
+div#box3 {
+    margin-left: auto;
+    margin-right: auto;
+    clear: both;
+}
+
+
+/*入力欄センタリング
+---------------------------------------------------------------------------*/
+.centering{
+    display: inline-block;
+    text-align: center;
+    width: 300px;
+}
+
+
+/*植え方選択（プルダウン）
+---------------------------------------------------------------------------*/
+.hidden_box1 .hidden_show1 {
+    height: 0;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+    margin-left: auto;
+    margin-right: auto;
+}
+.hidden_box1 input:checked ~ .hidden_show1 {
+    height: auto;
+    opacity: 1;
+    padding: 10px 0;
+    text-align: center;
+
+}
+
+
+.hidden_box2 .hidden_show2 {
+    height: 0;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+}
+.hidden_box2 input:checked ~ .hidden_show2 {
+    height: auto;
+    opacity: 1;
+    padding: 10px 0;
+}
+
+
+.hidden_box3 .hidden_show3 {
+    height: 0;
+    overflow: hidden;
+    text-align: center;
+    transition: 0.5s;
+}
+.hidden_box3 input:checked ~ .hidden_show3 {
+    height: auto;
+    opacity: 1;
+    padding: 10px 0;
+}
+
+
+/*map設定
+---------------------------------------------------------------------------*/
+.gmap {
+    position: relative;                         /*ボックスの配置方法(relativeは相対位置配置)*/
+    padding-bottom: 56.25%;                     /*ボックス内側下の余白*/
+    padding-top: 30px;                          /*ボックス内側上の余白*/
+    height: 0;                                  /*領域の高さ指定*/
+    overflow: hidden;                           /*ボックスのはみ出た部分の表示指定(hiddenは非表示)*/
+}
+
+.gmap iframe {
+    position: absolute;                         /*ボックスの配置方法(absoluteは絶対位置配置)*/
+    top: 0;                                     /*上からの距離(positionで指定している場合に適用)*/
+    left: 0;                                    /*左からの距離(positionで指定している場合に適用)*/
+    width: 100%;                                /*幅指定(100%は画面横幅いっぱいに表示)*/
+    height: 100%;                               /*領域の高さ指定*/
+}
+
+
+/*説明書き
+---------------------------------------------------------------------------*/
+div#popup{
+    width:25%;
+    line-height: 250%;
+    background:rgba(105,105,105,0.5);
+    padding:0 4%;
+    box-sizing:border-box;
+    display:none;
+    position:fixed;
+    top:50%;
+    left:85%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*img{
+    width:2.5%;
+}*/
+
+label{
+    display:block;
+}
+
+label span.explanation{
+    display:block;
+    background-color:#01b6ed;
+    color:#fff;
+    width:30px;
+    line-height:40px;
+    border-radius:4px;
+    text-align:center;
+}
+
+label span.question:hover{
+    cursor:pointer;
+}
+
+input[type="checkbox"]{
+    display:none;
+}
+
+input[type="checkbox"]:checked + #popup{
+    display:block;
+    transition:.2s;
+}
+
+
+/*レスポンシブ設定
+---------------------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+
+    body {
+        color: #333;                            /*文字色指定*/
+        font-family: 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', Osaka, 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', serif; /*フォントの種類指定(左から優先順位)*/
+        line-height: 2;                         /*行の高さ指定(数値のみの場合はfont-sizeの倍数)*/
+        background-position:50% 0;
+        background-size: cover;
+        text-align:center;                      /* 水平方向の揃え方指定 */
+        -webkit-text-size-adjust: none;
+        background-color: #FFFFFF;
+    }
+
+    header {
+        height:55px;                           /*領域の高さ指定*/
+        background-color: #8a8a8a;
+    }
+
+    .backsayuu{
+        background-color: #ffffff;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: auto;
+        height: inherit;
+    }
+
+    .backsayuu2{
+        background-color: #ffffff;
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+        margin-bottom: auto;
+        height: auto;
+    }
+
+    .footer {
+        background-color: #FFFFFF;
+        /*padding-top: 5em;*/
+        margin: 8em 2em 0 2em;
+        position: relative;
+        padding: 1em 1.5em;
+        border-top: solid 2px black;
+        border-bottom: solid 2px black;
+    }
+
+    label {
+        display: block;
+        font-size: 0.8em;
+    }
+
+    /*メインの内容
+    ---------------------------------------------------------------------------*/
+    article {
+        width: 80%;                            /*幅指定(100%は画面横幅いっぱいに表示)*/
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 65px;
+    }
+    /*index.html ボタン位置設定
+    ---------------------------------------------------------------------------*/
+    #item {
+        /*width: 100%;*/
+        /*position: relative;*/
+        /*text-align: center;*/
+        /**/
+        /*display: flex;*/
+        /*flex-direction: row;*/
+        /*justify-content: space-between;*/
+        display: flex;
+        /*コレ*/flex-direction:column;
+        align-items: center;
+    }
+
+    .unification {
+        width: 11em;
+        /*margin-right: 35%;*/
+    }
+
+    .unification {
+        display: -webkit-box;
+        width: 15em;
+        height: 6em;
+        padding: 1.5em 0 0 1.5em;
+    }
+
+    .unification a {
+        width: 30%;
+    }
+
+
+    /*テーブル details
+    ---------------------------------------------------------------------------*/
+    .details {
+        width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .details, .details td, .details th {
+        border: 1px solid #000000;              /*テーブルの枠線の幅、線種、色*/
+        table-layout: fixed;
+        word-break: break-all;
+        text-align: center;
+    }
+    .details th {
+        width: 60%;	                            /*幅*/
+        text-align: center;	                    /*センタリング*/
+        font-size: 60%;
+    }
+    .details td {
+        text-align: left;
+        font-weight: bold;
+        font-size: 10px;
+
+    }
+    .details td img {
+        width: 100%;
+    }
+
+
+    /*テーブル2 追加入力欄テーブル
+    ---------------------------------------------------------------------------*/
+    .write {
+        width: 100%;
+        border: none;                           /*テーブルの枠線の幅、線種、色*/
+        table-layout: auto;
+        background-color:#CCFFCC;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .write tr {
+        text-align: center;
+    }
+    .write td {
+        text-align: center;
+        font-size: 150%;
+    }
+
+
+    /*テーブル設定
+    ---------------------------------------------------------------------------*/
+    .ta th{
+        border-collapse: collapse;
+        font-size: 1em;
+        width: 6em;
+    }
+
+    .ta td{
+        border-collapse: collapse;
+    }
+
+
+    /*植え方選択・田んぼ選択
+    ---------------------------------------------------------------------------*/
+    .hidden_box1 {
+        background: #FAFFFA;
+        font-size: 150%;
+        display: inline-block;
+        color: black;
+        width: 300px;
+        height: 40px;
+        line-height: 38px;
+        border-radius: 10%;
+        border: double 4px black;
+        text-align: center;
+    }
+
+
+
+
+    /*植え方選択（プルダウン）
+    ---------------------------------------------------------------------------*/
+    .hidden_box1 .hidden_show1 {
+        height: 0;
+        overflow: hidden;
+        text-align: center;
+        transition: 0.5s;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.6em;
+    }
+    .hidden_box1 input:checked ~ .hidden_show1 {
+        height: auto;
+        opacity: 1;
+        padding: 10px 0;
+        text-align: center;
+
+    }
+
+
+
+    .hidden_box2 .hidden_show2 {
+        height: 0;
+        overflow: hidden;
+        text-align: center;
+        transition: 0.5s;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 0.6em;
+    }
+    .hidden_box2 input:checked ~ .hidden_show2 {
+        height: auto;
+        opacity: 1;
+        padding: 10px 0;
+    }
+
+
+    .hidden_box3 .hidden_show3 {
+        height: 0;
+        overflow: hidden;
+        text-align: center;
+        transition: 0.5s;
+    }
+    .hidden_box3 input:checked ~ .hidden_show3 {
+        height: auto;
+        opacity: 1;
+        padding: 10px 0;
+    }
+
+
+    /*ログイン画面（左右分割）
+    ---------------------------------------------------------------------------*/
+    .login input{
+        width: 120px;
+    }
+
+    .login label {
+        width: 60px;
+        text-align: left;
+    }
+
+    div#box1 {
+        width: 50%;
+        height: 50%;
+        float: right;
+    }
+
+    div#box2 {
+        width: 50%;
+        height: 50%;
+        float: right;
+    }
+
+    div#box3 {
+        margin-left: auto;
+        margin-right: auto;
+        clear: both;
+    }
+
+
+    /*入力欄センタリング
+    ---------------------------------------------------------------------------*/
+    .centering{
+        display: inline-block;
+        text-align: left;
+        width: 40%;
+    }
+
+
+}

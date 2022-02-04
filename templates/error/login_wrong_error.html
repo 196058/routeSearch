@@ -18,7 +18,7 @@
 <!--<header>-->
 <h1 class="h1title">
     <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -32,9 +32,9 @@
     <h3>入力された パスワード は登録されていません<br>お手数ですがもう一度やり直してください</h3>
 
     <br><br>
-    <div class="reset button-bg from-left">
-        <a href="{% url 'login' %}">- ログイン画面に戻る -</a><br><br>
-    </div>
+{#    <div class="reset button-bg from-left">#}
+        <a href="{% url 'login' %}" class="fas fa-chevron-circle-left">- ログイン画面に戻る -</a><br><br>
+{#    </div>#}
 </article>
 </body>
 </html>

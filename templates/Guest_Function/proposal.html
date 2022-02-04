@@ -7,22 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>システム終了</title>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
 </head>
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
-<article class="backsayuu2">
+<div class="background">
+    <div class="side"></div>
+
+<article class="backsayuu">
     <div class="contents-miss">
         <h1>終了します</h1>
     </div>
@@ -33,11 +39,18 @@
     </h3>
 
     <br><br>
-    <div class="reset button-bg from-left">
-        <a href="{% url 'shinki_add' %}">- 登録する -</a><br>
+{#    <div class="reset button-bg from-left">#}
+        <a href="{% url 'shinki_add' %}" class="button-default"> 登録する </a><br>
 
-        <a href="{% url 'index' %}">- 終了する -</a>
-    </div>
+        <a href="{% url 'index' %}" class="fas fa-home"> 終了する </a>
+{#    </div>#}
 </article>
+
+<div class="side"></div>
+</div>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

@@ -17,8 +17,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -27,19 +27,38 @@
 		<h1>対応マニュアル一覧</h1>
 	</div>
 
-	<form action="{% url 'inquiry_master' %}" method="post">
-		タイトル検索<input type="text" placeholder="タイトル入力">
+	<form action="{% url 'inquiry_search' %}" method="post">
+        {% csrf_token %}
+		タイトル検索<input type="text" name="title_key" placeholder="タイトル入力">
 		<input type="submit" value="検索">
 	</form>
+    <form action="{% url 'inquiry_master' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="全件表示">
+    </form>
 
 	<div class="reset button-bg from-left">
-		<table class="details">
-			<tr><th>タイトル</th><th>内容</th><th>編集</th><th>削除</th></tr>
+        <table class="details">
+			<tr><th>No</th><th>対応ID</th><th>タイトル</th><th>内容</th><th>編集</th><th>削除</th></tr>
 			<tr>
-				<td></td>
-				<td></td>
-				<td><a href="{% url 'inquiry_edit' %}"> 編集 </a></td>
-				<td><a href="{% url 'inquiry_del_confirm' %}"> 削除 </a></td>
+                {% for inquiry_info in inquiry_info %}
+                    <td>{{ inquiry_info.inquiry_no }}</td>
+                    <td>{{ inquiry_info.inquiry_id }}</td>
+                    <td>{{ inquiry_info.title }}</td>
+                    <td>{{ inquiry_info.contents }}</td>
+                    <td><form action="{% url 'inquiry_edit' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="inquiry_no" value="{{ inquiry_info.inquiry_no }}">
+                            <input type="submit" value="編集">
+                        </form>
+                    </td>
+                    <td><form action="{% url 'inquiry_del_confirm' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="inquiry_no" value="{{ inquiry_info.inquiry_no }}">
+                            <input type="submit" value="削除">
+                        </form>
+                    </td>
+                {% endfor %}
 			</tr>
 		</table>
 
@@ -48,5 +67,6 @@
 		<a href="{% url 'admin_home' %}"> ホームに戻る </a>
 	</div>
 </article>
+
 </body>
 </html>

@@ -7,45 +7,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>ホーム</title>
 
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+
 </head>
 <body>
 <h1 class="h1title">
-    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'member_login' %}" title="ホーム画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
+<div class="background">
+    <div class="side"></div>
 
-<article class="backsayuu2">
+<article class="backsayuu">
     <div class="contents-miss">
         <h1>ホーム</h1>
     </div>
 
-    <h3>機能を選択してください</h3>
+    <h3>機能を選択してください</h3><br>
 
-    <div class="reset button-bg from-left">
-        <a href="{% url 'tanbo_info' %}">- ルート検索 -</a><br><br><br>
-        <a href="{% url 'tanbo_master' %}">- 田んぼ一覧 -</a><br><br><br>
-        <a href="{% url 'kikai_master' %}">- 機械一覧 -</a><br><br><br><br><br>
+{#    <div class="reset button-bg from-left">#}
+        <a href="{% url 'tanbo_info' %}" class="button-default"> ルート検索 </a><br><br>
+        <a href="{% url 'tanbo_master' %}" class="button-default"> 田んぼ一覧 </a><br><br>
+        <a href="{% url 'kikai_master' %}" class="button-default"> 機械一覧 </a><br><br><br>
 
-        <a href="{% url 'member_logout' %}">- ログアウト -</a>
-    </div>
+        <a href="{% url 'member_logout' %}" class="fas fa-sign-out-alt"> ログアウト </a>
+{#    </div>#}
 
     <br><br><br><br>
 <!--    <footer class="footer">-->
-    <div class="footer" id="footer">
-        <h5>チーム定時退社</h5>
-        〒73*-****<br>
-        広島市南区比治山本町<br>
-        TEL：***-****<br>
-    </div>
+{#    <div class="footer" id="footer">#}
+{#        <h5>チーム定時退社</h5>#}
+{#        〒73*-****<br>#}
+{#        広島市南区比治山本町<br>#}
+{#        TEL：***-****<br>#}
+{#    </div>#}
 <!--    </footer>-->
     <br>
 </article>
+    <div class="side"></div>
+</div>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>

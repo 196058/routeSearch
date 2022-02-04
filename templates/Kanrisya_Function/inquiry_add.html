@@ -28,8 +28,8 @@
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/denwa.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
 
@@ -40,13 +40,16 @@
 
 	<h4>必要項目を入力してください</h4>
 
-    <form action="{% url 'inquiry_add_confirm' %}" method="" id="formID">
+    <form action="{% url 'inquiry_add_confirm' %}" method="post" id="formID">
+        {% csrf_token %}
 	    <table class="write">
 		    <td>
-			    タイトル：<input type="text" id="" class="validate[required]" data-prompt-position="topLeft"><br>
-			    内容：<input type="text" id="" class="validate[required]" data-prompt-position="topLeft"><br>
+			    ID：<input type="text" name="inquiry_id" id="inquiry_id" class="validate[required]" data-prompt-position="topLeft"><br>
+			    タイトル：<input type="text" name="title" id="" class="validate[required]" data-prompt-position="topLeft"><br>
+			    内容：<input type="text" name="contents" id="" class="validate[required]" data-prompt-position="topLeft"><br>
 		    </td>
 	    </table>
+        <input type="submit" value="確認">
     </form>
 
 	<br><br>
@@ -55,5 +58,6 @@
 		<a href="{% url 'inquiry_master' %}"> 一覧に戻る </a>
 	</div>
 </article>
+
 </body>
 </html>

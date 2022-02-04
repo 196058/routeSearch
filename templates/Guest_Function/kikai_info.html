@@ -7,69 +7,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>植え方選択</title>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
+    <link rel="icon" href="http://saetl.net/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" type="img/x-icon" href="http://saetl.net/favicon.ico">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Berkshire+Swash|Lobster" rel="stylesheet" type="text/css"><!--googlewebフォント-->
 
     <link rel="stylesheet" href="{% static 'systemdesign/css/css.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/font.css' %}">
     <link rel="stylesheet" href="{% static 'systemdesign/css/button.css' %}">
+    <link rel="stylesheet" href="{% static 'systemdesign/css/validationEngine.jquery.css' %}">
+
+    <script src="{% static 'systemdesign/js/jquery.validationEngine-ja.js' %}"></script>
+    <script src="{% static 'systemdesign/js/jquery.validationEngine.js' %}"></script>
+	<script src="{% static 'systemdesign/js/jquery-1.8.2.min.js' %}"></script>
 
     <script src="{% static 'systemdesign/js/button_control.js' %}"></script>
     <script src="{% static 'systemdesign/js/radio_button.js' %}"></script>
+
+    <script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery("#formID").validationEngine();
+    });
+</script>
+
 </head>
 <body>
 <!--<header>-->
 <h1 class="h1title">
-    <a href="{% url 'index' %}" title="メニュー画面へ移動します">田んぼルート検索</a>
-    <a href="#footer"><img src="{% static 'systemdesign/images/denwa.png' %}" class="toicon" style="float: right;"></a>
+    <a href="{% url 'index' %}" title="メニュー画面へ移動します" style="padding: 0 0.5em">田んぼルート検索</a>
+    <a href="mailto:address"><img src="{% static 'systemdesign/images/mail.png' %}" class="tel-fixed"></a>
 </h1>
 <!--</header>-->
+<div class="background">
+    <div class="side"></div>
 
 <article class="backsayuu">
     <div class="contents-miss">
         <h1>植え方選択</h1>
     </div>
 
-    <form action="{% url 'route_search' %}" method="get">
-        <h3>機械で植える</h3>
-
-        <div class="hidden_box">
-            <div class="hidden_box1">
-                <input type="checkbox" id="label1" name="group" onclick="clickBtn1()">
-                <label for="label1">機械で植える</label>
-
-                <div class="hidden_show1">
-                    1:<input type="text" id="a" onclick="clickBtn1()"><br>
-                    2:<input type="text" id="b" onclick="clickBtn1()"><br>
-                    3:<input type="text" id="c" onclick="clickBtn1()"><br>
-                    4:<input type="text" id="d" onclick="clickBtn1()"><br>
-                </div>
-                <!-- hidden_show1 -->
-            </div>
-            <!-- hidden_box1 -->
-        </div>
+    <form action="{% url 'Guest_tanbo_info' %}" id="formID" method="post">
+        {% csrf_token %}
+        <h3> 機械の情報を入力してください </h3>
+        <table class="write">
+		        <td>
+			        全長：<input type="text" name="full_length" id="full_length" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
+			        全幅：<input type="text" name="full_width" id="full_width" class="validate[required]" data-prompt-position="topLeft">(mm)<br>
+			        条数：<input type="text" name="plant" id="plant" class="validate[required]" data-prompt-position="topLeft">(条)<br>
+		        </td>
+	        </table>
         <!-- hidden_box -->
+{#        <h3>? 手で植えますか ?</h3>#}
+{#        <div class="hidden_box">#}
+{#            <div class="hidden_box2">#}
+{#                <input type="checkbox" id="label2" name="group" onclick="clickBtn2()">#}
+{#                <label for="label2">手で植える</label>#}
+{#                <div class="hidden_show2">#}
+{#                    間隔:<input type="text" id="e" name="hand" onclick="clickBtn2()">#}
+{#                </div>#}
+{#                <!-- hidden_show2 -->#}
+{#            </div>#}
+{#            <!-- hidden_box2 -->#}
+{#        </div>#}
+{#        <!-- hidden_box -->#}
 
-        <h3>手で植える</h3>
-
-        <div class="hidden_box">
-            <div class="hidden_box2">
-                <input type="checkbox" id="label2" name="group" onclick="clickBtn2()">
-                <label for="label2">手で植える</label>
-                <div class="hidden_show2">
-                    間隔:<input type="text" id="e" name="hand" onclick="clickBtn2()">
-                </div>
-                <!-- hidden_show2 -->
-            </div>
-            <!-- hidden_box2 -->
-        </div>
-        <!-- hidden_box -->
+        <br><br>
+        <input type="submit" value="田んぼ情報取得" class="button-default">
+{#        <input type="submit" value="ルート検索　開始">#}
     </form>
 
-    <div class="reset button-bg from-left">
-        <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>
-        <a href="{% url 'Guest_tanbo_info' %}">- ひとつ前に戻る -</a>
-    </div>
+    <br><br>
+{#    <div class="reset button-bg from-left">#}
+{#        <a href="{% url 'Guest_route_search' %}">- ルート検索　開始 -</a><br><br>#}
+        <a href="{% url 'index' %}" class="fas fa-home"> メニューに戻る </a>
+{#        <a href="{% url 'Guest_kikai_info' %}">- ひとつ前に戻る -</a>#}
+{#    </div>#}
 </article>
+
+    <div class="side"></div>
+</div>
+
+<a href="tel:000-0000-0000">
+    <img class="tel-fixed-phone" src="{% static 'systemdesign/images/denwa.png' %}"></a>
+
 </body>
 </html>
